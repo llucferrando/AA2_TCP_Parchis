@@ -1,24 +1,21 @@
 #pragma once
 #include "Component.h"
 #include "Vector2.h"
+#include <SFML/System/Vector2.hpp>
 
 class Transform : public Component
 {
 public:
 	Transform();
 
-	Vector2 position;
-	float rotation;
-	Vector2 scale;
+	sf::Vector2f position;
+	sf::Angle rotation;
+	sf::Vector2f scale;
 
 	const std::type_index GetType() override;
 
-	void Translate(const Vector2& offset) {
-		position += offset;
-	}
+	void Translate(const sf::Vector2f& offset);
 
-	void Rotate(float angle) {
-		rotation += angle;
-	}
+	void Rotate(sf::Angle angle);
 };
 
