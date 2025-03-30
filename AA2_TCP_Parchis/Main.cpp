@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include "GameObject.h"
+#include "Component.h"
+#include "AnimatedSprite.h"
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -9,14 +12,6 @@
 #define NUM_FRAMES 10
 #define ANIMATION_SPEED 0.1
 
-
-void UpdateSprite(sf::Sprite& animatedSprite, int& currentFrame, float& deltaTimeAnimation) {
-
-	if (deltaTimeAnimation >= ANIMATION_SPEED) {
-		currentFrame = (currentFrame + 1) % NUM_FRAMES; //Si paso de largo, vuelvo al principio
-		animatedSprite.setTextureRect(sf::IntRect({ currentFrame * FRAME_W, 0 }, { FRAME_W, FRAME_H }));
-	}
-}
 
 sf::Texture LoadSpriteSheet(const std::string& path) {
 	sf::Texture texture;
@@ -92,6 +87,12 @@ int main()
 	sf::Sound sound(buffer);
 	sound.play();
 
+	auto ficha = new GameObject();
+	ficha->AddComponent<AnimatedSprite>(std::string("Assets/Spritesheets/S_Link.png"),
+		sf::Vector2i(FRAME_W, FRAME_H),
+		NUM_FRAMES,
+		ANIMATION_SPEED);
+
 	while (window->isOpen())
 	{
 		float deltaTime = deltaTimeClock.restart().asSeconds();
@@ -101,7 +102,9 @@ int main()
 		{
 			HandleEvent(*event, *window);
 		}
-		UpdateSprite(animatedSprite, currentFrame, deltaTimeAnimation);
+		ficha->GetComponent<AnimatedSprite>()->Update(deltaTime);
+		ficha->GetComponent<AnimatedSprite>()->Draw(*window, ficha->GetComponent<Transform>());
+		//UpdateSprite(animatedSprite, currentFrame, deltaTimeAnimation);
 		Render(*window, /*square*/animatedSprite);
 	}
 	delete window;
