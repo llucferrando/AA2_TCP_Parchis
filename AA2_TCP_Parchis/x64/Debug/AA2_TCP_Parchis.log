@@ -1,2 +1,22 @@
-﻿  TestServer.cpp
-  AA2_TCP_Parchis.vcxproj -> C:\Users\LlucFerrandoJorda\source\repos\AA2_TCP_Parchis\AA2_TCP_Parchis\x64\Debug\AA2_TCP_Parchis.exe
+﻿  AnimatedSprite.cpp
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\AnimatedSprite.cpp(6,23): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Main.cpp
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\Main.cpp(94): message : see reference to function template instantiation 'T *GameObject::AddComponent<AnimatedSprite,std::string,sf::Vector2i,int,double>(std::string &&,sf::Vector2i &&,int &&,double &&)' being compiled
+          with
+          [
+              T=AnimatedSprite
+          ]
+  Generating Code...
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1094,5): error MSB6006: "link.exe" exited with code 1104.
+LINK : fatal error LNK1104: cannot open file 'sfml-graphics-d.lib'
