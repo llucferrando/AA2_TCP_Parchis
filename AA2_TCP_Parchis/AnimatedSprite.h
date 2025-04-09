@@ -9,7 +9,7 @@ public:
 
 	AnimatedSprite(const std::string& texturePath, sf::Vector2i frameSize, int frameCount, float frameTime);
 	void Update(float deltaTime);
-	void Draw(sf::RenderWindow& window, Transform* transform);
+	void Draw(sf::RenderWindow* window, Transform* transform);
 	const std::type_index GetType() override;
 
 private:
