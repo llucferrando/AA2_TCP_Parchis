@@ -21,12 +21,12 @@ void AnimatedSprite::Update(float deltaTime)
     }
 }
 
-void AnimatedSprite::Draw(sf::RenderWindow& window, Transform* transform)
+void AnimatedSprite::Draw(sf::RenderWindow* window, Transform* transform)
 {
     _sprite.setPosition(transform->position);
     _sprite.setRotation(transform->rotation); 
     _sprite.setScale(transform->scale);
-    window.draw(_sprite);
+    window->draw(_sprite);
 }
 
 const std::type_index AnimatedSprite::GetType()
