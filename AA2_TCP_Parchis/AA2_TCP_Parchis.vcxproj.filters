@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Sockets">
-      <UniqueIdentifier>{2a02335d-30b9-46b6-b635-08f782dd787d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Sockets">
-      <UniqueIdentifier>{57a74b0f-27c8-4589-9584-91691a5781ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{81e8b9b5-ec3d-4ed4-b6c7-331ccb89b07a}</UniqueIdentifier>
     </Filter>
@@ -30,6 +24,18 @@
     </Filter>
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{9f512d13-8cc9-4ef7-ab2e-ba1b6289bfab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TCP">
+      <UniqueIdentifier>{962cfb9e-a7df-4dc1-bce9-c08841d794e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TCP\Sockets">
+      <UniqueIdentifier>{2a02335d-30b9-46b6-b635-08f782dd787d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TCP">
+      <UniqueIdentifier>{e06355f5-b812-4953-ad3e-6f181b531d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TCP\Sockets">
+      <UniqueIdentifier>{57a74b0f-27c8-4589-9584-91691a5781ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source Files\TCP</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files\TCP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Header Files\TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Header Files\TCP</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
