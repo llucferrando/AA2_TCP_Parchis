@@ -57,12 +57,35 @@ void Server::ReceiveData(Client* client)
     sf::Packet packet;
     if (client->GetSocket()->receive(packet) == sf::Socket::Status::Done)
     {
-        std::string msg;
-        packet >> msg;
+        std::string command;
+        packet >> command;
 
-        std::cout << "[RECEIVED] " << msg << " (from " << client->GetGUID() << ")" << std::endl;
+        if (command == "REGISTER")
+        {
+            std::string nick, pass;
+            packet >> nick >> pass;
 
-        // Aquí irá la lógica futura: interpretar comandos LOGIN / REGISTER / etc.
+            bool success = _db->RegisterUser(nick, pass);
+            sf::Packet response;
+            response << (success ? "REGISTER_OK" : "REGISTER_FAIL");
+            client->GetSocket()->send(response);
+        }
+        else if (command == "LOGIN")
+        {
+            std::string nick, pass;
+            packet >> nick >> pass;
+
+            bool success = _db->LoginUser(nick, pass);
+            sf::Packet response;
+            response << (success ? "LOGIN_OK" : "LOGIN_FAIL");
+            client->GetSocket()->send(response);
+        }
+        else
+        {
+            sf::Packet response;
+            response << "UNKNOWN_COMMAND";
+            client->GetSocket()->send(response);
+        }
     }
     else
     {

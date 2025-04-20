@@ -1,4 +1,5 @@
 #include "DataBaseManager.h"
+#include "bcrypt.h"
 
 #define SERVER "127.0.0.1:3306"
 #define USERNAME "root"
@@ -20,32 +21,77 @@ DataBaseManager::~DataBaseManager()
 
 void DataBaseManager::ConnectDatabase()
 {
-	sql::Driver* driver;
-	sql::Connection* con;
 
 	try {
-		driver = get_driver_instance();
-		con = driver->connect(SERVER, USERNAME, PASSWORD);
-		std::cout << "Connection done" << std::endl;
+		_driver = get_driver_instance();
+		_con = _driver->connect(SERVER, USERNAME, PASSWORD);
+		_con->setSchema("videogame");
+		std::cout << "Connection with database done" << std::endl;
 
-		con->close();
-		std::cout << "Connection close" << std::endl;
 	}
 	catch (sql::SQLException e) {
-		std::cout << "Couldn't connect to server" << e.what() << std::endl;
-		system("pause");
-		exit(1);
+		std::cerr << "[DB] Error al conectar: " << e.what()
+			<< " (MySQL error code: " << e.getErrorCode()
+			<< ", SQLState: " << e.getSQLState() << ")" << std::endl;
 
 	}
-	delete con;
 }
 
 bool DataBaseManager::RegisterUser(const std::string& nickname, const std::string& password)
 {
-	return false;
+	//We check for empty fields
+	if (nickname.empty() || password.empty()) {
+		std::cerr << "Nickname or password empty on field \n";
+		return false;
+	}
+
+	try {
+		std::string query = "INSERT INTO users(nickname, password) VALUES (?,?)";
+		std::string hashedPassword = bcrypt::generateHash(password); //Generate a hashed future password
+		std::unique_ptr<sql::PreparedStatement> stmt(_con->prepareStatement(query)); //We can avoid to free memory
+
+		stmt->setString(1, nickname);
+		stmt->setString(2, hashedPassword);
+		stmt->execute();
+
+		
+
+		std::cout << "User registered correctly" << std::endl;
+		return true;
+	}
+	catch(sql::SQLException& e){
+		std::cerr<<"Error while trying to register user" << e.what() << std::endl;
+		return false;
+	}
+	
 }
 
 bool DataBaseManager::LoginUser(const std::string& nickname, const std::string& password)
 {
-	return false;
+	//We check for empty fields
+	if (nickname.empty() || password.empty()) {
+		std::cerr << "Nickname or password empty on field \n";
+		return false;
+	}
+	try {
+		std::string query = "SELECT password FROM users WHERE nickname = ?"; 
+		std::unique_ptr<sql::PreparedStatement> stmt(_con->prepareStatement(query)); //We can avoid to free memory
+		stmt->setString(1, nickname);
+		std::unique_ptr<sql::ResultSet> res(stmt->executeQuery());
+
+		if (res->next()) {
+			std::string storedHash = res->getString("password"); 
+			if (bcrypt::validatePassword(password, storedHash)) { 
+				std::cout << "Correct login for user: " << nickname << std::endl;
+				return true;
+			}
+		}
+
+		std::cout << "Login failed for user: " << nickname << std::endl;
+		return false;
+	}
+	catch (sql::SQLException& e) {
+		std::cerr << "Login error" << e.what() << std::endl;
+		return false;
+	}
 }

@@ -2,6 +2,7 @@
 
 Client::Client(sf::TcpSocket* socket)
 {
+	_socket=socket;
 	std::ostringstream ss;
 	ss << "C" << std::rand();
 	_guid = ss.str();

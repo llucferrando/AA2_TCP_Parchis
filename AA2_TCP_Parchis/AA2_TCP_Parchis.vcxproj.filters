@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{0a3f588b-d002-40f3-bcdd-a97f2ccded59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{0223d86c-f0ad-4f08-ad20-09de00f97988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{6fc27bd4-a6cd-40fd-b8d2-ebd25ae4b5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\bcrypt">
+      <UniqueIdentifier>{13896523-9310-4ba6-8b9c-6c30bbbd8dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils\bcrypt">
+      <UniqueIdentifier>{6f1260a8-4c84-4900-9d26-ada3666475e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -77,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="DataBaseManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="bcrypt.cpp">
+      <Filter>Source Files\Utils\bcrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="blowfish.cpp">
+      <Filter>Source Files\Utils\bcrypt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="bcrypt.h">
+      <Filter>Header Files\Utils\bcrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="node_blf.h">
+      <Filter>Header Files\Utils\bcrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="openbsd.h">
+      <Filter>Header Files\Utils\bcrypt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

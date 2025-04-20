@@ -1,9 +1,16 @@
-﻿  Server.cpp
+﻿  DataBaseManager.cpp
+  Main.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory
+  (compilando archivo de origen "DataBaseManager.cpp")
+  
 C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
-  (compilando archivo de origen "Server.cpp")
+  (compilando archivo de origen "Main.cpp")
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
   vea la declaración de 'std::runtime_error'
   C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
   vea la declaración de 'sf::Exception'
   
-  AA2_TCP_Parchis.vcxproj -> C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Debug\AA2_TCP_Parchis.exe
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory
+  (compilando archivo de origen "Main.cpp")
+  
+  Generando código...

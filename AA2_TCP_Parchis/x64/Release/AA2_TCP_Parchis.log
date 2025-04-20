@@ -1,4 +1,57 @@
-﻿  DataBaseManager.cpp
+﻿  AnimatedSprite.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "AnimatedSprite.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\AnimatedSprite.cpp(6,23): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
+  bcrypt.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(240,21): warning C4267: 'argumento': conversión de 'size_t' a 'unsigned short'; posible pérdida de datos
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(242,51): warning C4267: 'argumento': conversión de 'size_t' a 'unsigned short'; posible pérdida de datos
+  blowfish.cpp
+  Client.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "Client.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+  DataBaseManager.cpp
+  EventHandler.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "EventHandler.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+  GameManager.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "GameManager.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244: 'argumento': conversión de '_Ty' a 'float'; posible pérdida de datos
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         with
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         [
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:             _Ty=double
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         ]
+  (compilando archivo de origen "GameManager.cpp")
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42):
+  el contexto de creación de instancias de la plantilla (el más antiguo primero) es
+  	C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp(14,11):
+  	Vea la referencia a la creación de una instancia de la función plantilla "T *GameObject::AddComponent<AnimatedSprite,const char(&)[31],sf::Vector2i,int,double>(const char (&)[31],sf::Vector2i &&,int &&,double &&)" que se está compilando
+          with
+          [
+              T=AnimatedSprite
+          ]
+  
+  GameObject.cpp
   Main.cpp
 C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
   (compilando archivo de origen "Main.cpp")
@@ -7,11 +60,39 @@ C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception
   C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
   vea la declaración de 'sf::Exception'
   
+  Server.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "Server.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\Server.cpp(71,38): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\Server.cpp(81,38): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\Server.cpp(87,38): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
+  SpriteRenderer.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "SpriteRenderer.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\SpriteRenderer.cpp(5,26): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
+  Transform.cpp
+  Window.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "Window.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
      Creando biblioteca C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.lib y objeto C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exp
   Generando código
-  42 of 201 functions (20.9%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 427 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Generación de código finalizada
 mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_driver.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_connection.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración

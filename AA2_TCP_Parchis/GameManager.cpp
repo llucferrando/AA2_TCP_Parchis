@@ -67,3 +67,8 @@ void GameManager::HandleEvents()
         _eventHandler->HandleEvent(*event, *_window);
     }
 }
+
+void GameManager::SplashScreen()
+{
+
+}

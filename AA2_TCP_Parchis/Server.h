@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include "Client.h"
+#include "DataBaseManager.h"
 
 class Server
 {
@@ -19,4 +20,6 @@ private:
     sf::TcpListener _listener;
     sf::SocketSelector _selector;
     std::vector<std::unique_ptr<Client>> _clients;
+    DataBaseManager* _db = new DataBaseManager;
+
 };

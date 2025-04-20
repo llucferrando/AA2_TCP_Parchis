@@ -19,6 +19,8 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
+    void SplashScreen();
+    void MainMenu();
 
     Window* _window;
     EventHandler* _eventHandler;

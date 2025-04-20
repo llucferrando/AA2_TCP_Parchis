@@ -136,6 +136,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="bcrypt.cpp" />
+    <ClCompile Include="blowfish.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DataBaseManager.cpp" />
     <ClCompile Include="EventHandler.cpp" />
@@ -149,12 +151,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="bcrypt.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DataBaseManager.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="node_blf.h" />
+    <ClInclude Include="openbsd.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Transform.h" />
