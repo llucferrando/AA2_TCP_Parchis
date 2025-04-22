@@ -12,6 +12,7 @@ Server::Server(unsigned short port)
 
 void Server::Run()
 {
+    _db->ConnectDatabase();
     while (true)
     {
         if (_selector.wait(sf::seconds(1.f)))

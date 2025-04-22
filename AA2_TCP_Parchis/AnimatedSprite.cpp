@@ -17,7 +17,7 @@ void AnimatedSprite::Update(float deltaTime)
         _currentFrame = (_currentFrame + 1) % _frameCount;
 
         int left = _currentFrame * _frameSize.x;
-        _sprite.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), _frameSize));
+        _sprite.setTextureRect(sf::IntRect(sf::Vector2i(left, 0), _frameSize));
     }
 }
 

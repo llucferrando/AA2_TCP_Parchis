@@ -1,18 +1,18 @@
 #include "EventHandler.h"
 #include <iostream>
 
-void EventHandler::HandleEvent(const sf::Event& event, Window& window)
+void EventHandler::HandleEvent(const sf::Event& event, sf::RenderWindow& window)
 {
     if (event.is<sf::Event::Closed>())
     {
-        window.Close();
+        window.close();
     }
 
     //Keyboard
     if (const sf::Event::KeyPressed* keyPressed = event.getIf<sf::Event::KeyPressed>()) {
         switch (keyPressed->code) {
         case sf::Keyboard::Key::Escape:
-            window.Close();
+            window.close();
             break;
         default:
             break;

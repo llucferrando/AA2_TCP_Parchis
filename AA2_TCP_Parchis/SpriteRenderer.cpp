@@ -3,7 +3,7 @@
 SpriteRenderer::SpriteRenderer(const std::string & texturePath) : _texture(), _sprite(_texture)
 {
     _texture.loadFromFile(texturePath);
-    _sprite.setTexture(_texture);
+    _sprite.setTexture(_texture, true);
 }
 
 void SpriteRenderer::Draw(sf::RenderWindow* window, Transform* transform)

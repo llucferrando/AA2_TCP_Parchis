@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "Vector2.h"
 #include <SFML/System/Vector2.hpp>
 
 class Transform : public Component

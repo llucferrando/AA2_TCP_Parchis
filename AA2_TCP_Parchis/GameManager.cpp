@@ -4,19 +4,15 @@
 #define FRAME_H 101
 #define NUM_FRAMES 10
 #define ANIMATION_SPEED 0.1
-
+#include <SFML/System/Vector2.hpp>
 GameManager::GameManager()
 {
-    _window = new Window();
+    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "nuget");
     _eventHandler = new EventHandler();
 
     _ficha = new GameObject();
-    _ficha->AddComponent<AnimatedSprite>(
-        "Assets/Spritesheets/S_Link.png",
-        sf::Vector2i(FRAME_W, FRAME_H),
-        NUM_FRAMES,
-        ANIMATION_SPEED
-        );
+    _splashScreen = new GameObject();
+
 }
 
 GameManager::~GameManager()
@@ -26,12 +22,19 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
+    _ficha->AddComponent<AnimatedSprite>(
+        "Assets/Spritesheets/S_Link.png",
+        sf::Vector2i(FRAME_W, FRAME_H),
+        NUM_FRAMES,
+        ANIMATION_SPEED
+    );
+    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+    _splashScreen->GetComponent<Transform>()->scale = sf::Vector2f(0.7f, .7f);
 }
 
 void GameManager::Run()
 {
-        SplashScreen();
-    while (_window->IsOpen()) {
+    while (_window->isOpen()) {
 
         float deltaTime = _deltaClock.restart().asSeconds();
 
@@ -54,16 +57,18 @@ void GameManager::Update(float deltaTime)
 
 void GameManager::Render()
 {
-    _window->Clear();
+    _window->clear();
     //-- Draw things
-    _ficha->GetComponent<AnimatedSprite>()->Draw(_window->GetWindow(), _ficha->GetComponent<Transform>());
+    _ficha->GetComponent<AnimatedSprite>()->Draw(_window, _ficha->GetComponent<Transform>());
+    _splashScreen->GetComponent<SpriteRenderer>()->Draw(_window, _splashScreen->GetComponent<Transform>());
+
     //--
-    _window->Display();
+    _window->display();
 }
 
 void GameManager::HandleEvents()
 {
-    while (const std::optional event = _window->GetWindow()->pollEvent())//si veo un evento, automaticamente se consume (un buffer)
+    while (const std::optional event = _window->pollEvent())//si veo un evento, automaticamente se consume (un buffer)
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
@@ -71,20 +76,20 @@ void GameManager::HandleEvents()
 
 void GameManager::SplashScreen()
 {
-    GameObject splashGO;
-    splashGO.AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+    //GameObject splashGO;
+    //splashGO.AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
 
-    const float splashDuration = 3.0f;
-    sf::Clock clock;
+    //const float splashDuration = 3.0f;
+    //sf::Clock clock;
 
-    while (_window->IsOpen() && clock.getElapsedTime().asSeconds() < splashDuration)
-    {
-        _window->Clear();
+    //while (_window->IsOpen() && clock.getElapsedTime().asSeconds() < splashDuration)
+    //{
+    //    _window->Clear();
 
-        splashGO.GetComponent<SpriteRenderer>()->Draw(_window->GetWindow(), splashGO.GetComponent<Transform>());
+    //   
 
-        _window->Display();
-    }
+    //    _window->Display();
+    //}
 
 
 }

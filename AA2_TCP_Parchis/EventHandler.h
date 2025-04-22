@@ -5,6 +5,6 @@
 class EventHandler
 {
 public:
-	void HandleEvent(const sf::Event& event, Window& window);
+	void HandleEvent(const sf::Event& event, sf::RenderWindow& window);
 };
 

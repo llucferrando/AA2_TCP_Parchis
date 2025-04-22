@@ -1,13 +1,13 @@
 #include "GameManager.h"
 #include "DataBaseManager.h"
+#include "Server.h"
 
 int main()
 {
-	DataBaseManager* myDB = new DataBaseManager();
+	Server server;
 	GameManager* gm = new GameManager();
 
-	//myDB->ConnectDatabase();
-
+	//server.Run();
 	gm->Init();
 	gm->Run();
 		

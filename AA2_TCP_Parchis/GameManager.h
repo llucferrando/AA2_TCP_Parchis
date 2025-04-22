@@ -21,12 +21,12 @@ private:
     void Render();
     void HandleEvents();
     void SplashScreen();
-    void MainMenu();
 
-    Window* _window;
+    sf::RenderWindow* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
     GameObject* _ficha;
+    GameObject* _splashScreen;
 };
 
