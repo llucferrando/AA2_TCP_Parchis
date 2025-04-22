@@ -1,8 +1,8 @@
 ﻿  DataBaseManager.cpp
+  GameManager.cpp
   Main.cpp
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory
-  (compilando archivo de origen "DataBaseManager.cpp")
-  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.cpp : error C1041: no puede abrir la base de datos de programa 'C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\x64\Debug\vc143.idb'. Si varios CL.EXE escriben en el mismo archivo .PDB, use /FS.
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp : error C1041: no puede abrir la base de datos de programa 'C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\x64\Debug\vc143.idb'. Si varios CL.EXE escriben en el mismo archivo .PDB, use /FS.
 C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
   (compilando archivo de origen "Main.cpp")
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
@@ -13,4 +13,24 @@ C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception
 C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory
   (compilando archivo de origen "Main.cpp")
   
+  Server.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "Server.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: No se puede abrir el archivo incluir: 'mysql_connection.h': No such file or directory
+  (compilando archivo de origen "Server.cpp")
+  
+  SpriteRenderer.cpp
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
+  (compilando archivo de origen "SpriteRenderer.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
+  vea la declaración de 'std::runtime_error'
+  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+  vea la declaración de 'sf::Exception'
+  
+C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\SpriteRenderer.cpp(5,26): warning C4834: Descartar el valor de retorno de la función con el atributo [[nodiscard]]
   Generando código...

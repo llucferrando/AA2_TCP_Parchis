@@ -6,7 +6,7 @@ int main()
 	DataBaseManager* myDB = new DataBaseManager();
 	GameManager* gm = new GameManager();
 
-	myDB->ConnectDatabase();
+	//myDB->ConnectDatabase();
 
 	gm->Init();
 	gm->Run();

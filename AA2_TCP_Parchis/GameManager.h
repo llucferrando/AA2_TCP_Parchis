@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include "GameObject.h"
 #include "AnimatedSprite.h"
+#include "SpriteRenderer.h"
 #include "Window.h"
 #include "EventHandler.h"
 

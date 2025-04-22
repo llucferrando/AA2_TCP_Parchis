@@ -30,6 +30,7 @@ void GameManager::Init()
 
 void GameManager::Run()
 {
+        SplashScreen();
     while (_window->IsOpen()) {
 
         float deltaTime = _deltaClock.restart().asSeconds();
@@ -70,5 +71,20 @@ void GameManager::HandleEvents()
 
 void GameManager::SplashScreen()
 {
+    GameObject splashGO;
+    splashGO.AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+
+    const float splashDuration = 3.0f;
+    sf::Clock clock;
+
+    while (_window->IsOpen() && clock.getElapsedTime().asSeconds() < splashDuration)
+    {
+        _window->Clear();
+
+        splashGO.GetComponent<SpriteRenderer>()->Draw(_window->GetWindow(), splashGO.GetComponent<Transform>());
+
+        _window->Display();
+    }
+
 
 }
