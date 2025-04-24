@@ -1,7 +1,6 @@
 #include "GameManager.h"
-// --Change after where belong
-#define FRAME_W 96
-#define FRAME_H 101
+#define FRAME_W 1024
+#define FRAME_H 1024
 #define NUM_FRAMES 10
 #define ANIMATION_SPEED 0.1
 #include <SFML/System/Vector2.hpp>
@@ -11,8 +10,6 @@ GameManager::GameManager()
     _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "nuget");
     _eventHandler = new EventHandler();
 
-    _ficha = new GameObject();
-    _splashScreen = new GameObject();
 
 }
 
@@ -52,23 +49,19 @@ void GameManager::Run()
 
 void GameManager::Shutdown()
 {
-    //Clear fichas y vaynas
+    
 }
 
 void GameManager::Update(float deltaTime)
 {
-    //Update fichas o lo k sea
-    _ficha->GetComponent<AnimatedSprite>()->Update(deltaTime);
+    _menuManager->Update(deltaTime);
 }
 
 void GameManager::Render()
 {
     _window->clear();
-    //-- Draw things
-    _ficha->GetComponent<AnimatedSprite>()->Draw(_window, _ficha->GetComponent<Transform>());
-    _splashScreen->GetComponent<SpriteRenderer>()->Draw(_window, _splashScreen->GetComponent<Transform>());
-
-    //--
+   
+    _menuManager->Render(_window);
     _window->display();
 }
 
@@ -80,22 +73,3 @@ void GameManager::HandleEvents()
     }
 }
 
-void GameManager::SplashScreen()
-{
-    //GameObject splashGO;
-    //splashGO.AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
-
-    //const float splashDuration = 3.0f;
-    //sf::Clock clock;
-
-    //while (_window->IsOpen() && clock.getElapsedTime().asSeconds() < splashDuration)
-    //{
-    //    _window->Clear();
-
-    //   
-
-    //    _window->Display();
-    //}
-
-
-}

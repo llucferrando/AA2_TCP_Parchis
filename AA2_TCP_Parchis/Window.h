@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#define WIDTH 1280
+#define WIDTH 720
 #define HEIGHT 720
 
 class Window
