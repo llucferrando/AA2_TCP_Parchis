@@ -2,12 +2,15 @@
 #include "DataBaseManager.h"
 #include "Server.h"
 #include "Enums.hpp"
+#include "MenuManager.h"
 
 
 int main(int argc, char* argv[])
 {
 	ParchisState state = ParchisState::GAME_SERVER;
 		GameManager* gm = new GameManager();
+		MenuManager* mM = new MenuManager();
+		
 	//Server server;
 
 	switch (state)
@@ -20,6 +23,8 @@ int main(int argc, char* argv[])
 	case ParchisState::GAME_SERVER:
 		//std::cout << "Iniciando Game Server en puerto 55000 y registrando en bootstrap..." << std::endl;
 		//GameServer server(55000, "127.0.0.1", 50000); // puerto local y bootstrap IP:puerto
+		mM->Init();
+		mM->Render();
 		gm->Init();
 		gm->Run();
 		break;

@@ -27,7 +27,6 @@ private:
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
-    MenuManager * _menuManager;
     
 };
 

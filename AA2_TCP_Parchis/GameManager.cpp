@@ -7,7 +7,7 @@
 
 GameManager::GameManager()
 {
-    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "nuget");
+    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
     _eventHandler = new EventHandler();
 
 
@@ -44,14 +44,12 @@ void GameManager::Shutdown()
 
 void GameManager::Update(float deltaTime)
 {
-    _menuManager->Update(deltaTime);
 }
 
 void GameManager::Render()
 {
     _window->clear();
    
-    _menuManager->Render(_window);
     _window->display();
 }
 

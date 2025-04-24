@@ -6,7 +6,18 @@ MenuManager::MenuManager() : _currentState(MenuState::SplashScreen)
 {
     _splashScreen = new GameObject();
     _loginMenu = new LoginMenu();
-    _matchmakingMenu = nullptr; // Cuando tengas MatchmakingMenu, inicialízalo igual
+    _matchmakingMenu = nullptr; 
+    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
+    _eventHandler = new EventHandler();
+    
+}
+
+MenuManager::~MenuManager()
+{
+    delete _splashScreen;
+    delete _loginMenu;
+    delete _matchmakingMenu;
+
 }
 
 void MenuManager::Init()
@@ -15,25 +26,6 @@ void MenuManager::Init()
     _menuTimer.restart();
 }
 
-void MenuManager::InitSplash()
-{
-    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
-    auto* t = _splashScreen->GetComponent<Transform>();
-    t->position = { 0.f, 0.f };
-    t->scale = { 1.f, 1.f };
-}
-
-void MenuManager::InitLogin()
-{
-    if (_loginMenu) {
-        _loginMenu->Init();
-    }
-}
-
-void MenuManager::InitMatchmaking()
-{
-    // Preparar matchmaking menu aquí
-}
 
 void MenuManager::Update(float deltaTime)
 {
@@ -42,37 +34,41 @@ void MenuManager::Update(float deltaTime)
         UpdateState(MenuState::LoginMenu);
         InitLogin();
     }
-
-    // Update dinámico según el estado
-    switch (_currentState) {
-    case MenuState::LoginMenu:
-        if (_loginMenu) _loginMenu->Update(deltaTime);
-        break;
-    case MenuState::MatchmakingMenu:
-        // matchmakingMenu->Update(deltaTime);
-        break;
-    default:
-        break;
+    if(_currentState==MenuState::LoginMenu && _loginMenu)
+    {
+        _loginMenu->Update(deltaTime);
     }
+
 }
 
-void MenuManager::Render(sf::RenderWindow* window)
+void MenuManager::Render()
 {
     switch (_currentState)
     {
     case MenuState::SplashScreen:
-        _splashScreen->GetComponent<SpriteRenderer>()->Draw(window, _splashScreen->GetComponent<Transform>());
+        _splashScreen->GetComponent<SpriteRenderer>()->Draw(_window, _splashScreen->GetComponent<Transform>());
         break;
     case MenuState::LoginMenu:
-        if (_loginMenu) _loginMenu->Render(window);
+        if (_loginMenu) _loginMenu->Render(_window);
         break;
     case MenuState::MatchmakingMenu:
-        // matchmakingMenu->Render(window);
         break;
     case MenuState::InGame:
-        // gameInterface->Render(window);
         break;
     }
+}
+
+void MenuManager::Run()
+{
+    while (_window->isOpen()) {
+
+        float deltaTime = _deltaClock.restart().asSeconds();
+
+        HandleEvents();
+        Update(deltaTime);
+        Render();
+    }
+
 }
 
 void MenuManager::NextMenu()
@@ -89,7 +85,31 @@ void MenuManager::UpdateState(MenuState newState)
     _currentState = newState;
 }
 
+void MenuManager::HandleEvents()
+{
+}
+
 MenuState MenuManager::GetCurrentState() const
 {
     return _currentState;
+}
+
+
+
+void MenuManager::InitSplash()
+{
+    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+    auto* t = _splashScreen->GetComponent<Transform>();
+    t->position = { 0.f, 0.f };
+    t->scale = { 1.f, 1.f };
+}
+
+void MenuManager::InitLogin()
+{
+    _loginMenu->Init();
+}
+
+void MenuManager::InitMatchmaking()
+{
+
 }
