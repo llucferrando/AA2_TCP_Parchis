@@ -1,5 +1,12 @@
 #pragma once
 
+enum class MenuState {
+	SplashScreen,
+	LoginMenu,
+	MatchmakingMenu,
+	InGame
+};
+
 enum class ParchisState {
 	CLIENT,
 	GAME_SERVER,

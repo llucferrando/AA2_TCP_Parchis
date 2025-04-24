@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "MenuState.h"
+#include "Enums.hpp"
 #include "GameObject.h"
 #include "LoginMenu.h"
 
@@ -13,6 +13,7 @@ public:
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
     void NextMenu(); 
+    void UpdateState(MenuState state);
     MenuState GetCurrentState() const;
 
 private:

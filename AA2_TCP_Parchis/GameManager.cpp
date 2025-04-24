@@ -1,8 +1,8 @@
 #include "GameManager.h"
-#define FRAME_W 1024
-#define FRAME_H 1024
-#define NUM_FRAMES 10
-#define ANIMATION_SPEED 0.1
+//#define FRAME_W 1024
+//#define FRAME_H 1024
+//#define NUM_FRAMES 10
+//#define ANIMATION_SPEED 0.1
 #include <SFML/System/Vector2.hpp>
 
 GameManager::GameManager()
@@ -20,18 +20,8 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-    _ficha->AddComponent<AnimatedSprite>(
-        "Assets/Spritesheets/S_Link.png",
-        sf::Vector2i(FRAME_W, FRAME_H),
-        NUM_FRAMES,
-        ANIMATION_SPEED
-    );
-    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
-    _splashScreen->GetComponent<Transform>()->scale = sf::Vector2f(0.7f, .7f);
-
     _eventHandler->onClick.Subscribe([this](sf::Vector2f clickPos)
         {
-            _splashScreen->GetComponent<Transform>()->scale = sf::Vector2f(5.f, 5.f);
         });
 }
 

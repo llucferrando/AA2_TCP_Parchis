@@ -39,7 +39,7 @@ void MenuManager::Update(float deltaTime)
 {
     if (_currentState == MenuState::SplashScreen && _menuTimer.getElapsedTime().asSeconds() > 3.0f)
     {
-        _currentState = MenuState::LoginMenu;
+        UpdateState(MenuState::LoginMenu);
         InitLogin();
     }
 
@@ -78,9 +78,15 @@ void MenuManager::Render(sf::RenderWindow* window)
 void MenuManager::NextMenu()
 {
     if (_currentState == MenuState::LoginMenu)
-        _currentState = MenuState::MatchmakingMenu;
+        UpdateState(MenuState::MatchmakingMenu);
     else if (_currentState == MenuState::MatchmakingMenu)
-        _currentState = MenuState::InGame;
+        UpdateState(MenuState::InGame);
+}
+
+void MenuManager::UpdateState(MenuState newState)
+{
+    if (_currentState == newState) return;
+    _currentState = newState;
 }
 
 MenuState MenuManager::GetCurrentState() const
