@@ -25,6 +25,7 @@ void EventHandler::HandleEvent(const sf::Event& event, sf::RenderWindow& window)
         {
         case sf::Mouse::Button::Left:
             std::cout << "Left mouse button pressed at: " << mousePressed->position.x << ", " << mousePressed->position.y << std::endl;
+            onClick.Invoke(sf::Vector2f(mousePressed->position.x, mousePressed->position.y));
             break;
         default:
             break;
