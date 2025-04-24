@@ -34,7 +34,6 @@ C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\Eve
           [
               T=float
           ]
-  Ficha.cpp
   GameManager.cpp
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
@@ -44,7 +43,7 @@ C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\Gam
           [
               _Ty=double
           ]
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp(30): message : see reference to function template instantiation 'T *GameObject::AddComponent<AnimatedSprite,const char(&)[31],sf::Vector2i,int,double>(const char (&)[31],sf::Vector2i &&,int &&,double &&)' being compiled
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp(31): message : see reference to function template instantiation 'T *GameObject::AddComponent<AnimatedSprite,const char(&)[31],sf::Vector2i,int,double>(const char (&)[31],sf::Vector2i &&,int &&,double &&)' being compiled
           with
           [
               T=AnimatedSprite
@@ -73,8 +72,8 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.3162
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
      Creating library C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.lib and object C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exp
   Generating code
-  Previous IPDB was built with incompatible compiler, fall back to full compilation.
-  All 634 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Previous IPDB not found, fall back to full compilation.
+  All 612 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
 mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: PDB 'jdbc.pdb' was not found with 'mysqlcppconn-static.lib(mysql_driver.obj)' or at 'C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\jdbc.pdb'; linking object as if no debug info
 mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: PDB 'jdbc.pdb' was not found with 'mysqlcppconn-static.lib(mysql_connection.obj)' or at 'C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\jdbc.pdb'; linking object as if no debug info

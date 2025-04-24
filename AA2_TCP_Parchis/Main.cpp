@@ -7,7 +7,8 @@
 int main(int argc, char* argv[])
 {
 	ParchisState state = ParchisState::GAME_SERVER;
-	Server server;
+		GameManager* gm = new GameManager();
+	//Server server;
 
 	switch (state)
 	{
@@ -19,14 +20,13 @@ int main(int argc, char* argv[])
 	case ParchisState::GAME_SERVER:
 		//std::cout << "Iniciando Game Server en puerto 55000 y registrando en bootstrap..." << std::endl;
 		//GameServer server(55000, "127.0.0.1", 50000); // puerto local y bootstrap IP:puerto
-		GameManager* gm = new GameManager();
 		gm->Init();
 		gm->Run();
 		break;
 	case ParchisState::BOOTSTRAP:
 		//std::cout << "Iniciando Bootstrap Server en puerto 50000..." << std::endl;
 		//BootstrapServer server(50000);
-		server.Run();
+		//server.Run();
 		break;
 	default:
 		std::cout << "Modo inválido. Usa: bootstrap | gameserver | client" << std::endl;

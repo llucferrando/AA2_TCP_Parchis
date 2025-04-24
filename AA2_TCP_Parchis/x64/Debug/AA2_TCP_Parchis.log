@@ -1,98 +1,73 @@
 ﻿  AnimatedSprite.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'AnimatedSprite.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\AnimatedSprite.cpp(6,23): warning C4834: discarding return value of function with [[nodiscard]] attribute
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\AnimatedSprite.cpp(6,23): warning C4834: discarding return value of function with 'nodiscard' attribute
   bcrypt.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(240,21): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(242,51): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(240,28): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\bcrypt.cpp(242,58): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
   blowfish.cpp
   Client.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Client.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
   DataBaseManager.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
-  (compiling source file 'DataBaseManager.cpp')
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): fatal  error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
   EventHandler.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'EventHandler.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\EventHandler.cpp(28,89): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\EventHandler.cpp(28,63): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
   GameManager.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'GameManager.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         with
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         [
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:             _Ty=double
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244:         ]
-  (compiling source file 'GameManager.cpp')
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42):
-      the template instantiation context (the oldest one first) is
-          E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp(14,13):
-          see reference to function template instantiation 'T *GameObject::AddComponent<AnimatedSprite,const char(&)[31],sf::Vector2i,int,double>(const char (&)[31],sf::Vector2i &&,int &&,double &&)' being compiled
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\GameObject.h(17,42): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\GameManager.cpp(31): message : see reference to function template instantiation 'T *GameObject::AddComponent<AnimatedSprite,const char(&)[31],sf::Vector2i,int,double>(const char (&)[31],sf::Vector2i &&,int &&,double &&)' being compiled
           with
           [
               T=AnimatedSprite
           ]
-  
   GameObject.cpp
   Main.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Main.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
-  (compiling source file 'Main.cpp')
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): fatal  error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
   Server.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Server.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
-  (compiling source file 'Server.cpp')
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\DataBaseManager.h(2,10): fatal  error C1083: Cannot open include file: 'mysql_connection.h': No such file or directory
   SpriteRenderer.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'SpriteRenderer.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\AA2_TCP_Parchis\SpriteRenderer.cpp(5,26): warning C4834: discarding return value of function with [[nodiscard]] attribute
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\AA2_TCP_Parchis\SpriteRenderer.cpp(5,26): warning C4834: discarding return value of function with 'nodiscard' attribute
   Transform.cpp
   Window.cpp
-E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Window.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
-      see declaration of 'std::runtime_error'
-      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
   Generating Code...

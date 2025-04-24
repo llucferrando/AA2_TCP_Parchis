@@ -141,7 +141,6 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DataBaseManager.cpp" />
     <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="Ficha.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -158,7 +157,6 @@
     <ClInclude Include="DataBaseManager.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="Ficha.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="node_blf.h" />
