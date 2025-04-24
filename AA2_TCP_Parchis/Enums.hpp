@@ -29,7 +29,7 @@ enum class MessageType {
 	FICHA_DELETED
 };
 
-enum class FichaState {
+enum class TokenState {
 	IN_HOME,
 	IN_GAME,
 	IN_END

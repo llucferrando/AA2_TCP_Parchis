@@ -20,7 +20,7 @@ void LoginMenu::Init()
 {
     // Background GameObject con SpriteRenderer
     _backgroundGO = new GameObject();
-    _backgroundGO->AddComponent<SpriteRenderer>("Assets/Splashscreen/login.png");
+    _backgroundGO->AddComponent<SpriteRenderer>("Assets/Splashscreen/login.png", 10);
     _backgroundGO->GetComponent<Transform>()->position = sf::Vector2f(0.f, 0.f);
     _backgroundGO->GetComponent<Transform>()->scale = sf::Vector2f(1.f, 1.f);
 

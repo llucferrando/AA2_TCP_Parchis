@@ -1,12 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include "GameObject.h"
-#include "AnimatedSprite.h"
-#include "SpriteRenderer.h"
-#include "Window.h"
 #include "EventHandler.h"
 #include "MenuManager.h"
+#include "MatchManager.h"
+#include "BoardManager.h"
+#include "GameRules.h"
+#include "Enums.hpp"
 
 class GameManager
 {
@@ -21,13 +20,23 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
+    int RollDice();
     
 
-    sf::RenderWindow* _window;
+    Window* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
     MenuManager * _menuManager;
+    BoardManager* _boardManager;
+    MatchManager* _matchManager;
+    GameRules* _gameRules;
+
+    GameObject* _backgroundGO;
+
+    bool waitingSelection = false;
+    int diceValue = 0;
+    int _currentPlayer = 0;
     
 };
 

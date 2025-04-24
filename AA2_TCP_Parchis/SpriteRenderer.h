@@ -2,11 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include "Component.h"
 #include "Transform.h"
+#include "Enums.hpp"
 
 class SpriteRenderer : public Component 
 {
 public:
-	SpriteRenderer(const std::string& texturePath);
+	SpriteRenderer(const std::string& texturePath, int colorID);
 
 	void Draw(sf::RenderWindow* window, Transform* transform);
 
@@ -15,4 +16,6 @@ public:
 private:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
+	int _colorID;
+	sf::Color GetColorFromPlayer(int index);
 };

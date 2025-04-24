@@ -102,9 +102,6 @@
     <ClCompile Include="AnimatedSprite.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Ficha.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MenuManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
@@ -119,6 +116,21 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MatchManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRules.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +188,6 @@
     <ClInclude Include="MenuInterface.h">
       <Filter>Header Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Header Files\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="LoginMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -187,6 +196,24 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRules.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

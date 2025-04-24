@@ -8,19 +8,20 @@ public:
 	TokenComponent(int player, int id);
 
 	int GetPlayerID();
-	FichaState GetTokenState();
+	TokenState GetTokenState();
 	int GetTokenID();
 	int GetBoardPosition();
 	
 	void SetPlayerID(int playerID);
 	void SetTokenID(int tokenID);
 	void SetBoardPosition(int position);
-	void SetTokenState(FichaState state);
+	void SetTokenState(TokenState state);
+	const std::type_index GetType() override;
 
 private:
 	int _playerID;
 	int _tokenID;
 	int _boardPosition; // -1 if it's home
-	FichaState _state;
+	TokenState _state;
 };
 

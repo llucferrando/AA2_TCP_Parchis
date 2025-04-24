@@ -17,7 +17,7 @@ void MenuManager::Init()
 
 void MenuManager::InitSplash()
 {
-    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+    _splashScreen->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png", 10);
     auto* t = _splashScreen->GetComponent<Transform>();
     t->position = { 0.f, 0.f };
     t->scale = { 1.f, 1.f };

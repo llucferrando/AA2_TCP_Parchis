@@ -6,7 +6,7 @@
 class EventHandler
 {
 public:
-	void HandleEvent(const sf::Event& event, sf::RenderWindow& window);
+	void HandleEvent(const sf::Event& event, Window& window);
 
 	Event<sf::Vector2f> onClick;
 };

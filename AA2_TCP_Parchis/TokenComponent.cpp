@@ -3,7 +3,7 @@
 TokenComponent::TokenComponent(int playerID, int tokenID) : _playerID(playerID), _tokenID(tokenID)
 {
 	_boardPosition = -1;
-	_state = FichaState::IN_HOME;
+	_state = TokenState::IN_HOME;
 }
 
 int TokenComponent::GetPlayerID()
@@ -11,7 +11,7 @@ int TokenComponent::GetPlayerID()
 	return _playerID;
 }
 
-FichaState TokenComponent::GetTokenState()
+TokenState TokenComponent::GetTokenState()
 {
 	return _state;
 }
@@ -47,9 +47,14 @@ void TokenComponent::SetBoardPosition(int position)
 	_boardPosition = position;
 }
 
-void TokenComponent::SetTokenState(FichaState state)
+void TokenComponent::SetTokenState(TokenState state)
 {
 	if (_state == state) return;
 
 	_state = state;
+}
+
+const std::type_index TokenComponent::GetType()
+{
+	return typeid(TokenComponent);
 }
