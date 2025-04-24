@@ -156,6 +156,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DataBaseManager.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Ficha.h" />
     <ClInclude Include="GameManager.h" />
