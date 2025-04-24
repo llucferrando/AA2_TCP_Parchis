@@ -6,6 +6,7 @@
 #include "SpriteRenderer.h"
 #include "Window.h"
 #include "EventHandler.h"
+#include "MenuManager.h"
 
 class GameManager
 {
@@ -20,13 +21,13 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
-    void SplashScreen();
+    
 
     sf::RenderWindow* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
-    GameObject* _ficha;
-    GameObject* _splashScreen;
+    MenuManager * _menuManager;
+    
 };
 
