@@ -4,7 +4,9 @@
 #include "Client.h"
 
 class Room {
+
 public:
+
     Room(const std::string& id, int maxPlayers = 4);
 
     bool IsFull() const;

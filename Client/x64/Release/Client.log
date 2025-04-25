@@ -1,11 +1,12 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (AA2_TCP_Parchis.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  bcrypt.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\bcrypt.cpp(240,28): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\bcrypt.cpp(242,58): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-  blowfish.cpp
   MainClient.cpp
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\MainClient.cpp(17,16): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\MainClient.cpp(22,16): warning C4834: discarding return value of function with 'nodiscard' attribute
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 15 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Compiler switch has changed, fall back to full compilation.
+  All 83 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Client.vcxproj -> C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Client.exe
