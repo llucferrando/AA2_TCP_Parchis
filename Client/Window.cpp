@@ -1,7 +1,7 @@
 #include "Window.h"
 
 Window::Window() {
-    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "nuget");
+    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
 }
 
 Window::~Window() {

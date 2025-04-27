@@ -52,9 +52,7 @@ bool DataBaseManager::RegisterUser(const std::string& nickname, const std::strin
 
 		stmt->setString(1, nickname);
 		stmt->setString(2, hashedPassword);
-		stmt->execute();
-
-		
+		stmt->execute();		
 
 		std::cout << "User registered correctly" << std::endl;
 		return true;

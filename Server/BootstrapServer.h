@@ -15,6 +15,7 @@ public:
 private:
     void AcceptNewConnection();
     void ReceiveData(Client* client);
+    void HandleCommand(Client* client, const std::string& command, const std::string& nick, const std::string& pass);
     void HandleCommand(Client* client, const std::string& command);
     void CreateRoom(Client* client, const std::string& roomID);
     void JoinRoom(Client* client, const std::string& roomID);

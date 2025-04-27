@@ -5,17 +5,79 @@ GameManager::GameManager()
 {
     _window = new Window();
     _eventHandler = new EventHandler();
-
     _currentState = GameState::SplashScreen;
-    _splashTime = 0;
+    _loginMenu = new LoginMenu(_eventHandler);
+    _splashMenu = new SplashScreenMenu();
+    _client = new Client();
 
-    //_backgroundGO = new GameObject();
-    //_backgroundGO->AddComponent<SpriteRenderer>("Assets/GameAssets/Parchis.png", 10);
 
+    _loginMenu->GetLoginButton()->onClick.Subscribe([this]() 
+        {
+            //Si login es correcto con BBDD UPdate to matchmaking sino nada
+            std::string username = _loginMenu->GetUsernameText();
+            std::string password = _loginMenu->GetPaswwordText();
+            std::cout << "SendLogin  " + username + "   " + password << std::endl;
+            if (_client->SendLogin(username, password))
+            {
+                sf::Packet response;
+                if (_client->ReceivePacket(response))
+                {
+                    std::string reply;
+                    response >> reply;
 
-    //_matchManager = new MatchManager();
-    //_boardManager = new BoardManager();
-    //_gameRules = new GameRules(_boardManager);
+                    if (reply == "LOGIN_OK")
+                    {
+                        UpdateState(GameState::MatchmakingMenu);
+                    }
+                    else
+                    {
+                        std::cout << "Login fallido: " << reply << std::endl;                        
+                    }
+                }
+                else
+                {
+                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Error enviando login." << std::endl;
+            }
+        });
+
+    _loginMenu->GetRegisterButton()->onClick.Subscribe([this]()
+        {
+            //Si register es correcto con BBDD UPdate to matchmaking sino nada
+            std::string username = _loginMenu->GetUsernameText();
+            std::string password = _loginMenu->GetPaswwordText();
+            std::cout << "Send Register  " + username + "   " + password << std::endl;
+            if (_client->SendRegister(username, password))
+            {
+                sf::Packet response;
+                if (_client->ReceivePacket(response))
+                {
+                    std::string reply;
+                    response >> reply;
+
+                    if (reply == "REGISTER_OK")
+                    {
+                        UpdateState(GameState::MatchmakingMenu);
+                    }
+                    else
+                    {
+                        std::cout << "Register fallido: " << reply << std::endl;
+                    }
+                }
+                else
+                {
+                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Error enviando login." << std::endl;
+            }
+        });
 
     std::srand(std::time(nullptr));
 
@@ -28,7 +90,8 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-
+    _splashTime = 0;
+    _client->ConnectToBootstrapServer("127.0.0.1", 50000);
 }
 
 void GameManager::Run()
@@ -60,15 +123,20 @@ void GameManager::UpdateState(GameState newState)
 void GameManager::Update(float deltaTime)
 {
     switch (_currentState) {
+
         case GameState::SplashScreen:
+
             _splashTime += deltaTime;
-            if (_splashTime > 2) {
-                _currentState = GameState::LoginMenu;
+
+            if (_splashTime > 2) 
+            {
+                UpdateState(GameState::LoginMenu);
+                _splashTime = 0;
             }
             break;
 
         case GameState::LoginMenu:
-            //_loginMenu->Update(deltaTime);
+            _loginMenu->Update(deltaTime);
             break;
 
         case GameState::MatchmakingMenu:
@@ -85,14 +153,29 @@ void GameManager::Render()
 {
     _window->Clear();
 
+    switch (_currentState) {
 
+        case GameState::SplashScreen:
+            _splashMenu->Render(_window->GetWindow());
+            break;
+
+        case GameState::LoginMenu:
+            _loginMenu->Render(_window->GetWindow());
+            break;
+
+        case GameState::MatchmakingMenu:
+            break;
+
+        case GameState::Gameplay:
+            break;
+        }
 
     _window->Display();
 }
 
 void GameManager::HandleEvents()
 {
-    while (const std::optional event = _window->GetWindow()->pollEvent())//si veo un evento, automaticamente se consume (un buffer)
+    while (const std::optional event = _window->GetWindow()->pollEvent())
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
@@ -102,4 +185,5 @@ int GameManager::RollDice()
 {
     return rand() % 6 + 1;
 }
+
 

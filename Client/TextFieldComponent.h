@@ -11,7 +11,7 @@ public:
     ~TextFieldComponent();
 
     void Update(float deltaTime);
-    void Render(sf::RenderWindow& window);
+    void Render(sf::RenderWindow* window);
     void HandleInput(std::uint32_t unicode);
     std::string GetText() const;
     void SetText(const std::string& text);
@@ -20,7 +20,6 @@ public:
 
 private:
     void OnGlobalClick(sf::Vector2f clickPos);
-    //void HandleInput(sf::uint32 unicode);
 
     sf::RectangleShape _box;
     sf::Font _font;

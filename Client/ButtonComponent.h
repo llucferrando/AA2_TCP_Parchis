@@ -10,9 +10,9 @@ public:
     ButtonComponent(sf::Vector2f position, sf::Vector2f size, const std::string& label, EventHandler* eventHandler);
     ~ButtonComponent();
 
-    void Render(sf::RenderWindow& window);
+    void Render(sf::RenderWindow* window);
 
-    Event<> onClick; // Unity-style event
+    Event<> onClick; 
 
     const std::type_index GetType() override;
 

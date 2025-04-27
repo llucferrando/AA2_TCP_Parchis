@@ -40,9 +40,9 @@ void TextFieldComponent::Update(float deltaTime)
     }
 }
 
-void TextFieldComponent::Render(sf::RenderWindow& window)
+void TextFieldComponent::Render(sf::RenderWindow* window)
 {
-    window.draw(_box);
+    window->draw(_box);
     std::string toDisplay;
     if (_firstClick)
     {
@@ -59,7 +59,7 @@ void TextFieldComponent::Render(sf::RenderWindow& window)
 
 
     _text.setString(toDisplay);
-    window.draw(_text);
+    window->draw(_text);
 }
 
 // Handle the inputs from Event, if its backspace deletes last char, if not writes char.

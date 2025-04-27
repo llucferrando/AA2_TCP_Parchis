@@ -1,9 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EventHandler.h"
-
 #include "Enums.hpp"
-
+#include "LoginMenu.h"
+#include "SplashScreenMenu.h"
+#include <SFML/Network.hpp>
+#include "Client.h"
 class GameManager
 {
 public:
@@ -19,13 +21,19 @@ private:
     void Render();
     void HandleEvents();
     int RollDice();
-    
-    GameState _currentState;
+    //void SendLogin(const std::string& username, const std::string& password);
 
+    GameState _currentState;
+    sf::TcpSocket _socket;
     Window* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
+    Client* _client;
+
+    // -- Menus -- //
+    LoginMenu* _loginMenu;
+    SplashScreenMenu* _splashMenu;
 
 
     bool waitingSelection = false;

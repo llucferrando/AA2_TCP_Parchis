@@ -23,10 +23,10 @@ ButtonComponent::~ButtonComponent()
 }
 
 
-void ButtonComponent::Render(sf::RenderWindow &window)
+void ButtonComponent::Render(sf::RenderWindow* window)
 {
-    window.draw(_shape);
-    window.draw(_label);
+    window->draw(_shape);
+    window->draw(_label);
 }
 
 const std::type_index ButtonComponent::GetType() { return typeid(ButtonComponent); }

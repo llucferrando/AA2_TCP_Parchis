@@ -3,13 +3,12 @@
 
 BootstrapServer::BootstrapServer(unsigned short port) 
 {
-
     if (_listener.listen(port) != sf::Socket::Status::Done) 
     {
         std::cerr << "Failed to bind port." << std::endl;
     }
     _selector.add(_listener);
-    //_db.ConnectDatabase();
+    _db.ConnectDatabase();
 }
 
 void BootstrapServer::Run() 
@@ -57,53 +56,55 @@ void BootstrapServer::ReceiveData(Client* client)
 {
     sf::Packet packet;
 
-    if (client->GetSocket()->receive(packet) == sf::Socket::Status::Done) 
+    if (client->GetSocket()->receive(packet) == sf::Socket::Status::Done)
     {
-        std::string command;
+        std::string command, nick, pass;
         packet >> command;
-        HandleCommand(client, command);
+
+        if (command == "LOGIN" || command == "REGISTER")
+        {
+            packet >> nick >> pass;
+            HandleCommand(client, command, nick, pass);
+        }
+        else
+        {
+            HandleCommand(client, command);
+        }
     }
-    else 
+    else
     {
         RemoveClient(client);
     }
 }
 
-void BootstrapServer::HandleCommand(Client* client, const std::string& command) {
+void BootstrapServer::HandleCommand(Client* client, const std::string& command, const std::string& nick, const std::string& pass)
+{
     sf::Packet response;
 
-    if (command == "REGISTER") 
+    if (command == "REGISTER")
     {
-        std::string nick, pass;
-        client->GetSocket()->receive(response);
-
-        response >> nick >> pass;
         bool success = _db.RegisterUser(nick, pass);
-
-        response.clear();
-
         response << (success ? "REGISTER_OK" : "REGISTER_FAIL");
         client->GetSocket()->send(response);
     }
-    else if (command == "LOGIN") 
+    else if (command == "LOGIN")
     {
-        std::string nick, pass;
-        client->GetSocket()->receive(response);
-
-        response >> nick >> pass;
         bool success = _db.LoginUser(nick, pass);
-
-        response.clear();
-
         response << (success ? "LOGIN_OK" : "LOGIN_FAIL");
         client->GetSocket()->send(response);
     }
-    else if (command.rfind("CREATE_ROOM:", 0) == 0) 
+}
+
+void BootstrapServer::HandleCommand(Client* client, const std::string& command)
+{
+    sf::Packet response;
+
+    if (command.rfind("CREATE_ROOM", 0) == 0)
     {
         std::string roomID = command.substr(12);
         CreateRoom(client, roomID);
     }
-    else if (command.rfind("JOIN_ROOM:", 0) == 0) 
+    else if (command.rfind("JOIN_ROOM", 0) == 0)
     {
         std::string roomID = command.substr(10);
         JoinRoom(client, roomID);
