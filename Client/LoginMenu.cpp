@@ -45,6 +45,11 @@ ButtonComponent* LoginMenu::GetLoginButton()
     return _loginButton;
 }
 
+ButtonComponent* LoginMenu::GetRegisterButton()
+{
+    return _registerButton;
+}
+
 std::string LoginMenu::GetUsernameText()
 {
     return _usernameField->GetText();

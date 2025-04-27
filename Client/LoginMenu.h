@@ -5,8 +5,6 @@
 #include "SpriteRenderer.h"
 #include "EventHandler.h"
 
-// -- Acts like a unity prefab?
-
 class LoginMenu : public Menu
 {
 public:
@@ -15,6 +13,7 @@ public:
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
     ButtonComponent* GetLoginButton();
+    ButtonComponent* GetRegisterButton();
     std::string GetUsernameText();
     std::string GetPaswwordText();
 

@@ -34,32 +34,17 @@ void Client::DisconnectFromBootstrapServer()
 
 bool Client::SendLogin(const std::string& username, const std::string& password)
 {
+    std::cout << "Hola mi user es:" << username << " " << password << std::endl;
     sf::Packet packet;
-    packet << "LOGIN";
-    if (_bootstrapSocket.send(packet) != sf::Socket::Status::Done)
-        return false;
-
-    sf::Packet credentials;
-    credentials << username << password;
-    if (_bootstrapSocket.send(credentials) != sf::Socket::Status::Done)
-        return false;
-
-    return true;
+    packet << "LOGIN" << username << password;
+    return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
 bool Client::SendRegister(const std::string& username, const std::string& password)
 {
     sf::Packet packet;
-    packet << "REGISTER";
-    if (_bootstrapSocket.send(packet) != sf::Socket::Status::Done)
-        return false;
-
-    sf::Packet credentials;
-    credentials << username << password;
-    if (_bootstrapSocket.send(credentials) != sf::Socket::Status::Done)
-        return false;
-
-    return true;
+    packet << "REGISTER" << username << password;
+    return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
 bool Client::CreateRoom()

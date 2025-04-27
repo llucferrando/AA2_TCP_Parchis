@@ -19,9 +19,9 @@ public:
     bool JoinRoom(int roomId);
 
     bool ReceivePacket(sf::Packet& packet);
-    void StartP2PListening(unsigned short port); // Empezar a aceptar conexiones P2P
-    void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); // Conectar a otro jugador
-    void BroadcastToPeers(sf::Packet& packet); // Enviar a todos los peers
+    void StartP2PListening(unsigned short port); 
+    void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
+    void BroadcastToPeers(sf::Packet& packet); 
 
 private:
     sf::TcpSocket _bootstrapSocket;

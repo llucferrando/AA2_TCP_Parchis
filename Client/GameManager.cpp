@@ -31,8 +31,7 @@ GameManager::GameManager()
                     }
                     else
                     {
-                        std::cout << "Login fallido: " << reply << std::endl;
-                        // Aquí podrías mostrar un error visual en la pantalla también
+                        std::cout << "Login fallido: " << reply << std::endl;                        
                     }
                 }
                 else
@@ -45,10 +44,40 @@ GameManager::GameManager()
                 std::cout << "Error enviando login." << std::endl;
             }
         });
-    
-    //_matchManager = new MatchManager();
-    //_boardManager = new BoardManager();
-    //_gameRules = new GameRules(_boardManager);
+
+    _loginMenu->GetRegisterButton()->onClick.Subscribe([this]()
+        {
+            //Si register es correcto con BBDD UPdate to matchmaking sino nada
+            std::string username = _loginMenu->GetUsernameText();
+            std::string password = _loginMenu->GetPaswwordText();
+            std::cout << "Send Register  " + username + "   " + password << std::endl;
+            if (_client->SendRegister(username, password))
+            {
+                sf::Packet response;
+                if (_client->ReceivePacket(response))
+                {
+                    std::string reply;
+                    response >> reply;
+
+                    if (reply == "REGISTER_OK")
+                    {
+                        UpdateState(GameState::MatchmakingMenu);
+                    }
+                    else
+                    {
+                        std::cout << "Register fallido: " << reply << std::endl;
+                    }
+                }
+                else
+                {
+                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Error enviando login." << std::endl;
+            }
+        });
 
     std::srand(std::time(nullptr));
 
@@ -108,7 +137,6 @@ void GameManager::Update(float deltaTime)
 
         case GameState::LoginMenu:
             _loginMenu->Update(deltaTime);
-            //_loginMenu->Update(deltaTime);
             break;
 
         case GameState::MatchmakingMenu:
@@ -157,32 +185,5 @@ int GameManager::RollDice()
 {
     return rand() % 6 + 1;
 }
-//
-//void GameManager::SendLogin(const std::string& username, const std::string& password) {
-//
-//    sf::Packet packet;
-//    packet << "LOGIN";
-//    _socket.send(packet);
-//
-//    sf::Packet credentials;
-//    credentials << username << password;
-//    _socket.send(credentials);
-//
-//    sf::Packet response;
-//    if (_socket.receive(response) == sf::Socket::Status::Done) 
-//    {
-//        std::string reply;
-//        response >> reply;
-//
-//        if (reply == "LOGIN_OK") 
-//        {
-//            UpdateState(GameState::MatchmakingMenu);
-//        }
-//        else 
-//        {
-//            std::cout << "Login failed" << std::endl;
-//            // Aquí podrías mostrar un mensaje de error en pantalla
-//        }
-//    }
-//}
+
 
