@@ -139,6 +139,7 @@
     <ClCompile Include="bcrypt.cpp" />
     <ClCompile Include="blowfish.cpp" />
     <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="bcrypt.h" />
     <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Enums.hpp" />
     <ClInclude Include="Event.h" />

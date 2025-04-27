@@ -3,13 +3,12 @@
 
 BootstrapServer::BootstrapServer(unsigned short port) 
 {
-
     if (_listener.listen(port) != sf::Socket::Status::Done) 
     {
         std::cerr << "Failed to bind port." << std::endl;
     }
     _selector.add(_listener);
-    //_db.ConnectDatabase();
+    _db.ConnectDatabase();
 }
 
 void BootstrapServer::Run() 

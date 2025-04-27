@@ -5,6 +5,7 @@
 #include "LoginMenu.h"
 #include "SplashScreenMenu.h"
 #include <SFML/Network.hpp>
+#include "Client.h"
 class GameManager
 {
 public:
@@ -20,13 +21,15 @@ private:
     void Render();
     void HandleEvents();
     int RollDice();
-    void SendLogin(const std::string& username, const std::string& password);
+    //void SendLogin(const std::string& username, const std::string& password);
 
     GameState _currentState;
     sf::TcpSocket _socket;
     Window* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
+
+    Client* _client;
 
     // -- Menus -- //
     LoginMenu* _loginMenu;

@@ -8,7 +8,7 @@ GameManager::GameManager()
     _currentState = GameState::SplashScreen;
     _loginMenu = new LoginMenu(_eventHandler);
     _splashMenu = new SplashScreenMenu();
-
+    _client = new Client();
 
 
     _loginMenu->GetLoginButton()->onClick.Subscribe([this]() 
@@ -16,10 +16,36 @@ GameManager::GameManager()
             //Si login es correcto con BBDD UPdate to matchmaking sino nada
             std::string username = _loginMenu->GetUsernameText();
             std::string password = _loginMenu->GetPaswwordText();
-            std::cout << "SendLogin";
-            SendLogin(username, password);
-        });
+            std::cout << "SendLogin  " + username + "   " + password << std::endl;
+            if (_client->SendLogin(username, password))
+            {
+                sf::Packet response;
+                if (_client->ReceivePacket(response))
+                {
+                    std::string reply;
+                    response >> reply;
 
+                    if (reply == "LOGIN_OK")
+                    {
+                        UpdateState(GameState::MatchmakingMenu);
+                    }
+                    else
+                    {
+                        std::cout << "Login fallido: " << reply << std::endl;
+                        // Aquí podrías mostrar un error visual en la pantalla también
+                    }
+                }
+                else
+                {
+                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Error enviando login." << std::endl;
+            }
+        });
+    
     //_matchManager = new MatchManager();
     //_boardManager = new BoardManager();
     //_gameRules = new GameRules(_boardManager);
@@ -36,6 +62,7 @@ GameManager::~GameManager()
 void GameManager::Init()
 {
     _splashTime = 0;
+    _client->ConnectToBootstrapServer("127.0.0.1", 50000);
 }
 
 void GameManager::Run()
@@ -130,32 +157,32 @@ int GameManager::RollDice()
 {
     return rand() % 6 + 1;
 }
-
-void GameManager::SendLogin(const std::string& username, const std::string& password) {
-
-    sf::Packet packet;
-    packet << "LOGIN";
-    _socket.send(packet);
-
-    sf::Packet credentials;
-    credentials << username << password;
-    _socket.send(credentials);
-
-    sf::Packet response;
-    if (_socket.receive(response) == sf::Socket::Status::Done) 
-    {
-        std::string reply;
-        response >> reply;
-
-        if (reply == "LOGIN_OK") 
-        {
-            UpdateState(GameState::MatchmakingMenu);
-        }
-        else 
-        {
-            std::cout << "Login failed" << std::endl;
-            // Aquí podrías mostrar un mensaje de error en pantalla
-        }
-    }
-}
+//
+//void GameManager::SendLogin(const std::string& username, const std::string& password) {
+//
+//    sf::Packet packet;
+//    packet << "LOGIN";
+//    _socket.send(packet);
+//
+//    sf::Packet credentials;
+//    credentials << username << password;
+//    _socket.send(credentials);
+//
+//    sf::Packet response;
+//    if (_socket.receive(response) == sf::Socket::Status::Done) 
+//    {
+//        std::string reply;
+//        response >> reply;
+//
+//        if (reply == "LOGIN_OK") 
+//        {
+//            UpdateState(GameState::MatchmakingMenu);
+//        }
+//        else 
+//        {
+//            std::cout << "Login failed" << std::endl;
+//            // Aquí podrías mostrar un mensaje de error en pantalla
+//        }
+//    }
+//}
 
