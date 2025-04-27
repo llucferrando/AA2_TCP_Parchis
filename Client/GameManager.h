@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EventHandler.h"
-#include "GameObject.h"
-#include "SpriteRenderer.h"
 #include "Enums.hpp"
-
+#include "LoginMenu.h"
+#include "SplashScreenMenu.h"
+#include <SFML/Network.hpp>
 class GameManager
 {
 public:
@@ -19,18 +19,19 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
-    void SplashScreen();
-    void LoginMenu();
-    void MatchmakingScreen();
     int RollDice();
-    
-    GameState _currentState;
+    void SendLogin(const std::string& username, const std::string& password);
 
+    GameState _currentState;
+    sf::TcpSocket _socket;
     Window* _window;
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
-    GameObject* _splashSprite;
+    // -- Menus -- //
+    LoginMenu* _loginMenu;
+    SplashScreenMenu* _splashMenu;
+
 
     bool waitingSelection = false;
     int diceValue = 0;

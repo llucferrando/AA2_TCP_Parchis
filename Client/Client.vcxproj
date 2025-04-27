@@ -142,8 +142,10 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="SplashScreenMenu.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextFieldComponent.cpp" />
     <ClCompile Include="TokenComponent.cpp" />
@@ -160,9 +162,12 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="LoginMenu.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="node_blf.h" />
     <ClInclude Include="openbsd.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="SplashScreenMenu.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextFieldComponent.h" />
     <ClInclude Include="TokenComponent.h" />
