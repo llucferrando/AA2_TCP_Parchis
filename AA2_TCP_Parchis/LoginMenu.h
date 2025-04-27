@@ -23,4 +23,6 @@ private:
     TextField* _passwordField;
     Button* _loginButton;
     Button* _registerButton;
+
+    
 };

@@ -4,21 +4,15 @@
 
 MenuManager::MenuManager() : _currentState(MenuState::SplashScreen)
 {
+    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
     _splashScreen = new GameObject();
     _loginMenu = new LoginMenu();
-    _matchmakingMenu = nullptr; 
-    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
-    _eventHandler = new EventHandler();
+    //_matchmakingMenu = nullptr; 
+    //_eventHandler = new EventHandler();
     
 }
 
-MenuManager::~MenuManager()
-{
-    delete _splashScreen;
-    delete _loginMenu;
-    delete _matchmakingMenu;
 
-}
 
 void MenuManager::Init()
 {
@@ -34,15 +28,35 @@ void MenuManager::Update(float deltaTime)
         UpdateState(MenuState::LoginMenu);
         InitLogin();
     }
-    if(_currentState==MenuState::LoginMenu && _loginMenu)
-    {
+    switch (_currentState) {
+    case MenuState::LoginMenu:
         _loginMenu->Update(deltaTime);
+    case MenuState::MatchmakingMenu:
+        //_loginMenu->Update(deltaTime);
+    case MenuState::InGame:
+            break;
+    }
+    
+
+}
+
+void MenuManager::Run()
+{
+    while (_window->isOpen()) {
+
+        float deltaTime = _deltaClock.restart().asSeconds();
+
+        //HandleEvents();
+        Update(deltaTime);
+        Render();
     }
 
 }
 
 void MenuManager::Render()
 {
+    _window->clear();
+
     switch (_currentState)
     {
     case MenuState::SplashScreen:
@@ -56,28 +70,11 @@ void MenuManager::Render()
     case MenuState::InGame:
         break;
     }
+
+    _window->display();
+    
 }
 
-void MenuManager::Run()
-{
-    while (_window->isOpen()) {
-
-        float deltaTime = _deltaClock.restart().asSeconds();
-
-        HandleEvents();
-        Update(deltaTime);
-        Render();
-    }
-
-}
-
-void MenuManager::NextMenu()
-{
-    if (_currentState == MenuState::LoginMenu)
-        UpdateState(MenuState::MatchmakingMenu);
-    else if (_currentState == MenuState::MatchmakingMenu)
-        UpdateState(MenuState::InGame);
-}
 
 void MenuManager::UpdateState(MenuState newState)
 {
@@ -87,6 +84,12 @@ void MenuManager::UpdateState(MenuState newState)
 
 void MenuManager::HandleEvents()
 {
+    while (const std::optional event = _window->pollEvent())
+    {
+        _eventHandler->HandleEvent(*event, *_window);
+    }
+   
+
 }
 
 MenuState MenuManager::GetCurrentState() const

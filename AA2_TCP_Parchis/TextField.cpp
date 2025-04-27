@@ -17,21 +17,7 @@ TextField::TextField(sf::Vector2f position, sf::Vector2f size, const std::string
 }
 
 void TextField::HandleEvent(const sf::Event& event) {
-    if (const auto* mouse = event.getIf<sf::Event::MouseButtonPressed>()) {
-        sf::Vector2f mousePos(mouse->position.x, mouse->position.y);
-        _focused = _textBox.getGlobalBounds().contains(mousePos);
-    }
-
-    if (_focused) {
-        if (const auto* input = event.getIf<sf::Event::TextEntered>()) {
-            if (input->unicode == 8 && !_input.empty()) {
-                _input.pop_back();
-            }
-            else if (input->unicode < 128 && input->unicode >= 32) {
-                _input += static_cast<char>(input->unicode);
-            }
-        }
-    }
+    
 }
 
 void TextField::Update(float deltaTime) {
@@ -64,4 +50,3 @@ void TextField::DrawText(sf::RenderWindow& window) const {
 
     window.draw(text);
 }
-

@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "Event.h"
+#include "EventHandler.h"
 
 class TextField {
 public:
@@ -9,6 +11,7 @@ public:
     void HandleEvent(const sf::Event& event);
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
+
 
     std::string GetText() const;
 
@@ -26,4 +29,9 @@ private:
 
     void DrawText(sf::RenderWindow& window) const;
     void UpdateText(sf::RenderWindow& window) const;
+
+    //Event<sf::Vector2f>::ListenerID _clickListenerID;
+    
+
+   
 };

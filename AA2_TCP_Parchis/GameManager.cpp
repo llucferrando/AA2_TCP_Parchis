@@ -7,7 +7,6 @@
 
 GameManager::GameManager()
 {
-    _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
     _eventHandler = new EventHandler();
 
 
@@ -58,6 +57,7 @@ void GameManager::HandleEvents()
     while (const std::optional event = _window->pollEvent())//si veo un evento, automaticamente se consume (un buffer)
     {
         _eventHandler->HandleEvent(*event, *_window);
+        
     }
 }
 

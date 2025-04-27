@@ -25,12 +25,12 @@ void LoginMenu::Init()
     _backgroundGO->GetComponent<Transform>()->scale = sf::Vector2f(1.f, 1.f);
 
     // Campos de texto
-    _nicknameField = new TextField(sf::Vector2f(200, 300), sf::Vector2f(400, 50), "Nickname");
-    _passwordField = new TextField(sf::Vector2f(200, 370), sf::Vector2f(400, 50), "Password", true);
+    _nicknameField = new TextField(sf::Vector2f(160, 300), sf::Vector2f(400, 50), "Nickname");
+    _passwordField = new TextField(sf::Vector2f(160, 370), sf::Vector2f(400, 50), "Password", true);
 
     // Botones
-    _loginButton = new Button(sf::Vector2f(200, 450), sf::Vector2f(180, 50), "Login");
-    _registerButton = new Button(sf::Vector2f(420, 450), sf::Vector2f(180, 50), "Register");
+    _loginButton = new Button(sf::Vector2f(170, 450), sf::Vector2f(180, 50), "Login",30);
+    _registerButton = new Button(sf::Vector2f(370, 450), sf::Vector2f(180, 50), "Register",30);
 }
 
 void LoginMenu::HandleEvent(const sf::Event& event)

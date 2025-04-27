@@ -1,45 +1,37 @@
-﻿  Main.cpp
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
-  (compilando archivo de origen "Main.cpp")
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
-  vea la declaración de 'std::runtime_error'
-  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-  vea la declaración de 'sf::Exception'
+﻿  MenuManager.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'MenuManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
   
-  MenuManager.cpp
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: se ha utilizado una interfaz no de DLL class 'std::runtime_error' como base para la interfaz DLL class 'sf::Exception'
-  (compilando archivo de origen "MenuManager.cpp")
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\stdexcept(100,19):
-  vea la declaración de 'std::runtime_error'
-  C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
-  vea la declaración de 'sf::Exception'
-  
-     Creando biblioteca C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.lib y objeto C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exp
-  Generando código
-  10 of 664 functions ( 1.5%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
+     Creating library E:\3r CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.lib and object E:\3r CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exp
+  Generating code
+  0 of 468 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
-  Generación de código finalizada
-mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_driver.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_connection.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_native_driver_wrapper.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_native_driver_wrapper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_uri.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_uri.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_metadata.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_metadata.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_warning.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_warning.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_prepared_statement.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_prepared_statement.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_statement.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_statement.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_debug.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_debug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_client_api.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_client_api.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_native_connection_wrapper.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_native_connection_wrapper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_util.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_util.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_art_resultset.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_art_resultset.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_resultbind.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_resultbind.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_ps_resultset.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_ps_resultset.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_ps_resultset_metadata.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_ps_resultset_metadata.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_parameter_metadata.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_parameter_metadata.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_resultset.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_resultset.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_native_resultset_wrapper.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_native_resultset_wrapper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_native_statement_wrapper.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_native_statement_wrapper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_art_rset_metadata.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_art_rset_metadata.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-mysqlcppconn-static.lib(mysql_resultset_metadata.obj) : warning LNK4099: no se encontró PDB '' con 'mysqlcppconn-static.lib(mysql_resultset_metadata.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  AA2_TCP_Parchis.vcxproj -> C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exe
+  Finished generating code
+mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_driver.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_connection.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_native_driver_wrapper.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_native_driver_wrapper.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_uri.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_uri.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_metadata.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_metadata.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_warning.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_warning.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_prepared_statement.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_prepared_statement.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_statement.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_statement.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_debug.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_debug.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_client_api.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_client_api.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_native_connection_wrapper.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_native_connection_wrapper.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_util.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_util.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_art_resultset.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_art_resultset.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_resultbind.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_resultbind.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_ps_resultset.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_ps_resultset.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_ps_resultset_metadata.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_ps_resultset_metadata.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_parameter_metadata.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_parameter_metadata.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_resultset.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_resultset.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_native_resultset_wrapper.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_native_resultset_wrapper.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_native_statement_wrapper.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_native_statement_wrapper.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_art_rset_metadata.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_art_rset_metadata.obj)' or at ''; linking object as if no debug info
+mysqlcppconn-static.lib(mysql_resultset_metadata.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_resultset_metadata.obj)' or at ''; linking object as if no debug info
+  AA2_TCP_Parchis.vcxproj -> E:\3r CDI\Xarxes\AA2_TCP_Parchis\x64\Release\AA2_TCP_Parchis.exe

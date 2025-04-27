@@ -1,11 +1,11 @@
 #include "Button.h"
 #include <iostream>
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& text)
-    : _hovered(false), _clicked(false)
+Button::Button(sf::Vector2f buttonPosition, sf::Vector2f buttonSize, const std::string& text, float textSize)
+    : _hovered(false), _clicked(false),_label(text),_textSize(textSize)
 {
-    _shape.setPosition(position);
-    _shape.setSize(size);
+    _shape.setPosition(buttonPosition);
+    _shape.setSize(buttonSize);
     _shape.setFillColor(sf::Color(100, 100, 250));
     _shape.setOutlineColor(sf::Color::Black);
     _shape.setOutlineThickness(2);
@@ -31,7 +31,7 @@ void Button::HandleEvent(const sf::Event& event)
 
 void Button::Update(float)
 {
-    
+      
 }
 
 
@@ -41,13 +41,13 @@ void Button::Draw(sf::RenderWindow& window) const
 
     sf::Text text (_font);
     text.setString(_label);
-    text.setCharacterSize(20);
+    text.setCharacterSize(_textSize);
     text.setFillColor(sf::Color::White);
 
-    // Center text
-    auto bounds = text.getLocalBounds();
-   
-    text.setPosition(_shape.getPosition() + _shape.getSize() / 2.f);
+
+    sf::Vector2f center = _shape.getPosition() + _shape.getSize() / 2.f;
+    text.setOrigin(text.getGlobalBounds().getCenter());  
+    text.setPosition(center);
 
     window.draw(text);
 }
