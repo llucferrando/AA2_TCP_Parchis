@@ -135,14 +135,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="bcrypt.cpp" />
     <ClCompile Include="blowfish.cpp" />
+    <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MainClient.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="TextFieldComponent.cpp" />
+    <ClCompile Include="TokenComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="bcrypt.h" />
+    <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Enums.hpp" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="node_blf.h" />
     <ClInclude Include="openbsd.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="TextFieldComponent.h" />
+    <ClInclude Include="TokenComponent.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
