@@ -1,48 +1,53 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (AA2_TCP_Parchis.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  ButtonComponent.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\ButtonComponent.cpp(9,23): warning C4834: discarding return value of function with 'nodiscard' attribute
-  EventHandler.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\EventHandler.cpp(34,89): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\EventHandler.cpp(34,63): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
+  AnimatedSprite.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'AnimatedSprite.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\AnimatedSprite.cpp(6,23): warning C4834: discarding return value of function with [[nodiscard]] attribute
   GameManager.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\GameManager.cpp(20,25): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'GameManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameManager.cpp(14,25): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,23): error C2665: 'SpriteRenderer::SpriteRenderer': no overloaded function could convert all the argument types
+  (compiling source file 'GameManager.cpp')
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\SpriteRenderer.h(21,1):
+      could be 'SpriteRenderer::SpriteRenderer(SpriteRenderer &&)'
+          E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,23):
+          'SpriteRenderer::SpriteRenderer(SpriteRenderer &&)': cannot convert argument 1 from 'const char [31]' to 'SpriteRenderer &&'
+              E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,42):
+              Reason: cannot convert from 'const char [31]' to 'SpriteRenderer'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\SpriteRenderer.h(21,1):
+      or       'SpriteRenderer::SpriteRenderer(const SpriteRenderer &)'
+          E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,23):
+          'SpriteRenderer::SpriteRenderer(const SpriteRenderer &)': cannot convert argument 1 from 'const char [31]' to 'const SpriteRenderer &'
+              E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,42):
+              Reason: cannot convert from 'const char [31]' to 'const SpriteRenderer'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,23):
+      while trying to match the argument list '(const char [31])'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameObject.h(17,23):
+      the template instantiation context (the oldest one first) is
+          E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameManager.cpp(98,20):
+          see reference to function template instantiation 'T *GameObject::AddComponent<SpriteRenderer,const char(&)[31]>(const char (&)[31])' being compiled
+          with
+          [
+              T=SpriteRenderer
+          ]
+  
   MainClient.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
-  TextFieldComponent.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\TextFieldComponent.cpp(13,23): warning C4834: discarding return value of function with 'nodiscard' attribute
-  Generating code
-  0 of 872 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  Client.vcxproj -> C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Client.exe
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'MainClient.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+  Transform.cpp

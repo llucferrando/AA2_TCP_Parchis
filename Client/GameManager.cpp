@@ -1,21 +1,15 @@
 #include "GameManager.h"
 
 
+
 GameManager::GameManager()
 {
     _window = new Window();
+    _window->GetWindow()->setFramerateLimit(60);
     _eventHandler = new EventHandler();
 
     _currentState = GameState::SplashScreen;
     _splashTime = 0;
-
-    //_backgroundGO = new GameObject();
-    //_backgroundGO->AddComponent<SpriteRenderer>("Assets/GameAssets/Parchis.png", 10);
-
-
-    //_matchManager = new MatchManager();
-    //_boardManager = new BoardManager();
-    //_gameRules = new GameRules(_boardManager);
 
     std::srand(std::time(nullptr));
 
@@ -61,6 +55,7 @@ void GameManager::Update(float deltaTime)
 {
     switch (_currentState) {
         case GameState::SplashScreen:
+            SplashScreen();
             _splashTime += deltaTime;
             if (_splashTime > 2) {
                 _currentState = GameState::LoginMenu;
@@ -92,10 +87,23 @@ void GameManager::Render()
 
 void GameManager::HandleEvents()
 {
-    while (const std::optional event = _window->GetWindow()->pollEvent())//si veo un evento, automaticamente se consume (un buffer)
+    while (const std::optional event = _window->GetWindow()->pollEvent())
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
+}
+
+void GameManager::SplashScreen()
+{
+    _splashSprite->AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png");
+}
+
+void GameManager::LoginMenu()
+{
+}
+
+void GameManager::MatchmakingScreen()
+{
 }
 
 int GameManager::RollDice()

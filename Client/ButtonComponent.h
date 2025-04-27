@@ -12,7 +12,7 @@ public:
 
     void Render(sf::RenderWindow& window);
 
-    Event<> onClick; // Unity-style event
+    Event<> onClick; 
 
     const std::type_index GetType() override;
 

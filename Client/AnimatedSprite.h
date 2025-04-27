@@ -18,7 +18,7 @@ private:
 
     sf::Vector2i _frameSize;
     int _frameCount;
-    float _frameTime; // En segundos
+    float _frameTime; 
     float _currentTime = 0.f;
     int _currentFrame = 0;
 };

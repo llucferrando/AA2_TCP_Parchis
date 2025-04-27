@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EventHandler.h"
-
+#include "GameObject.h"
+#include "SpriteRenderer.h"
 #include "Enums.hpp"
 
 class GameManager
@@ -18,6 +19,9 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
+    void SplashScreen();
+    void LoginMenu();
+    void MatchmakingScreen();
     int RollDice();
     
     GameState _currentState;
@@ -26,7 +30,7 @@ private:
     EventHandler* _eventHandler;
     sf::Clock _deltaClock;
 
-
+    GameObject* _splashSprite;
 
     bool waitingSelection = false;
     int diceValue = 0;
