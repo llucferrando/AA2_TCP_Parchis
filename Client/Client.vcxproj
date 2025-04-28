@@ -145,6 +145,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
+    <ClCompile Include="MatchmakingMenu.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SplashScreenMenu.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LoginMenu.h" />
+    <ClInclude Include="MatchmakingMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="node_blf.h" />
     <ClInclude Include="openbsd.h" />

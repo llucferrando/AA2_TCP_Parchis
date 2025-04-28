@@ -6,6 +6,8 @@
 #include "SplashScreenMenu.h"
 #include <SFML/Network.hpp>
 #include "Client.h"
+#include "MatchmakingMenu.h"
+
 class GameManager
 {
 public:
@@ -33,6 +35,7 @@ private:
 
     // -- Menus -- //
     LoginMenu* _loginMenu;
+    MatchmakingMenu* _matchmakingMenu;
     SplashScreenMenu* _splashMenu;
 
 

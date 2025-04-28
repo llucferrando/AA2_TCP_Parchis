@@ -140,7 +140,7 @@ void GameManager::Update(float deltaTime)
             break;
 
         case GameState::MatchmakingMenu:
-            //_matchmakingMenu->Update(deltaTime);
+            _matchmakingMenu->Update(deltaTime);
             break;
 
         case GameState::Gameplay:
@@ -164,6 +164,7 @@ void GameManager::Render()
             break;
 
         case GameState::MatchmakingMenu:
+            _matchmakingMenu->Render(_window->GetWindow());
             break;
 
         case GameState::Gameplay:
