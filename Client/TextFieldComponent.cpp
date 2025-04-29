@@ -1,7 +1,7 @@
 #include "TextFieldComponent.h"
 
 TextFieldComponent::TextFieldComponent(sf::Vector2f position, sf::Vector2f size, const std::string& placeholder, EventHandler* eventHandler)
-    : _placeholder(placeholder), _focused(false), _cursorBlink(0.f), _cursorVisible(true), _text(_font, "", 24)
+    : _placeholder(placeholder), _focused(false), _cursorBlink(0.f), _cursorVisible(true), _text(_font, "", 24), _eventHandler(eventHandler)
 {
 
     _box.setPosition(position);
@@ -16,17 +16,19 @@ TextFieldComponent::TextFieldComponent(sf::Vector2f position, sf::Vector2f size,
     _text.setPosition(sf::Vector2f(position.x + 10, position.y + 10));
     _text.setFillColor(sf::Color::Black);
 
-    eventHandler->onClick.Subscribe([this](sf::Vector2f clickPos) {
+    _listenerClickId = _eventHandler->onClick.Subscribe([this](sf::Vector2f clickPos) {
         OnGlobalClick(clickPos);
         });
 
-    eventHandler->onTextEntered.Subscribe([this](std::uint32_t unicode) {
+    _listenerTextId = _eventHandler->onTextEntered.Subscribe([this](std::uint32_t unicode) {
         HandleInput(unicode);
         });
 }
 
 TextFieldComponent::~TextFieldComponent()
 {
+    _eventHandler->onClick.UnSubscribe(_listenerClickId);
+    _eventHandler->onTextEntered.UnSubscribe(_listenerTextId);
 }
 
 void TextFieldComponent::Update(float deltaTime)

@@ -9,6 +9,10 @@ GameObject::~GameObject()
 {
 	for (Component* component : components)
 	{
-		delete component;
+		if (component)
+		{
+			delete component;
+		}
 	}
+	components.clear();
 }

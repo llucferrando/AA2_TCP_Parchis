@@ -20,6 +20,12 @@ LoginMenu::LoginMenu(EventHandler* eventHandler, Client* client) {
     SubcribeToButtons();
 }
 
+LoginMenu::~LoginMenu()
+{
+    onLoginSucces.UnsubscribeAll();
+    onRegisterSucces.UnsubscribeAll();
+}
+
 void LoginMenu::Update(float deltaTime)
 {
     _usernameField->Update(deltaTime);

@@ -20,6 +20,7 @@ ButtonComponent::ButtonComponent(sf::Vector2f position, sf::Vector2f size, const
 
 ButtonComponent::~ButtonComponent()
 {
+    onClick.UnsubscribeAll();
 }
 
 

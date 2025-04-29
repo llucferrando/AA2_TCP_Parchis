@@ -29,7 +29,9 @@ public:
 			callback(args...);
 		}
 	}
-
+	void UnsubscribeAll() {
+		_listeners.clear();
+	}
 private:
 	std::unordered_map<ListenerID, Callback> _listeners;
 	ListenerID _nextId = 0;

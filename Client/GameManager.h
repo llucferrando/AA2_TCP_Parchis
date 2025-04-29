@@ -25,6 +25,9 @@ private:
     int RollDice();
 
     GameState _currentState;
+    GameState _nextState = GameState::None;
+    bool _shouldChangeState;
+
     sf::TcpSocket _socket;
     Window* _window;
     EventHandler* _eventHandler;

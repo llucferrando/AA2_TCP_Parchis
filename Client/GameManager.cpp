@@ -6,10 +6,11 @@ GameManager::GameManager()
     _window = new Window();
     _client = new Client();
     _eventHandler = new EventHandler();
-    _currentState = GameState::SplashScreen;
-    _loginMenu = new LoginMenu(_eventHandler, _client);
-    _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
-    _splashMenu = new SplashScreenMenu();
+    _currentState = GameState::None;
+    _loginMenu = nullptr;
+    _splashMenu = nullptr;
+    _matchmakingMenu = nullptr;
+    UpdateState(GameState::SplashScreen);
     _splashTime = 0;
 
     std::srand(std::time(nullptr));
@@ -22,8 +23,6 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-    _loginMenu->onLoginSucces.Subscribe([this]() { UpdateState(GameState::MatchmakingMenu); });
-    _loginMenu->onRegisterSucces.Subscribe([this]() { std::cout << "Registered succesfully..." << std::endl; });
     _client->ConnectToBootstrapServer("127.0.0.1", 50000);
 }
 
@@ -53,6 +52,45 @@ void GameManager::UpdateState(GameState newState)
 {
     if (_currentState == newState) return;
 
+    switch (_currentState) 
+    {
+        case GameState::SplashScreen:
+            delete _splashMenu;
+            _splashMenu = nullptr;
+            break;
+
+        case GameState::LoginMenu:
+            delete _loginMenu;
+            _loginMenu = nullptr;
+            break;
+
+        case GameState::MatchmakingMenu:
+            delete _matchmakingMenu;
+            _matchmakingMenu = nullptr;
+            break;
+
+        default: break;
+    }
+
+    switch (newState) 
+    {
+        case GameState::SplashScreen:
+            _splashMenu = new SplashScreenMenu();
+            break;
+        case GameState::LoginMenu:
+            _loginMenu = new LoginMenu(_eventHandler, _client);
+            _loginMenu->onLoginSucces.Subscribe([this]() {     _nextState = GameState::MatchmakingMenu;
+            _shouldChangeState = true; });
+            _loginMenu->onRegisterSucces.Subscribe([this]() { std::cout << "Registered succesfully..." << std::endl; });
+            break;
+
+        case GameState::MatchmakingMenu:
+            _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
+            break;
+
+        default: break;
+    }
+
     _currentState = newState;
 }
 
@@ -60,7 +98,7 @@ void GameManager::Update(float deltaTime)
 {
     switch (_currentState) {
 
-        case GameState::SplashScreen:
+        case GameState::SplashScreen:            
 
             _splashTime += deltaTime;
 
@@ -72,16 +110,23 @@ void GameManager::Update(float deltaTime)
             break;
 
         case GameState::LoginMenu:
+
             _loginMenu->Update(deltaTime);
             break;
 
         case GameState::MatchmakingMenu:
+
             _matchmakingMenu->Update(deltaTime);
             break;
 
         case GameState::Gameplay:
             //UpdateGameplay(deltaTime);
             break;
+    }
+
+    if (_shouldChangeState) {
+        UpdateState(_nextState);
+        _shouldChangeState = false;
     }
 }
 

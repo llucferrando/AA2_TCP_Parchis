@@ -4,7 +4,8 @@ enum class GameState {
 	SplashScreen,
 	LoginMenu,
 	MatchmakingMenu,
-	Gameplay
+	Gameplay,
+	None
 };
 
 enum class ParchisState {

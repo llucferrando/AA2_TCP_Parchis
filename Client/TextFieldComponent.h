@@ -33,5 +33,10 @@ private:
     bool _cursorVisible;
     bool _firstClick = true;
 
+    //For clearing memory in destructor
+    uint64_t _listenerClickId;
+    uint64_t _listenerTextId;
+    EventHandler* _eventHandler;
+
 };
 

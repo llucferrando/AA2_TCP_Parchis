@@ -10,7 +10,7 @@ class LoginMenu : public Menu
 {
 public:
     LoginMenu(EventHandler* eventHandler, Client* client);
-
+    ~LoginMenu();
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
     ButtonComponent* GetLoginButton();
