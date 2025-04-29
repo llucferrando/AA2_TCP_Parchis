@@ -22,9 +22,11 @@ private:
     void StartMatch(Room* room);
     void RemoveClient(Client* client);
 
+    
     sf::TcpListener _listener;
     sf::SocketSelector _selector;
     std::vector<std::unique_ptr<Client>> _clients;
     std::unordered_map<std::string, std::unique_ptr<Room>> _rooms;
     DataBaseManager _db;
+    
 };

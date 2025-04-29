@@ -47,17 +47,17 @@ bool Client::SendRegister(const std::string& username, const std::string& passwo
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
-bool Client::CreateRoom()
+bool Client::CreateRoom(const std::string& idCreateRoom)
 {
     sf::Packet packet;
-    packet << "CREATE_ROOM";
+    packet << "CREATE_ROOM" << idCreateRoom;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
-bool Client::JoinRoom(int roomId)
+bool Client::JoinRoom(const std::string& idJoinRoom)
 {
     sf::Packet packet;
-    packet << "JOIN_ROOM" << roomId;
+    packet << "JOIN_ROOM" << idJoinRoom;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 

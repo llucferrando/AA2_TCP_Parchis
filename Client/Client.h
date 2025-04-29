@@ -15,8 +15,8 @@ public:
     bool SendLogin(const std::string& username, const std::string& password);
     bool SendRegister(const std::string& username, const std::string& password);
 
-    bool CreateRoom();
-    bool JoinRoom(int roomId);
+    bool CreateRoom(const std::string& idCreateRoom);
+    bool JoinRoom(const std::string& idJoinRoom);
 
     bool ReceivePacket(sf::Packet& packet);
     void StartP2PListening(unsigned short port); 

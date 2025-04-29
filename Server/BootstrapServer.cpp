@@ -102,6 +102,8 @@ void BootstrapServer::HandleCommand(Client* client, const std::string& command)
     if (command.rfind("CREATE_ROOM", 0) == 0)
     {
         std::string roomID = command.substr(12);
+        response << "ROOM_CREATED";
+
         CreateRoom(client, roomID);
     }
     else if (command.rfind("JOIN_ROOM", 0) == 0)

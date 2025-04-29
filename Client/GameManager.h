@@ -22,6 +22,7 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
+    void MatchmakingMenuLogic();
     int RollDice();
     //void SendLogin(const std::string& username, const std::string& password);
 

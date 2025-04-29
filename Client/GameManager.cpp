@@ -65,6 +65,7 @@ GameManager::GameManager()
                     {
                         _window->Clear();
                         UpdateState(GameState::MatchmakingMenu);
+                        MatchmakingMenuLogic();
                     }
                     else
                     {
@@ -81,6 +82,9 @@ GameManager::GameManager()
                 std::cout << "Error enviando login." << std::endl;
             }
         });
+
+
+    
 
     std::srand(std::time(nullptr));
 
@@ -183,6 +187,43 @@ void GameManager::HandleEvents()
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
+}
+
+void GameManager::MatchmakingMenuLogic()
+{
+    _matchmakingMenu->GetCreateRoomButton()->onClick.Subscribe([this]() {
+        //Si login es correcto con BBDD UPdate to matchmaking sino nada
+        std::string idRoomCreate = _matchmakingMenu->GetCreateIDText();
+        std::cout << "Send Room Creation Request:  " + idRoomCreate << std::endl;
+        if (_client->CreateRoom(idRoomCreate))
+        {
+            sf::Packet response;
+            if (_client->ReceivePacket(response))
+            {
+                std::string reply;
+                response >> reply;
+
+                if (reply == "ROOM_CREATED")
+                {
+                    UpdateState(GameState::Gameplay);
+
+                }
+                else
+                {
+                    std::cout << "Error while creating the room: " << reply << std::endl;
+                }
+            }
+            else
+            {
+                std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Error enviando id room" << std::endl;
+        }
+
+        });
 }
 
 int GameManager::RollDice()

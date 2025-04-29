@@ -9,9 +9,9 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler)
 
 	_idJoinRoomField = AddComponent<TextFieldComponent>(sf::Vector2f(160, 450), sf::Vector2f(400, 50), "ID join room", eventHandler);
 
-	_createButton = AddComponent<ButtonComponent>(sf::Vector2f(170, 370), sf::Vector2f(180, 50), "Create", eventHandler);
+	_createButton = AddComponent<ButtonComponent>(sf::Vector2f(250, 370), sf::Vector2f(180, 50), "Create", eventHandler);
 
-	_joinButton = AddComponent<ButtonComponent>(sf::Vector2f(170, 520), sf::Vector2f(180, 50), "Join", eventHandler);
+	_joinButton = AddComponent<ButtonComponent>(sf::Vector2f(250, 520), sf::Vector2f(180, 50), "Join", eventHandler);
 
 	_createButton->onClick.Subscribe([this]() {
 		std::cout << "Create Room Button pressed\n" << std::endl;

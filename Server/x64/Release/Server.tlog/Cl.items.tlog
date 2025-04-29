@@ -1,8 +1,8 @@
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\bcrypt.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\bcrypt.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\blowfish.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\blowfish.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\BootstrapServer.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\BootstrapServer.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\Client.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Client.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\DataBaseManager.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\DataBaseManager.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\MainServer.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\MainServer.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\Room.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Room.obj
-C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\Server.cpp;C:\ENTI\3R CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Server.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\bcrypt.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\bcrypt.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\blowfish.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\blowfish.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\BootstrapServer.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\BootstrapServer.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\Client.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Client.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\DataBaseManager.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\DataBaseManager.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\MainServer.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\MainServer.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\Room.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Room.obj
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\Server.cpp;E:\3r CDI\Xarxes\AA2_TCP_Parchis\Server\x64\Release\Server.obj
