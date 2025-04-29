@@ -1,4 +1,5 @@
 #include "MatchmakingMenu.h"
+#include <iostream>
 
 MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler)
 {
@@ -29,11 +30,11 @@ void MatchmakingMenu::Update(float deltaTime)
 
 void MatchmakingMenu::Render(sf::RenderWindow* window)
 {
-	/*GetComponent<SpriteRenderer>()->Draw(window, GetComponent<Transform>());
+	GetComponent<SpriteRenderer>()->Draw(window, GetComponent<Transform>());
 	_idCreateRoomField->Render(window);
 	_idJoinRoomField->Render(window); 
 	_createButton->Render(window);
-	_joinButton->Render(window);*/
+	_joinButton->Render(window);
 }
 
 ButtonComponent* MatchmakingMenu::GetCreateRoomButton()

@@ -55,7 +55,7 @@ std::string LoginMenu::GetUsernameText()
     return _usernameField->GetText();
 }
 
-std::string LoginMenu::GetPaswwordText()
+std::string LoginMenu::GetPasswordText()
 {
     return _passwordField->GetText();
 }

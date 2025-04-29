@@ -15,7 +15,7 @@ public:
     ButtonComponent* GetLoginButton();
     ButtonComponent* GetRegisterButton();
     std::string GetUsernameText();
-    std::string GetPaswwordText();
+    std::string GetPasswordText();
 
 private:
     TextFieldComponent* _usernameField;

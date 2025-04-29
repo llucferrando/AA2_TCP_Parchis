@@ -7,6 +7,7 @@ GameManager::GameManager()
     _eventHandler = new EventHandler();
     _currentState = GameState::SplashScreen;
     _loginMenu = new LoginMenu(_eventHandler);
+    _matchmakingMenu = new MatchmakingMenu(_eventHandler);
     _splashMenu = new SplashScreenMenu();
     _client = new Client();
 
@@ -15,7 +16,7 @@ GameManager::GameManager()
         {
             //Si login es correcto con BBDD UPdate to matchmaking sino nada
             std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPaswwordText();
+            std::string password = _loginMenu->GetPasswordText();
             std::cout << "SendLogin  " + username + "   " + password << std::endl;
             if (_client->SendLogin(username, password))
             {
@@ -28,6 +29,7 @@ GameManager::GameManager()
                     if (reply == "LOGIN_OK")
                     {
                         UpdateState(GameState::MatchmakingMenu);
+                        
                     }
                     else
                     {
@@ -49,7 +51,7 @@ GameManager::GameManager()
         {
             //Si register es correcto con BBDD UPdate to matchmaking sino nada
             std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPaswwordText();
+            std::string password = _loginMenu->GetPasswordText();
             std::cout << "Send Register  " + username + "   " + password << std::endl;
             if (_client->SendRegister(username, password))
             {
@@ -61,6 +63,7 @@ GameManager::GameManager()
 
                     if (reply == "REGISTER_OK")
                     {
+                        _window->Clear();
                         UpdateState(GameState::MatchmakingMenu);
                     }
                     else
@@ -164,7 +167,7 @@ void GameManager::Render()
             break;
 
         case GameState::MatchmakingMenu:
-            _matchmakingMenu->Render(_window->GetWindow());
+           _matchmakingMenu->Render(_window->GetWindow());
             break;
 
         case GameState::Gameplay:
