@@ -7,7 +7,7 @@
 class SpriteRenderer : public Component 
 {
 public:
-	SpriteRenderer(const std::string& texturePath, int colorID);
+	SpriteRenderer(const std::string& texturePath, sf::Color color);
 
 	void Draw(sf::RenderWindow* window, Transform* transform);
 
@@ -16,6 +16,4 @@ public:
 private:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
-	int _colorID;
-	sf::Color GetColorFromPlayer(int index);
 };

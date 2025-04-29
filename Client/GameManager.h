@@ -23,7 +23,6 @@ private:
     void Render();
     void HandleEvents();
     int RollDice();
-    //void SendLogin(const std::string& username, const std::string& password);
 
     GameState _currentState;
     sf::TcpSocket _socket;

@@ -9,8 +9,11 @@ Client::~Client()
 
     for (auto& peer : _peers)
     {
-        peer->disconnect();
-        delete peer;
+        if (peer.socket)
+        {
+            peer.socket->disconnect();
+            delete peer.socket;
+        }
     }
     _peers.clear();
 }
@@ -54,7 +57,7 @@ bool Client::CreateRoom()
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
-bool Client::JoinRoom(int roomId)
+bool Client::JoinRoom(std::string roomId)
 {
     sf::Packet packet;
     packet << "JOIN_ROOM" << roomId;
@@ -76,15 +79,21 @@ void Client::StartP2PListening(unsigned short port)
 
 void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
 {
-    sf::TcpSocket* peer = new sf::TcpSocket();
-    if (peer->connect(ip, port) == sf::Socket::Status::Done)
+    sf::TcpSocket* peerSocket = new sf::TcpSocket();
+    if (peerSocket->connect(ip, port) == sf::Socket::Status::Done)
     {
-        _peers.push_back(peer);
+ /*       PeerInfo info;
+        info.socket = peerSocket;
+        info.ip = ip;
+        info.port = port;
+        _peers.push_back(info);*/
+
+        _peers.emplace_back(peerSocket, ip, port);
     }
     else
     {
         std::cout << "Failed to connect to peer: " << ip << ":" << port << std::endl;
-        delete peer;
+        delete peerSocket;
     }
 }
 
@@ -92,6 +101,7 @@ void Client::BroadcastToPeers(sf::Packet& packet)
 {
     for (auto& peer : _peers)
     {
-        peer->send(packet);
+        if (peer.socket)
+            peer.socket->send(packet);
     }
 }

@@ -4,86 +4,15 @@
 GameManager::GameManager()
 {
     _window = new Window();
+    _client = new Client();
     _eventHandler = new EventHandler();
     _currentState = GameState::SplashScreen;
-    _loginMenu = new LoginMenu(_eventHandler);
-    _matchmakingMenu = new MatchmakingMenu(_eventHandler);
+    _loginMenu = new LoginMenu(_eventHandler, _client);
+    _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
     _splashMenu = new SplashScreenMenu();
-    _client = new Client();
-
-
-    _loginMenu->GetLoginButton()->onClick.Subscribe([this]() 
-        {
-            //Si login es correcto con BBDD UPdate to matchmaking sino nada
-            std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPasswordText();
-            std::cout << "SendLogin  " + username + "   " + password << std::endl;
-            if (_client->SendLogin(username, password))
-            {
-                sf::Packet response;
-                if (_client->ReceivePacket(response))
-                {
-                    std::string reply;
-                    response >> reply;
-
-                    if (reply == "LOGIN_OK")
-                    {
-                        UpdateState(GameState::MatchmakingMenu);
-                        
-                    }
-                    else
-                    {
-                        std::cout << "Login fallido: " << reply << std::endl;                        
-                    }
-                }
-                else
-                {
-                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
-                }
-            }
-            else
-            {
-                std::cout << "Error enviando login." << std::endl;
-            }
-        });
-
-    _loginMenu->GetRegisterButton()->onClick.Subscribe([this]()
-        {
-            //Si register es correcto con BBDD UPdate to matchmaking sino nada
-            std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPasswordText();
-            std::cout << "Send Register  " + username + "   " + password << std::endl;
-            if (_client->SendRegister(username, password))
-            {
-                sf::Packet response;
-                if (_client->ReceivePacket(response))
-                {
-                    std::string reply;
-                    response >> reply;
-
-                    if (reply == "REGISTER_OK")
-                    {
-                        _window->Clear();
-                        UpdateState(GameState::MatchmakingMenu);
-                    }
-                    else
-                    {
-                        std::cout << "Register fallido: " << reply << std::endl;
-                    }
-                }
-                else
-                {
-                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
-                }
-            }
-            else
-            {
-                std::cout << "Error enviando login." << std::endl;
-            }
-        });
+    _splashTime = 0;
 
     std::srand(std::time(nullptr));
-
 }
 
 GameManager::~GameManager()
@@ -93,7 +22,8 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-    _splashTime = 0;
+    _loginMenu->onLoginSucces.Subscribe([this]() { UpdateState(GameState::MatchmakingMenu); });
+    _loginMenu->onRegisterSucces.Subscribe([this]() { std::cout << "Registered succesfully..." << std::endl; });
     _client->ConnectToBootstrapServer("127.0.0.1", 50000);
 }
 
@@ -110,8 +40,11 @@ void GameManager::Run()
 }
 
 void GameManager::Shutdown()
-{    
-
+{   
+    delete _loginMenu;
+    delete _matchmakingMenu;
+    delete _splashMenu;
+    delete _client;
     delete _eventHandler;
     delete _window;
 }

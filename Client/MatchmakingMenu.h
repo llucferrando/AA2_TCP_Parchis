@@ -4,11 +4,12 @@
 #include "TextFieldComponent.h"
 #include "SpriteRenderer.h"
 #include "EventHandler.h"
+#include "Client.h"
 
 class MatchmakingMenu : public Menu
 {
 public:
-    MatchmakingMenu(EventHandler* eventHandler);
+    MatchmakingMenu(EventHandler* eventHandler, Client* client);
 
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
@@ -20,7 +21,8 @@ public:
 private:
     TextFieldComponent* _idCreateRoomField;
     TextFieldComponent* _idJoinRoomField;
-    ButtonComponent* _createButton;
-    ButtonComponent* _joinButton;
+    ButtonComponent* _createRoomButton;
+    ButtonComponent* _joinRoomButton;
+    Client* _client;
 };
 

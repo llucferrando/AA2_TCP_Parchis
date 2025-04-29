@@ -122,15 +122,45 @@ void BootstrapServer::CreateRoom(Client* client, const std::string& roomID)
     client->SetRoomID(roomID);
 }
 
-void BootstrapServer::JoinRoom(Client* client, const std::string& roomID) 
+void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
 {
     auto it = _rooms.find(roomID);
 
-    if (it != _rooms.end() && !it->second->IsFull()) 
+    if (it != _rooms.end() && !it->second->IsFull())
     {
         it->second->AddPlayer(client);
+
         client->SetRoomID(roomID);
-        if (it->second->IsFull()) StartMatch(it->second.get());
+
+        // Construir el paquete de respuesta con IPs y Puertos de los otros jugadores
+        sf::Packet response;
+        const auto& players = it->second->GetPlayers();
+
+        int otherPlayers = players.size() - 1; // Avoid sending yourself
+
+        response << otherPlayers;
+
+        for (auto* player : players)
+        {
+            if (player != client) 
+            {
+                auto optionalIp = player->GetSocket()->getRemoteAddress();
+
+                if (optionalIp.has_value())
+                {
+                    sf::IpAddress ip = optionalIp.value();
+                    unsigned short port = player->GetSocket()->getRemotePort();
+                    response << ip.toString() << port;
+                }
+            }
+        }
+
+        client->GetSocket()->send(response);
+
+        if (it->second->IsFull())
+        {
+            StartMatch(it->second.get());
+        }
     }
 }
 

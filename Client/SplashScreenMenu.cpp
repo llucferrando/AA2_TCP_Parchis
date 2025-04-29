@@ -2,7 +2,7 @@
 
 SplashScreenMenu::SplashScreenMenu()
 {
-	AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png", 10);
+	AddComponent<SpriteRenderer>("Assets/Splashscreen/splash.png", sf::Color::White);
 }
 
 void SplashScreenMenu::Render(sf::RenderWindow* window)
