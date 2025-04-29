@@ -16,12 +16,12 @@ private:
     void AcceptNewConnection();
     void ReceiveData(Client* client);
     void HandleCommand(Client* client, const std::string& command, const std::string& nick, const std::string& pass);
-    void HandleCommand(Client* client, const std::string& command);
+    void HandleCommand(Client* client, const std::string& command, sf::Packet& packet);
     void CreateRoom(Client* client, const std::string& roomID);
     void JoinRoom(Client* client, const std::string& roomID);
     void StartMatch(Room* room);
     void RemoveClient(Client* client);
-
+    std::string GenerateRandomRoomID();
     sf::TcpListener _listener;
     sf::SocketSelector _selector;
     std::vector<std::unique_ptr<Client>> _clients;

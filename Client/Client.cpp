@@ -50,10 +50,10 @@ bool Client::SendRegister(const std::string& username, const std::string& passwo
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
-bool Client::CreateRoom()
+bool Client::CreateRoom(std::string roomID)
 {
     sf::Packet packet;
-    packet << "CREATE_ROOM";
+    packet << "CREATE_ROOM" << roomID;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 

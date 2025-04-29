@@ -26,7 +26,7 @@ public:
     bool SendLogin(const std::string& username, const std::string& password);
     bool SendRegister(const std::string& username, const std::string& password);
 
-    bool CreateRoom();
+    bool CreateRoom(std::string roomID);
     bool JoinRoom(std::string roomId);
 
     bool ReceivePacket(sf::Packet& packet);

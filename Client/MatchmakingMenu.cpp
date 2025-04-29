@@ -19,7 +19,7 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 
 		std::cout << "Creating a room..." << std::endl;
 
-		if (_client->CreateRoom()) {
+		if (_client->CreateRoom(_idCreateRoomField->GetText())) {
 			std::cout << "Room created successfully, now listening for players..." << std::endl;
 			_client->StartP2PListening(60000); // ejemplo puerto libre
 		}
