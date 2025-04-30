@@ -75,9 +75,11 @@ void GameManager::UpdateState(GameState newState)
     switch (newState) 
     {
         case GameState::SplashScreen:
+            std::cout << "[Client] Opening Splashscreen" << std::endl;
             _splashMenu = new SplashScreenMenu();
             break;
         case GameState::LoginMenu:
+            std::cout << "[Client] Opening Login Menu" << std::endl;
             _loginMenu = new LoginMenu(_eventHandler, _client);
             _loginMenu->onLoginSucces.Subscribe([this]() {     _nextState = GameState::MatchmakingMenu;
             _shouldChangeState = true; });
@@ -85,6 +87,7 @@ void GameManager::UpdateState(GameState newState)
             break;
 
         case GameState::MatchmakingMenu:
+            std::cout << "[Client] Opening Matchmaking Menu" << std::endl;
             _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
             break;
 

@@ -24,20 +24,24 @@ bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port
 
     if (_bootstrapSocket.connect(*resolved, port) != sf::Socket::Status::Done)
     {
-        std::cout << "Failed to connect to bootstrap server." << std::endl;
+        std::cout << "[Client] Failed to connect to bootstrap server." << std::endl;
         return false;
     }
+
+    std::cout << "[Client] Connected to bootstrap server ip " + ip << std::endl;
     return true;
 }
 
 void Client::DisconnectFromBootstrapServer()
 {
+    std::cout << "[Client] Disconnected from bootstrap server." << std::endl;
+
     _bootstrapSocket.disconnect();
 }
 
 bool Client::SendLogin(const std::string& username, const std::string& password)
 {
-    std::cout << "Hola mi user es:" << username << " " << password << std::endl;
+    std::cout << "[Client] Login sended with user " << username << " and password " << password << std::endl;
     sf::Packet packet;
     packet << "LOGIN" << username << password;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
@@ -45,6 +49,8 @@ bool Client::SendLogin(const std::string& username, const std::string& password)
 
 bool Client::SendRegister(const std::string& username, const std::string& password)
 {
+    std::cout << "[Client] Register sended with user " << username << " and password " << password << std::endl;
+
     sf::Packet packet;
     packet << "REGISTER" << username << password;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
@@ -52,6 +58,8 @@ bool Client::SendRegister(const std::string& username, const std::string& passwo
 
 bool Client::CreateRoom(std::string roomID)
 {
+    std::cout << "[Client] Create Room request with id " << roomID << std::endl;
+
     sf::Packet packet;
     packet << "CREATE_ROOM" << roomID;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
@@ -59,6 +67,8 @@ bool Client::CreateRoom(std::string roomID)
 
 bool Client::JoinRoom(std::string roomId)
 {
+    std::cout << "[Client] Join Room request with id " << roomId << std::endl;
+
     sf::Packet packet;
     packet << "JOIN_ROOM" << roomId;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
@@ -73,7 +83,7 @@ void Client::StartP2PListening(unsigned short port)
 {
     if (_p2pListener.listen(port) != sf::Socket::Status::Done)
     {
-        std::cout << "Failed to start P2P listening on port " << port << std::endl;
+        std::cout << "[Client] Failed to start P2P listening on port " << port << std::endl;
     }
 }
 
@@ -82,17 +92,11 @@ void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
     sf::TcpSocket* peerSocket = new sf::TcpSocket();
     if (peerSocket->connect(ip, port) == sf::Socket::Status::Done)
     {
- /*       PeerInfo info;
-        info.socket = peerSocket;
-        info.ip = ip;
-        info.port = port;
-        _peers.push_back(info);*/
-
         _peers.emplace_back(peerSocket, ip, port);
     }
     else
     {
-        std::cout << "Failed to connect to peer: " << ip << ":" << port << std::endl;
+        std::cout << "[Client] Failed to connect to peer: " << ip << ":" << port << std::endl;
         delete peerSocket;
     }
 }

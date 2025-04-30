@@ -8,15 +8,11 @@ C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Server\BootstrapSer
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Server\BootstrapServer.cpp(181,46): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Server\BootstrapServer.cpp(200,34): warning C4834: discarding return value of function with 'nodiscard' attribute
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Server\BootstrapServer.cpp(219,34): warning C4834: discarding return value of function with 'nodiscard' attribute
-  MainServer.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
      Creating library C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Server.lib and object C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Server.exp
   Generating code
-  24 of 584 functions ( 4.1%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    37 functions had inline decision re-evaluated but remain unchanged
+  44 of 626 functions ( 7.0%) were compiled, the rest were copied from previous compilation.
+    15 functions were new in current compilation
+    42 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: PDB 'jdbc.pdb' was not found with 'mysqlcppconn-static.lib(mysql_driver.obj)' or at 'C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\jdbc.pdb'; linking object as if no debug info
 mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: PDB 'jdbc.pdb' was not found with 'mysqlcppconn-static.lib(mysql_connection.obj)' or at 'C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\jdbc.pdb'; linking object as if no debug info

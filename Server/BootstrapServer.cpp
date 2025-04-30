@@ -206,22 +206,26 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
     }
 }
 
-void BootstrapServer::StartMatch(Room* room) 
+void BootstrapServer::StartMatch(Room* room)
 {
     std::cout << "[Server] Match started for room: " << room->GetID() << std::endl;
 
-    const auto& players = room->GetPlayers();
+    auto playersCopy = room->GetPlayers();
 
-    for (auto* player : players) 
+    for (auto* player : playersCopy)
     {
         sf::Packet packet;
         packet << "START_P2P";
         player->GetSocket()->send(packet);
-
-        _selector.remove(*player->GetSocket());
-
-        player->GetSocket()->disconnect();
     }
+
+    for (auto* player : playersCopy)
+    {
+        _selector.remove(*player->GetSocket());
+        player->GetSocket()->disconnect();
+        RemoveClient(player);
+    }
+
     _rooms.erase(room->GetID());
 }
 

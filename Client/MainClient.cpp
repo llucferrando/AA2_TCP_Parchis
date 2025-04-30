@@ -4,11 +4,11 @@
 int main() {
     GameManager* gameManager = new GameManager();
 
-    std::cout << "Starting Game Manager Initialization... " << std::endl;
+    std::cout << "[Client] Starting Game Manager Initialization... " << std::endl;
 
     gameManager->Init();
 
-    std::cout << "Starting Game Manager Run..." << std::endl;
+    std::cout << "[Client] Starting Game Manager Run..." << std::endl;
 
     gameManager->Run();
 

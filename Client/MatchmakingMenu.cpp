@@ -17,14 +17,14 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 
 	_createRoomButton->onClick.Subscribe([this]() {
 
-		std::cout << "Creating a room..." << std::endl;
+		std::cout << "[Client] Creating a room..." << std::endl;
 
 		if (_client->CreateRoom(_idCreateRoomField->GetText())) {
-			std::cout << "Room created successfully, now listening for players..." << std::endl;
+			std::cout << "[Client] Room created successfully, now listening for players..." << std::endl;
 			_client->StartP2PListening(60000); // ejemplo puerto libre
 		}
 		else {
-			std::cout << "Failed to create room." << std::endl;
+			std::cout << "[Client] Failed to create room." << std::endl;
 		}
 	});
 
