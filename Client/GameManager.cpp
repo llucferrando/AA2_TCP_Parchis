@@ -10,6 +10,7 @@ GameManager::GameManager()
     _loginMenu = nullptr;
     _splashMenu = nullptr;
     _matchmakingMenu = nullptr;
+    _gameOverMenu = nullptr;
     UpdateState(GameState::SplashScreen);
     _splashTime = 0;
 
@@ -69,6 +70,11 @@ void GameManager::UpdateState(GameState newState)
             _matchmakingMenu = nullptr;
             break;
 
+        case GameState::GameOver:
+            delete _matchmakingMenu;
+            _matchmakingMenu = nullptr;
+            break;
+        
         default: break;
     }
 
@@ -89,6 +95,12 @@ void GameManager::UpdateState(GameState newState)
         case GameState::MatchmakingMenu:
             std::cout << "[Client] Opening Matchmaking Menu" << std::endl;
             _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
+            break;
+
+        case GameState::GameOver:
+            std::cout << "[Client] Opening GameOver Menu" << std::endl;
+            //_gameOverMenu = new GameOverMenu(_eventHandler, _client);
+
             break;
 
         default: break;

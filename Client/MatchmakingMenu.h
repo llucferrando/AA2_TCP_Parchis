@@ -19,6 +19,7 @@ public:
     std::string GetJoinIDText();
 
 private:
+    void SubcribeToButtons();
     TextFieldComponent* _idCreateRoomField;
     TextFieldComponent* _idJoinRoomField;
     ButtonComponent* _createRoomButton;

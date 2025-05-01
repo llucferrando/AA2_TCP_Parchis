@@ -105,6 +105,9 @@
     <ClCompile Include="SplashScreenMenu.cpp">
       <Filter>Source Files\GameObjects\Prefabs</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcrypt.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files\GameObjects\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
       <Filter>Header Files\GameObjects\Prefabs</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,6 +15,42 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 
 	_client = client;
 
+	SubcribeToButtons();
+
+}
+
+void MatchmakingMenu::Update(float deltaTime)
+{
+	_idCreateRoomField->Update(deltaTime);
+	_idJoinRoomField->Update(deltaTime);
+}
+
+void MatchmakingMenu::Render(sf::RenderWindow* window)
+{
+	GetComponent<SpriteRenderer>()->Draw(window, GetComponent<Transform>());
+	_idCreateRoomField->Render(window);
+	_idJoinRoomField->Render(window); 
+	_createRoomButton->Render(window);
+	_joinRoomButton->Render(window);
+}
+
+ButtonComponent* MatchmakingMenu::GetCreateRoomButton()
+{
+	return _createRoomButton;
+}
+
+ButtonComponent* MatchmakingMenu::GetJoinRoomButton()
+{
+	return _joinRoomButton;
+}
+
+std::string MatchmakingMenu::GetJoinIDText()
+{
+	return _idJoinRoomField->GetText();
+}
+
+void MatchmakingMenu::SubcribeToButtons()
+{
 	_createRoomButton->onClick.Subscribe([this]() {
 
 		std::cout << "[Client] Creating a room..." << std::endl;
@@ -26,7 +62,7 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		else {
 			std::cout << "[Client] Failed to create room." << std::endl;
 		}
-	});
+		});
 
 	_joinRoomButton->onClick.Subscribe([this]() {
 
@@ -60,37 +96,8 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		else {
 			std::cout << "Failed to join room." << std::endl;
 		}
-	});
-}
+		});
 
-void MatchmakingMenu::Update(float deltaTime)
-{
-	_idCreateRoomField->Update(deltaTime);
-	_idJoinRoomField->Update(deltaTime);
-}
-
-void MatchmakingMenu::Render(sf::RenderWindow* window)
-{
-	GetComponent<SpriteRenderer>()->Draw(window, GetComponent<Transform>());
-	_idCreateRoomField->Render(window);
-	_idJoinRoomField->Render(window); 
-	_createRoomButton->Render(window);
-	_joinRoomButton->Render(window);
-}
-
-ButtonComponent* MatchmakingMenu::GetCreateRoomButton()
-{
-	return _createRoomButton;
-}
-
-ButtonComponent* MatchmakingMenu::GetJoinRoomButton()
-{
-	return _joinRoomButton;
-}
-
-std::string MatchmakingMenu::GetJoinIDText()
-{
-	return _idJoinRoomField->GetText();
 }
 
 std::string MatchmakingMenu::GetCreateIDText()

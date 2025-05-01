@@ -7,6 +7,7 @@
 #include <SFML/Network.hpp>
 #include "Client.h"
 #include "MatchmakingMenu.h"
+#include "GameOverMenu.h"
 
 class GameManager
 {
@@ -39,6 +40,8 @@ private:
     LoginMenu* _loginMenu;
     MatchmakingMenu* _matchmakingMenu;
     SplashScreenMenu* _splashMenu;
+    GameOverMenu* _gameOverMenu;
+    
 
 
     bool waitingSelection = false;

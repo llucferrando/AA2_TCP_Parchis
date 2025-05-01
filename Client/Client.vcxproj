@@ -143,6 +143,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="MatchmakingMenu.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="LoginMenu.h" />
     <ClInclude Include="MatchmakingMenu.h" />
     <ClInclude Include="Menu.h" />

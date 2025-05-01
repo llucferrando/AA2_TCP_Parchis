@@ -17,6 +17,7 @@ LoginMenu::LoginMenu(EventHandler* eventHandler, Client* client) {
 
     //Subcribe to OnClickEvent for each button in the menu
 
+
     SubcribeToButtons();
 }
 
