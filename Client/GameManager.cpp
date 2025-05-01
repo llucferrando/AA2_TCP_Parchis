@@ -10,6 +10,7 @@ GameManager::GameManager()
     _loginMenu = nullptr;
     _splashMenu = nullptr;
     _matchmakingMenu = nullptr;
+    _gameplay = nullptr;
     UpdateState(GameState::SplashScreen);
     _splashTime = 0;
 
@@ -45,6 +46,7 @@ void GameManager::Shutdown()
     delete _splashMenu;
     delete _client;
     delete _eventHandler;
+    delete _gameplay;
     delete _window;
 }
 
@@ -69,7 +71,12 @@ void GameManager::UpdateState(GameState newState)
             _matchmakingMenu = nullptr;
             break;
 
-        default: break;
+        case GameState::Gameplay:
+            delete _gameplay;
+            _gameplay = nullptr;
+            break;
+        default: 
+            break;
     }
 
     switch (newState) 
@@ -89,6 +96,11 @@ void GameManager::UpdateState(GameState newState)
         case GameState::MatchmakingMenu:
             std::cout << "[Client] Opening Matchmaking Menu" << std::endl;
             _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
+            _matchmakingMenu->onStartMatch.Subscribe([this]() { _nextState = GameState::Gameplay; _shouldChangeState = true; });
+            break;
+        case GameState::Gameplay:
+            std::cout << "[Client] Starting the game... " << std::endl;
+            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler); // HOLA
             break;
 
         default: break;
@@ -118,16 +130,16 @@ void GameManager::Update(float deltaTime)
             break;
 
         case GameState::MatchmakingMenu:
-
             _matchmakingMenu->Update(deltaTime);
             break;
 
         case GameState::Gameplay:
-            //UpdateGameplay(deltaTime);
+            _gameplay->Update(deltaTime);
             break;
     }
 
-    if (_shouldChangeState) {
+    if (_shouldChangeState) 
+    {
         UpdateState(_nextState);
         _shouldChangeState = false;
     }
@@ -137,8 +149,8 @@ void GameManager::Render()
 {
     _window->Clear();
 
-    switch (_currentState) {
-
+    switch (_currentState) 
+    {
         case GameState::SplashScreen:
             _splashMenu->Render(_window->GetWindow());
             break;
@@ -152,8 +164,9 @@ void GameManager::Render()
             break;
 
         case GameState::Gameplay:
+            _gameplay->Render(_window->GetWindow());
             break;
-        }
+    }
 
     _window->Display();
 }
@@ -164,11 +177,6 @@ void GameManager::HandleEvents()
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
-}
-
-int GameManager::RollDice()
-{
-    return rand() % 6 + 1;
 }
 
 

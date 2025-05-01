@@ -15,6 +15,11 @@ void SpriteRenderer::Draw(sf::RenderWindow* window, Transform* transform)
     window->draw(_sprite);
 }
 
+sf::Sprite SpriteRenderer::GetSprite()
+{
+    return _sprite;
+}
+
 const std::type_index SpriteRenderer::GetType()
 {
     return typeid(SpriteRenderer);

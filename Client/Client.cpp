@@ -17,7 +17,11 @@ Client::~Client()
     }
     _peers.clear();
 }
-
+void Client::StopP2PListening()
+{
+    _p2pListener.close();
+    std::cout << "[Client] Listener cerrado correctamente." << std::endl;
+}
 bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port)
 {
     auto resolved = sf::IpAddress::resolve(ip);
@@ -85,6 +89,7 @@ void Client::StartP2PListening(unsigned short port)
     {
         std::cout << "[Client] Failed to start P2P listening on port " << port << std::endl;
     }
+
 }
 
 void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)

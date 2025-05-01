@@ -1,60 +1,44 @@
 #include "TokenComponent.h"
 
-TokenComponent::TokenComponent(int playerID, int tokenID) : _playerID(playerID), _tokenID(tokenID)
-{
-	_boardPosition = -1;
-	_state = TokenState::IN_HOME;
-}
+TokenComponent::TokenComponent(PlayerColor color, int id)
+    : _color(color), _tokenID(id), _boardPosition(-1), _state(TokenState::IN_HOME) {}
 
-int TokenComponent::GetPlayerID()
-{
-	return _playerID;
-}
-
-TokenState TokenComponent::GetTokenState()
-{
-	return _state;
-}
-
-int TokenComponent::GetTokenID()
-{
-	return _tokenID;
+void TokenComponent::SetBoardPosition(int pos) {
+    _boardPosition = pos;
 }
 
 int TokenComponent::GetBoardPosition()
 {
-	return _boardPosition;
+    return _boardPosition;
 }
 
-void TokenComponent::SetPlayerID(int playerID)
+TokenState TokenComponent::GetTokenState()
 {
-	if (_playerID == playerID) return;
-
-	_playerID = playerID;
-}
-
-void TokenComponent::SetTokenID(int tokenID)
-{
-	if (_tokenID == tokenID) return;
-
-	_tokenID = tokenID;
-}
-
-void TokenComponent::SetBoardPosition(int position)
-{
-	if (_boardPosition == position) return;
-
-	_boardPosition = position;
+    return _state;
 }
 
 void TokenComponent::SetTokenState(TokenState state)
 {
-	if (_state == state) return;
-
-	_state = state;
+    _state = state;
 }
 
-const std::type_index TokenComponent::GetType()
+int TokenComponent::GetTokenID() const
 {
-	return typeid(TokenComponent);
+    return _tokenID;
+}
+
+void TokenComponent::SetTokenID(int tokenID)
+{
+    _tokenID = tokenID;
+}
+
+
+PlayerColor TokenComponent::GetColor() const {
+    return _color;
+}
+
+
+
+const std::type_index TokenComponent::GetType() {
+    return typeid(TokenComponent);
 }

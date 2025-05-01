@@ -34,7 +34,14 @@ public:
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
     void BroadcastToPeers(sf::Packet& packet); 
 
+    void SetPlayerIndex(int index) { _playerIndex = index; }
+    void SetNumPlayers(int num) { _numPlayers = num; }
+    int GetPlayerIndex() const { return _playerIndex; }
+    int GetNumPlayers() const { return _numPlayers; }
+    void StopP2PListening();
 private:
+    int _playerIndex = -1;
+    int _numPlayers = 1;
     sf::TcpSocket _bootstrapSocket;
     sf::TcpListener _p2pListener;
     std::vector<PeerInfo> _peers;

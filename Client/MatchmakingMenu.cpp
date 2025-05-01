@@ -22,6 +22,8 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		if (_client->CreateRoom(_idCreateRoomField->GetText())) {
 			std::cout << "[Client] Room created successfully, now listening for players..." << std::endl;
 			_client->StartP2PListening(60000); // ejemplo puerto libre
+
+			_waitingForStartP2P = true;
 		}
 		else {
 			std::cout << "[Client] Failed to create room." << std::endl;
@@ -48,13 +50,13 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 					response >> ipString >> port;
 
 					auto resolved = sf::IpAddress::resolve(ipString);
-
 					sf::IpAddress ip(*resolved);
 					_client->ConnectToPeer(ip, port);
 				}
 
 				std::cout << "Connected to all peers!" << std::endl;
-				// Aquí podrías cambiar de estado a Gameplay, etc.
+
+				_waitingForStartP2P = true;
 			}
 		}
 		else {
@@ -67,6 +69,31 @@ void MatchmakingMenu::Update(float deltaTime)
 {
 	_idCreateRoomField->Update(deltaTime);
 	_idJoinRoomField->Update(deltaTime);
+
+	if (_waitingForStartP2P)
+	{
+		sf::Packet startPacket;
+
+		if (_client->ReceivePacket(startPacket))
+		{
+			std::string header;
+			startPacket >> header;
+
+			if (header == "START_P2P") {
+				int index, total;
+				startPacket >> index >> total;
+
+				_client->SetPlayerIndex(index);
+				_client->SetNumPlayers(total);
+				_client->StopP2PListening();
+
+				std::cout << "[Client] Soy el jugador " << index << " de " << total << std::endl;
+
+				_waitingForStartP2P = false;
+				onStartMatch.Invoke();
+			}
+		}
+	}
 }
 
 void MatchmakingMenu::Render(sf::RenderWindow* window)

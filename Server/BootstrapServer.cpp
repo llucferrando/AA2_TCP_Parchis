@@ -33,6 +33,18 @@ void BootstrapServer::Run()
                 }
             }
         }
+        for (auto& [roomID, room] : _rooms)
+        {
+            if (room->waitingToStart && room->GetPlayers().size() >= 2)
+            {
+                if (room->startTimer.getElapsedTime().asSeconds() >= 10.f)
+                {
+                    std::cout << "[Server] Timer expired, starting match for room: " << roomID << std::endl;
+                    StartMatch(room.get());
+                    break; // la sala se elimina en StartMatch()
+                }
+            }
+        }
     }
 }
 
@@ -156,38 +168,32 @@ std::string BootstrapServer::GenerateRandomRoomID()
 }
 void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
 {
-
-    std::cout << "[Server] Join room requested with ID: " << roomID << std::endl;
-    std::cout << "[Server] Existing rooms:" << std::endl;
-
-    for (const auto& pair : _rooms)
-    {
-        std::cout << " - " << pair.first << std::endl;
+    if (!client || client->GetRoomID() == roomID) {
+        std::cout << "[Server] Client already in room or invalid.\n";
+        return;
     }
+    std::cout << "[Server] Join room requested with ID: " << roomID << std::endl;
 
     auto it = _rooms.find(roomID);
 
     if (it != _rooms.end() && !it->second->IsFull())
     {
         std::cout << "[Server] Joining room..." << std::endl;
-        it->second->AddPlayer(client);
-
+        Room* room = it->second.get();
+        room->AddPlayer(client);
         client->SetRoomID(roomID);
 
-        // Construir el paquete de respuesta con IPs y Puertos de los otros jugadores
+        // Construir paquete con los otros jugadores (solo para networking peer-to-peer)
         sf::Packet response;
-        const auto& players = it->second->GetPlayers();
-
-        int otherPlayers = players.size() - 1; // Avoid sending yourself
+        const auto& players = room->GetPlayers();
+        int otherPlayers = players.size() - 1;
 
         response << otherPlayers;
-
         for (auto* player : players)
         {
-            if (player != client) 
+            if (player != client)
             {
                 auto optionalIp = player->GetSocket()->getRemoteAddress();
-
                 if (optionalIp.has_value())
                 {
                     sf::IpAddress ip = optionalIp.value();
@@ -196,12 +202,20 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
                 }
             }
         }
-
         client->GetSocket()->send(response);
 
-        if (it->second->GetPlayers().size() >= 2) // Al menos 2 jugadores
+        int numPlayers = room->GetPlayers().size();
+
+        if (numPlayers == 2 && !room->waitingToStart)
         {
-            StartMatch(it->second.get());
+            room->waitingToStart = true;
+            room->startTimer.restart();
+            std::cout << "[Server] Room has 2 players, starting 10s countdown..." << std::endl;
+        }
+        else if (numPlayers == 4)
+        {
+            std::cout << "[Server] Room full, starting immediately." << std::endl;
+            StartMatch(room);
         }
     }
 }
@@ -212,11 +226,17 @@ void BootstrapServer::StartMatch(Room* room)
 
     auto playersCopy = room->GetPlayers();
 
-    for (auto* player : playersCopy)
+    for (int i = 0; i < playersCopy.size(); ++i)
     {
         sf::Packet packet;
         packet << "START_P2P";
-        player->GetSocket()->send(packet);
+
+        int playerIndex = i;
+        int numPlayers = playersCopy.size();
+
+        packet << playerIndex << numPlayers;
+
+        playersCopy[i]->GetSocket()->send(packet);
     }
 
     for (auto* player : playersCopy)

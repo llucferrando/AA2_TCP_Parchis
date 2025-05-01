@@ -5,23 +5,27 @@
 class TokenComponent : public Component
 {
 public:
-	TokenComponent(int player, int id);
+	TokenComponent(PlayerColor color, int id);
 
-	int GetPlayerID();
-	TokenState GetTokenState();
-	int GetTokenID();
-	int GetBoardPosition();
-	
-	void SetPlayerID(int playerID);
-	void SetTokenID(int tokenID);
 	void SetBoardPosition(int position);
+	int GetBoardPosition();
+
+
+	TokenState GetTokenState();
 	void SetTokenState(TokenState state);
+	
+	int GetTokenID() const;	
+	void SetTokenID(int tokenID);
+
+	PlayerColor GetColor() const;
+
 	const std::type_index GetType() override;
 
 private:
-	int _playerID;
+	PlayerColor _color;
 	int _tokenID;
 	int _boardPosition; // -1 if it's home
+
 	TokenState _state;
 };
 

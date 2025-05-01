@@ -17,6 +17,7 @@ public:
     ButtonComponent* GetJoinRoomButton();
     std::string GetCreateIDText();
     std::string GetJoinIDText();
+    Event<> onStartMatch;
 
 private:
     TextFieldComponent* _idCreateRoomField;
@@ -24,5 +25,6 @@ private:
     ButtonComponent* _createRoomButton;
     ButtonComponent* _joinRoomButton;
     Client* _client;
+    bool _waitingForStartP2P = false;
 };
 

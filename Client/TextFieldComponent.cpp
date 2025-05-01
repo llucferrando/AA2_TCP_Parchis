@@ -27,8 +27,12 @@ TextFieldComponent::TextFieldComponent(sf::Vector2f position, sf::Vector2f size,
 
 TextFieldComponent::~TextFieldComponent()
 {
-    _eventHandler->onClick.UnSubscribe(_listenerClickId);
-    _eventHandler->onTextEntered.UnSubscribe(_listenerTextId);
+    if (_eventHandler)
+    {
+        _eventHandler->onClick.UnSubscribe(_listenerClickId);
+
+        _eventHandler->onTextEntered.UnSubscribe(_listenerTextId);
+    }
 }
 
 void TextFieldComponent::Update(float deltaTime)

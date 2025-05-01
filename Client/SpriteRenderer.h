@@ -11,6 +11,8 @@ public:
 
 	void Draw(sf::RenderWindow* window, Transform* transform);
 
+	sf::Sprite GetSprite();
+
 	const std::type_index GetType() override;
 
 private:
