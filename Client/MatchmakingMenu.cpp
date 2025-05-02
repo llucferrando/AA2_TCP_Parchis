@@ -21,7 +21,6 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		if (_client->CreateRoom(_idCreateRoomField->GetText()))
 		{
 			std::cout << "[Client] Room created successfully, now listening for players..." << std::endl;
-			_waitingForStartP2P = true;
 		}
 		else
 		{
@@ -34,7 +33,6 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 
 		if (_client->JoinRoom(GetJoinIDText())) {
 			std::cout << "[Client] Join packet sent. Waiting for response..." << std::endl;
-			_waitingForStartP2P = true;
 		}
 		else {
 			std::cout << "[Client] Failed to send join request." << std::endl;
@@ -46,70 +44,11 @@ void MatchmakingMenu::Update(float deltaTime)
 {
 	_idCreateRoomField->Update(deltaTime);
 	_idJoinRoomField->Update(deltaTime);
-	if (_waitingForStartP2P)
-	{
-		_client->AcceptP2PConnections();
 
-		auto optPacket = _client->CheckServerMessage();
-
-		if (optPacket.has_value())
-		{
-			sf::Packet& packet = optPacket.value();
-
-			std::string header;
-			packet >> header;
-
-			#pragma region Join_ROOM_ANSWER
-			if (header == "JOIN_OK") {
-				int numPeers;
-				packet >> numPeers;
-
-				for (int i = 0; i < numPeers; ++i)
-				{
-					std::string ipString;
-					unsigned short port;
-					packet >> ipString >> port;
-
-					auto resolved = sf::IpAddress::resolve(ipString);
-					sf::IpAddress ip(*resolved);
-					_client->ConnectToPeer(ip, port);
-				}
-				std::cout << "[Client] Connected to all peers!" << std::endl;
-			}			
-			if (header == "JOIN_FAIL") {
-				std::cout << "[Client] This room does not exist." << std::endl;
-				_waitingForStartP2P = false;
-				return;
-			}
-			#pragma endregion
-
-			if (header == "NEW_PEER") {
-				std::string ipString;
-				unsigned short port;
-				packet >> ipString >> port;
-
-				auto resolved = sf::IpAddress::resolve(ipString);
-				sf::IpAddress ip(*resolved);
-				_client->ConnectToPeer(ip, port);
-
-				std::cout << "[Client] Received new peer: " << ip << ":" << port << std::endl;
-			}
-
-			#pragma region START_MATCH
-			if (header == "START_P2P") {
-				int index, total;
-				packet >> index >> total;
-
-				_client->SetPlayerIndex(index);
-				_client->SetNumPlayers(total);
-
-				std::cout << "[Client] Soy el jugador " << index << " de " << total << std::endl;
-				_waitingForStartP2P = false;
-				onStartMatch.Invoke();
-			}
-			#pragma endregion
-		}
-	}
+	//Aqui tendria que hacer algo similar al servidor donde acepta y lee nuevos peers no?
+	  // Escuchar nuevos peers entrantes (si este cliente es host)
+	_client->UpdateP2PConnections();
+	_client->HandleServerMessages();
 }
 
 void MatchmakingMenu::Render(sf::RenderWindow* window)

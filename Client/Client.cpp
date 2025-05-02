@@ -1,7 +1,11 @@
 #include "Client.h"
 #include <iostream>
 
-Client::Client() { std::srand(std::time(nullptr)); }
+Client::Client() 
+{ 
+    std::srand(std::time(nullptr)); 
+    _p2pPort = 60000 + rand() % 1000;
+}
 
 Client::~Client()
 {
@@ -18,21 +22,8 @@ Client::~Client()
     _peers.clear();
 }
 
-void Client::StartP2PListening(unsigned short port)
-{
-    if (_p2pListener.listen(port) != sf::Socket::Status::Done)
-    {
-        std::cout << "[Client] Failed to start P2P listening on port " << port << std::endl;
-    }
 
-    std::cout << "[Client] Listening on port: " << port << std::endl;
-}
-
-void Client::StopP2PListening()
-{
-    _p2pListener.close();
-    std::cout << "[Client] Listener cerrado correctamente." << std::endl;
-}
+#pragma region BootstrapServer
 
 bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port)
 {
@@ -44,8 +35,8 @@ bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port
         return false;
     }
 
-    _bootstrapSocket.setBlocking(false); 
-    _selector.add(_bootstrapSocket);     
+    _bootstrapSocket.setBlocking(false);
+    _selector.add(_bootstrapSocket);
 
     std::cout << "[Client] Connected to bootstrap server ip " + ip << std::endl;
     return true;
@@ -54,7 +45,6 @@ bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port
 void Client::DisconnectFromBootstrapServer()
 {
     std::cout << "[Client] Disconnected from bootstrap server." << std::endl;
-
     _bootstrapSocket.disconnect();
 }
 
@@ -78,71 +68,97 @@ bool Client::SendRegister(const std::string& username, const std::string& passwo
 bool Client::CreateRoom(std::string roomID)
 {
     std::cout << "[Client] Create Room request with id " << roomID << std::endl;
-    unsigned short p2pPort = 60000 + rand() % 1000;
-    _lastP2PPort = p2pPort;
-    StartP2PListening(p2pPort);
 
     sf::Packet packet;
-    packet << "CREATE_ROOM" << roomID << p2pPort;
+    packet << "CREATE_ROOM" << roomID << _p2pPort;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
-bool Client::ReceivePacketFromPeers(sf::Packet& packet)
-{
-    for (auto& [socket, ip, port] : _peers)
-    {
-        if (socket->receive(packet) == sf::Socket::Status::Done)
-        {
-            std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
-            return true;
-        }
-    }
-    return false;
-}
-void Client::AcceptP2PConnections()
-{
-    sf::TcpSocket* newPeer = new sf::TcpSocket();
 
-    if (_p2pListener.accept(*newPeer) == sf::Socket::Status::Done)
-    {
-        newPeer->setBlocking(false);
-
-        auto optIp = newPeer->getRemoteAddress();
-        if (!optIp.has_value())
-        {
-            std::cerr << "[Client] Error: Could not get remote IP from incoming peer.\n";
-            delete newPeer;
-            return;
-        }
-
-        sf::IpAddress ip = optIp.value();
-        unsigned short port = newPeer->getRemotePort();
-
-        std::cout << "[Client] Accepted incoming peer: " << ip << ":" << port << std::endl;
-
-        _peers.emplace_back(newPeer, ip, port);
-    }
-    else
-    {
-        delete newPeer;
-    }
-}
 bool Client::JoinRoom(std::string roomId)
 {
     std::cout << "[Client] Join Room request with id " << roomId << std::endl;
 
-    unsigned short p2pPort = 60000 + rand() % 1000;
-    _lastP2PPort = p2pPort;
-    StartP2PListening(p2pPort);
-
     sf::Packet packet;
-    packet << "JOIN_ROOM" << roomId << p2pPort;
+    packet << "JOIN_ROOM" << roomId << _p2pPort;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
-bool Client::ReceivePacket(sf::Packet& packet)
+bool Client::ReceivePacketFromServer(sf::Packet& packet)
 {
     return _bootstrapSocket.receive(packet) == sf::Socket::Status::Done;
 }
+
+std::optional<sf::Packet> Client::CheckServerMessage()
+{
+    if (_selector.wait(sf::milliseconds(0)))
+    {
+        if (_selector.isReady(_bootstrapSocket))
+        {
+            sf::Packet packet;
+            if (_bootstrapSocket.receive(packet) == sf::Socket::Status::Done)
+            {
+                return packet;
+            }
+        }
+    }
+    return std::nullopt;
+}
+
+void Client::HandleServerMessages()
+{
+    auto packetOpt = CheckServerMessage();
+    if (!packetOpt.has_value()) return;
+
+    sf::Packet packet = packetOpt.value();
+    std::string cmd;
+    packet >> cmd;
+
+    if (cmd == "JOIN_OK")
+    {
+        int numPeers;
+        packet >> numPeers;
+        for (int i = 0; i < numPeers; ++i)
+        {
+            std::string ipStr;
+            unsigned short port;
+            packet >> ipStr >> port;
+
+            auto resolved = sf::IpAddress::resolve(ipStr);
+            if (resolved.has_value())
+            {
+                ConnectToPeer(resolved.value(), port);
+            }
+            else
+            {
+                std::cout << "[Client] Failed to resolve peer IP: " << ipStr << std::endl;
+            }
+        }
+    }
+    else if (cmd == "NEW_PEER")
+    {
+        std::string ipStr;
+        unsigned short port;
+        packet >> ipStr >> port;
+
+        auto resolved = sf::IpAddress::resolve(ipStr);
+        if (resolved.has_value())
+        {
+            ConnectToPeer(resolved.value(), port);
+            std::cout << "[Client] Connected to new peer announced by server: " << ipStr << ":" << port << std::endl;
+        }
+        else
+        {
+            std::cout << "[Client] Failed to resolve new peer IP: " << ipStr << std::endl;
+        }
+    }
+    else if (cmd == "JOIN_FAIL")
+    {
+        std::cout << "[Client] Failed to join room (JOIN_FAIL)." << std::endl;
+    }
+}
+#pragma endregion
+
+#pragma region P2P
 
 void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
 {
@@ -181,18 +197,67 @@ void Client::BroadcastToPeers(sf::Packet& packet)
     }
 }
 
-std::optional<sf::Packet> Client::CheckServerMessage()
+void Client::UpdateP2PConnections()
 {
-    if (_selector.wait(sf::milliseconds(0)))
+    if (_selector.isReady(_p2pListener))
     {
-        if (_selector.isReady(_bootstrapSocket))
+        sf::TcpSocket* newPeer = new sf::TcpSocket();
+        if (_p2pListener.accept(*newPeer) == sf::Socket::Status::Done)
         {
-            sf::Packet packet;
-            if (_bootstrapSocket.receive(packet) == sf::Socket::Status::Done)
+            newPeer->setBlocking(false);
+
+            auto optionalIp = newPeer->getRemoteAddress();
+            if (optionalIp.has_value())
             {
-                return packet;
+                sf::IpAddress ip = optionalIp.value();
+                unsigned short port = newPeer->getRemotePort();
+
+                _peers.emplace_back(newPeer, ip, port);
+                _selector.add(*newPeer);
+
+                std::cout << "[Client] New peer connected: " << ip << ":" << port << std::endl;
+            }
+            else
+            {
+                std::cout << "[Client] New peer connected but no valid IP." << std::endl;
+                delete newPeer;
             }
         }
+        else
+        {
+            delete newPeer;
+        }
     }
-    return std::nullopt;
 }
+
+bool Client::ReceivePacketFromPeers(sf::Packet& packet)
+{
+    for (auto& [socket, ip, port] : _peers)
+    {
+        if (socket->receive(packet) == sf::Socket::Status::Done)
+        {
+            std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
+            return true;
+        }
+    }
+    return false;
+}
+
+#pragma endregion
+
+#pragma region Getters & Setters
+
+    void Client::SetPlayerIndex(int index) { _playerIndex = index; }
+
+    void Client::SetNumPlayers(int num) { _numPlayers = num; }
+
+    int Client::GetPlayerIndex() const { return _playerIndex; }
+
+    int Client::GetNumPlayers() const { return _numPlayers; }
+
+    sf::SocketSelector Client::GetSelector()
+    {
+        return _selector;
+    }
+
+#pragma endregion
