@@ -5,6 +5,7 @@ enum class GameState {
 	LoginMenu,
 	MatchmakingMenu,
 	Gameplay,
+	GameOver,
 	None
 };
 

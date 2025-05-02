@@ -111,8 +111,7 @@ void LoginMenu::SubcribeToButtons()
                 if (reply == "REGISTER_OK")
                 {
                     onRegisterSucces.Invoke();
-                    //_window->Clear();
-                    //UpdateState(GameState::MatchmakingMenu);
+                    
                 }
                 else
                 {

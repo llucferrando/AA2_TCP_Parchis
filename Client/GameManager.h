@@ -8,6 +8,7 @@
 #include "Client.h"
 #include "MatchmakingMenu.h"
 #include "Gameplay.h"
+#include "GameOverMenu.h"
 
 class GameManager
 {
@@ -40,6 +41,7 @@ private:
     MatchmakingMenu* _matchmakingMenu;
     SplashScreenMenu* _splashMenu;
     Gameplay* _gameplay;
+    GameOverMenu *_gameOverMenu;
 
     bool waitingSelection = false;
     int diceValue = 0;

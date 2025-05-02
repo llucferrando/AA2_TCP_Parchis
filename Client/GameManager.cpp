@@ -11,6 +11,7 @@ GameManager::GameManager()
     _splashMenu = nullptr;
     _matchmakingMenu = nullptr;
     _gameplay = nullptr;
+    _gameOverMenu = nullptr;
     UpdateState(GameState::SplashScreen);
     _splashTime = 0;
 
@@ -44,6 +45,7 @@ void GameManager::Shutdown()
     delete _loginMenu;
     delete _matchmakingMenu;
     delete _splashMenu;
+    delete _gameOverMenu;
     delete _client;
     delete _eventHandler;
     delete _gameplay;
@@ -75,6 +77,12 @@ void GameManager::UpdateState(GameState newState)
             delete _gameplay;
             _gameplay = nullptr;
             break;
+
+        case GameState::GameOver:
+            delete _gameOverMenu;
+            _gameOverMenu = nullptr;
+            break;
+
         default: 
             break;
     }
@@ -98,10 +106,19 @@ void GameManager::UpdateState(GameState newState)
             _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
             _matchmakingMenu->onStartMatch.Subscribe([this]() { _nextState = GameState::Gameplay; _shouldChangeState = true; });
             break;
+
         case GameState::Gameplay:
             std::cout << "[Client] Starting the game... " << std::endl;
             _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler); // HOLA
             break;
+
+        case GameState::GameOver:
+            std::cout << "[Client] Game finished..." << std::endl;
+            _gameOverMenu = new GameOverMenu(_eventHandler,_client); 
+            _gameOverMenu->onReturnMenu.Subscribe([this]() { _nextState = GameState::MatchmakingMenu; _shouldChangeState = true; });
+            _gameOverMenu->onExitGame.Subscribe([this]() { _window->Close(); });
+            break;
+
 
         default: break;
     }
@@ -136,6 +153,10 @@ void GameManager::Update(float deltaTime)
         case GameState::Gameplay:
             _gameplay->Update(deltaTime);
             break;
+
+        case GameState::GameOver:
+            _gameOverMenu->Update(deltaTime);
+            break;
     }
 
     if (_shouldChangeState) 
@@ -165,6 +186,10 @@ void GameManager::Render()
 
         case GameState::Gameplay:
             _gameplay->Render(_window->GetWindow());
+            break;
+
+        case GameState::GameOver: 
+            _gameOverMenu->Render(_window->GetWindow());
             break;
     }
 
