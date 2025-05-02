@@ -140,7 +140,7 @@ void Gameplay::HandleNetwork()
 {
     sf::Packet packet;
 
-    if (_client->ReceivePacket(packet)) 
+    if (_client->ReceivePacketFromPeers(packet)) 
     {
         int msgTypeInt;
 

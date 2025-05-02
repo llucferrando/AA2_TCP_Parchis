@@ -21,12 +21,11 @@ DataBaseManager::~DataBaseManager()
 
 void DataBaseManager::ConnectDatabase()
 {
-
 	try {
 		_driver = get_driver_instance();
 		_con = _driver->connect(SERVER, USERNAME, PASSWORD);
 		_con->setSchema("videogame");
-		std::cout << "Connection with database done" << std::endl;
+		std::cout << "[Server] Connection with database done" << std::endl;
 
 	}
 	catch (sql::SQLException e) {
@@ -41,7 +40,7 @@ bool DataBaseManager::RegisterUser(const std::string& nickname, const std::strin
 {
 	//We check for empty fields
 	if (nickname.empty() || password.empty()) {
-		std::cerr << "Nickname or password empty on field \n";
+		std::cerr << "[Server] Nickname or password empty on field \n";
 		return false;
 	}
 
@@ -54,11 +53,11 @@ bool DataBaseManager::RegisterUser(const std::string& nickname, const std::strin
 		stmt->setString(2, hashedPassword);
 		stmt->execute();		
 
-		std::cout << "User registered correctly" << std::endl;
+		std::cout << "[Server] User registered correctly" << std::endl;
 		return true;
 	}
 	catch(sql::SQLException& e){
-		std::cerr<<"Error while trying to register user" << e.what() << std::endl;
+		std::cerr<<"[Server] Error while trying to register user" << e.what() << std::endl;
 		return false;
 	}
 	
@@ -68,7 +67,7 @@ bool DataBaseManager::LoginUser(const std::string& nickname, const std::string& 
 {
 	//We check for empty fields
 	if (nickname.empty() || password.empty()) {
-		std::cerr << "Nickname or password empty on field \n";
+		std::cerr << "[Server] Nickname or password empty on field \n";
 		return false;
 	}
 	try {
@@ -80,16 +79,16 @@ bool DataBaseManager::LoginUser(const std::string& nickname, const std::string& 
 		if (res->next()) {
 			std::string storedHash = res->getString("password"); 
 			if (bcrypt::validatePassword(password, storedHash)) { 
-				std::cout << "Correct login for user: " << nickname << std::endl;
+				std::cout << "[Server] Correct login for user: " << nickname << std::endl;
 				return true;
 			}
 		}
 
-		std::cout << "Login failed for user: " << nickname << std::endl;
+		std::cout << "[Server] Login failed for user: " << nickname << std::endl;
 		return false;
 	}
 	catch (sql::SQLException& e) {
-		std::cerr << "Login error" << e.what() << std::endl;
+		std::cerr << "[Server] Login error" << e.what() << std::endl;
 		return false;
 	}
 }

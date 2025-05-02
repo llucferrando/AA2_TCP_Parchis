@@ -65,14 +65,14 @@ void LoginMenu::SubcribeToButtons()
 {
     _loginButton->onClick.Subscribe([this]() {
 
-        std::cout << "Send Login with username: " + GetUsernameText() + " and password: " + GetPasswordText() << std::endl;
+        std::cout << "[Client] Send Login with username: " + GetUsernameText() + " and password: " + GetPasswordText() << std::endl;
 
         if (_client->SendLogin(GetUsernameText(), GetPasswordText()))
         {
-            sf::Packet response;
-
-            if (_client->ReceivePacket(response))
+            auto optPacket = _client->CheckServerMessage();
+            if (optPacket.has_value())
             {
+                sf::Packet& response = optPacket.value();
                 std::string reply;
                 response >> reply;
 
@@ -82,51 +82,50 @@ void LoginMenu::SubcribeToButtons()
                 }
                 else
                 {
-                    std::cout << "Login fallido: " << reply << std::endl;
+                    std::cout << "[Client] Login failed: " << reply << std::endl;
                 }
             }
             else
             {
-                std::cout << "Error recibiendo respuesta del servidor." << std::endl;
+                std::cout << "[Client] Error reciving server answer." << std::endl;
             }
         }
         else
         {
-            std::cout << "Error enviando login." << std::endl;
+            std::cout << "[Client] Error sending login." << std::endl;
         }
     });
 
     _registerButton->onClick.Subscribe([this]() {
 
-        std::cout << "Send Register with username: " + GetUsernameText() + " and password: " + GetPasswordText() << std::endl;
+        std::cout << "[Client] Send Register with username: " + GetUsernameText() + " and password: " + GetPasswordText() << std::endl;
 
         if (_client->SendRegister(GetUsernameText(), GetPasswordText()))
         {
-            sf::Packet response;
-            if (_client->ReceivePacket(response))
+            auto optPacket = _client->CheckServerMessage();
+            if (optPacket.has_value())
             {
+                sf::Packet& response = optPacket.value();
                 std::string reply;
                 response >> reply;
 
                 if (reply == "REGISTER_OK")
                 {
                     onRegisterSucces.Invoke();
-                    //_window->Clear();
-                    //UpdateState(GameState::MatchmakingMenu);
                 }
                 else
                 {
-                    std::cout << "Register failed: " << reply << std::endl;
+                    std::cout << "[Client] Register failed: " << reply << std::endl;
                 }
             }
             else
             {
-                std::cout << "Error reciving answer from server" << std::endl;
+                std::cout << "[Client] Error reciving answer from server" << std::endl;
             }
         }
         else
         {
-            std::cout << "Error sending register" << std::endl;
+            std::cout << "[Client] Error sending register" << std::endl;
         }
     });
 }

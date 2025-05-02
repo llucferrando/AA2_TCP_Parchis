@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Window.h"
 #include "EventHandler.h"
+#include "FontManager.h"
 
 class TextFieldComponent : public Component
 {
@@ -22,7 +23,6 @@ private:
     void OnGlobalClick(sf::Vector2f clickPos);
 
     sf::RectangleShape _box;
-    sf::Font _font;
     sf::Text _text;
 
     std::string _input;

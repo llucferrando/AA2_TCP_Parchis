@@ -1,7 +1,7 @@
 #include "TextFieldComponent.h"
 
 TextFieldComponent::TextFieldComponent(sf::Vector2f position, sf::Vector2f size, const std::string& placeholder, EventHandler* eventHandler)
-    : _placeholder(placeholder), _focused(false), _cursorBlink(0.f), _cursorVisible(true), _text(_font, "", 24), _eventHandler(eventHandler)
+    : _placeholder(placeholder), _focused(false), _cursorBlink(0.f), _cursorVisible(true), _text(FontManager::GetMainFont(), "", 24), _eventHandler(eventHandler)
 {
 
     _box.setPosition(position);
@@ -10,8 +10,7 @@ TextFieldComponent::TextFieldComponent(sf::Vector2f position, sf::Vector2f size,
     _box.setOutlineThickness(2);
     _box.setOutlineColor(sf::Color::Black);
 
-    _font.openFromFile("Assets/Fonts/Poppins-Bold.ttf");
-    _text.setFont(_font);
+    _text.setFont(FontManager::GetMainFont());
     _text.setCharacterSize(24);
     _text.setPosition(sf::Vector2f(position.x + 10, position.y + 10));
     _text.setFillColor(sf::Color::Black);
@@ -65,7 +64,7 @@ void TextFieldComponent::Render(sf::RenderWindow* window)
 
 
     _text.setString(toDisplay);
-    window->draw(_text);
+        window->draw(_text);
 }
 
 // Handle the inputs from Event, if its backspace deletes last char, if not writes char.

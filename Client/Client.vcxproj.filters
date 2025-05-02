@@ -120,6 +120,9 @@
     <ClCompile Include="BoardPositions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcrypt.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="BoardPositions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

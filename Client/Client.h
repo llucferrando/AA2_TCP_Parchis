@@ -28,12 +28,13 @@ public:
 
     bool CreateRoom(std::string roomID);
     bool JoinRoom(std::string roomId);
+    bool ReceivePacketFromPeers(sf::Packet& packet);
 
     bool ReceivePacket(sf::Packet& packet);
     void StartP2PListening(unsigned short port); 
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
     void BroadcastToPeers(sf::Packet& packet); 
-
+    std::optional<sf::Packet> CheckServerMessage();
     void SetPlayerIndex(int index) { _playerIndex = index; }
     void SetNumPlayers(int num) { _numPlayers = num; }
     int GetPlayerIndex() const { return _playerIndex; }
@@ -45,5 +46,7 @@ private:
     sf::TcpSocket _bootstrapSocket;
     sf::TcpListener _p2pListener;
     std::vector<PeerInfo> _peers;
+    unsigned short _lastP2PPort;
+    sf::SocketSelector _selector;
 };
 

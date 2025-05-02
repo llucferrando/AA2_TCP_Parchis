@@ -16,53 +16,30 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 	_client = client;
 
 	_createRoomButton->onClick.Subscribe([this]() {
-
 		std::cout << "[Client] Creating a room..." << std::endl;
 
-		if (_client->CreateRoom(_idCreateRoomField->GetText())) {
+		if (_client->CreateRoom(_idCreateRoomField->GetText()))
+		{
 			std::cout << "[Client] Room created successfully, now listening for players..." << std::endl;
-			_client->StartP2PListening(60000); // ejemplo puerto libre
+			_waitingForStartP2P = true;
+		}
+		else
+		{
+			std::cout << "[Client] Failed to create room." << std::endl;
+		}
+		});
 
+	_joinRoomButton->onClick.Subscribe([this]() {
+		std::cout << "[Client] Join room requested..." << std::endl;
+
+		if (_client->JoinRoom(GetJoinIDText())) {
+			std::cout << "[Client] Join packet sent. Waiting for response..." << std::endl;
 			_waitingForStartP2P = true;
 		}
 		else {
-			std::cout << "[Client] Failed to create room." << std::endl;
+			std::cout << "[Client] Failed to send join request." << std::endl;
 		}
-	});
-
-	_joinRoomButton->onClick.Subscribe([this]() {
-
-		std::cout << "Joining a room requested..." << std::endl;
-
-		if (_client->JoinRoom(GetJoinIDText())) {
-
-			sf::Packet response;
-
-			if (_client->ReceivePacket(response))
-			{
-				int numPeers;
-				response >> numPeers;
-
-				for (int i = 0; i < numPeers; ++i)
-				{
-					std::string ipString;
-					unsigned short port;
-					response >> ipString >> port;
-
-					auto resolved = sf::IpAddress::resolve(ipString);
-					sf::IpAddress ip(*resolved);
-					_client->ConnectToPeer(ip, port);
-				}
-
-				std::cout << "Connected to all peers!" << std::endl;
-
-				_waitingForStartP2P = true;
-			}
-		}
-		else {
-			std::cout << "Failed to join room." << std::endl;
-		}
-	});
+		});
 }
 
 void MatchmakingMenu::Update(float deltaTime)
@@ -72,19 +49,56 @@ void MatchmakingMenu::Update(float deltaTime)
 
 	if (_waitingForStartP2P)
 	{
-		sf::Packet startPacket;
-
-		if (_client->ReceivePacket(startPacket))
+		auto optPacket = _client->CheckServerMessage();
+		if (optPacket.has_value())
 		{
+			sf::Packet& packet = optPacket.value();
+
 			std::string header;
-			startPacket >> header;
+			packet >> header;
+
+			if (header == "JOIN_FAIL") {
+				std::cout << "[Client] This room does not exist." << std::endl;
+				_waitingForStartP2P = false;
+				return;
+			}
+
+			if (header == "JOIN_OK") {
+				int numPeers;
+				packet >> numPeers;
+
+				for (int i = 0; i < numPeers; ++i)
+				{
+					std::string ipString;
+					unsigned short port;
+					packet >> ipString >> port;
+
+					auto resolved = sf::IpAddress::resolve(ipString);
+					sf::IpAddress ip(*resolved);
+					_client->ConnectToPeer(ip, port);
+				}
+				std::cout << "[Client] Connected to all peers!" << std::endl;
+			}
+
+			if (header == "NEW_PEER") {
+				std::string ipString;
+				unsigned short port;
+				packet >> ipString >> port;
+
+				auto resolved = sf::IpAddress::resolve(ipString);
+				sf::IpAddress ip(*resolved);
+				_client->ConnectToPeer(ip, port);
+
+				std::cout << "[Client] Received new peer: " << ip << ":" << port << std::endl;
+			}
 
 			if (header == "START_P2P") {
 				int index, total;
-				startPacket >> index >> total;
+				packet >> index >> total;
 
 				_client->SetPlayerIndex(index);
 				_client->SetNumPlayers(total);
+				sf::sleep(sf::milliseconds(300)); // por seguridad antes de cerrar el listener
 				_client->StopP2PListening();
 
 				std::cout << "[Client] Soy el jugador " << index << " de " << total << std::endl;
@@ -105,22 +119,10 @@ void MatchmakingMenu::Render(sf::RenderWindow* window)
 	_joinRoomButton->Render(window);
 }
 
-ButtonComponent* MatchmakingMenu::GetCreateRoomButton()
-{
-	return _createRoomButton;
-}
+ButtonComponent* MatchmakingMenu::GetCreateRoomButton() { return _createRoomButton; }
 
-ButtonComponent* MatchmakingMenu::GetJoinRoomButton()
-{
-	return _joinRoomButton;
-}
+ButtonComponent* MatchmakingMenu::GetJoinRoomButton() { return _joinRoomButton; }
 
-std::string MatchmakingMenu::GetJoinIDText()
-{
-	return _idJoinRoomField->GetText();
-}
+std::string MatchmakingMenu::GetJoinIDText() { return _idJoinRoomField->GetText(); }
 
-std::string MatchmakingMenu::GetCreateIDText()
-{
-	return _idCreateRoomField->GetText();
-}
+std::string MatchmakingMenu::GetCreateIDText() { return _idCreateRoomField->GetText(); }
