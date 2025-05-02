@@ -46,10 +46,12 @@ void MatchmakingMenu::Update(float deltaTime)
 {
 	_idCreateRoomField->Update(deltaTime);
 	_idJoinRoomField->Update(deltaTime);
-
 	if (_waitingForStartP2P)
 	{
+		_client->AcceptP2PConnections();
+
 		auto optPacket = _client->CheckServerMessage();
+
 		if (optPacket.has_value())
 		{
 			sf::Packet& packet = optPacket.value();
@@ -57,12 +59,7 @@ void MatchmakingMenu::Update(float deltaTime)
 			std::string header;
 			packet >> header;
 
-			if (header == "JOIN_FAIL") {
-				std::cout << "[Client] This room does not exist." << std::endl;
-				_waitingForStartP2P = false;
-				return;
-			}
-
+			#pragma region Join_ROOM_ANSWER
 			if (header == "JOIN_OK") {
 				int numPeers;
 				packet >> numPeers;
@@ -78,7 +75,13 @@ void MatchmakingMenu::Update(float deltaTime)
 					_client->ConnectToPeer(ip, port);
 				}
 				std::cout << "[Client] Connected to all peers!" << std::endl;
+			}			
+			if (header == "JOIN_FAIL") {
+				std::cout << "[Client] This room does not exist." << std::endl;
+				_waitingForStartP2P = false;
+				return;
 			}
+			#pragma endregion
 
 			if (header == "NEW_PEER") {
 				std::string ipString;
@@ -92,20 +95,19 @@ void MatchmakingMenu::Update(float deltaTime)
 				std::cout << "[Client] Received new peer: " << ip << ":" << port << std::endl;
 			}
 
+			#pragma region START_MATCH
 			if (header == "START_P2P") {
 				int index, total;
 				packet >> index >> total;
 
 				_client->SetPlayerIndex(index);
 				_client->SetNumPlayers(total);
-				sf::sleep(sf::milliseconds(300)); // por seguridad antes de cerrar el listener
-				_client->StopP2PListening();
 
 				std::cout << "[Client] Soy el jugador " << index << " de " << total << std::endl;
-
 				_waitingForStartP2P = false;
 				onStartMatch.Invoke();
 			}
+			#pragma endregion
 		}
 	}
 }

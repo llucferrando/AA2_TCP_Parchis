@@ -29,7 +29,7 @@ public:
     bool CreateRoom(std::string roomID);
     bool JoinRoom(std::string roomId);
     bool ReceivePacketFromPeers(sf::Packet& packet);
-
+    void AcceptP2PConnections();
     bool ReceivePacket(sf::Packet& packet);
     void StartP2PListening(unsigned short port); 
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 

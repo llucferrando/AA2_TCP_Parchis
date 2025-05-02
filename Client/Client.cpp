@@ -98,6 +98,34 @@ bool Client::ReceivePacketFromPeers(sf::Packet& packet)
     }
     return false;
 }
+void Client::AcceptP2PConnections()
+{
+    sf::TcpSocket* newPeer = new sf::TcpSocket();
+
+    if (_p2pListener.accept(*newPeer) == sf::Socket::Status::Done)
+    {
+        newPeer->setBlocking(false);
+
+        auto optIp = newPeer->getRemoteAddress();
+        if (!optIp.has_value())
+        {
+            std::cerr << "[Client] Error: Could not get remote IP from incoming peer.\n";
+            delete newPeer;
+            return;
+        }
+
+        sf::IpAddress ip = optIp.value();
+        unsigned short port = newPeer->getRemotePort();
+
+        std::cout << "[Client] Accepted incoming peer: " << ip << ":" << port << std::endl;
+
+        _peers.emplace_back(newPeer, ip, port);
+    }
+    else
+    {
+        delete newPeer;
+    }
+}
 bool Client::JoinRoom(std::string roomId)
 {
     std::cout << "[Client] Join Room request with id " << roomId << std::endl;
