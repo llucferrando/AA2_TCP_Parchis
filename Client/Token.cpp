@@ -1,0 +1,30 @@
+#include "Token.h"
+
+Token::Token(int playerIndex, int tokenID, sf::Vector2f position, EventHandler* eventHandler)
+{
+	_state = TokenState::IN_HOME;
+	_color = GetColorFromIndex(playerIndex);
+	_spriteRenderer = AddComponent<SpriteRenderer>("Assets/GameAssets/Token.png", _color);
+	_token = AddComponent<TokenComponent>(GetEnumColorFromIndex(playerIndex), tokenID);
+	GetComponent<Transform>()->position = position;
+	_clickable = AddComponent<ClickableComponent>(eventHandler, GetComponent<Transform>(), _spriteRenderer);
+}
+
+void Token::Render(sf::RenderWindow* window)
+{
+	_spriteRenderer->Draw(window, GetComponent<Transform>());
+}
+
+void Token::Update(float deltaTime)
+{
+}
+
+TokenState Token::GetTokenState()
+{
+	return _state;
+}
+
+void Token::SetTokenState(TokenState tokenState)
+{
+	_state = tokenState;
+}

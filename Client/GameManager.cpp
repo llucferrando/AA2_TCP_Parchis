@@ -4,83 +4,17 @@
 GameManager::GameManager()
 {
     _window = new Window();
-    _eventHandler = new EventHandler();
-    _currentState = GameState::SplashScreen;
-    _loginMenu = new LoginMenu(_eventHandler);
-    _splashMenu = new SplashScreenMenu();
     _client = new Client();
-
-
-    _loginMenu->GetLoginButton()->onClick.Subscribe([this]() 
-        {
-            //Si login es correcto con BBDD UPdate to matchmaking sino nada
-            std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPaswwordText();
-            std::cout << "SendLogin  " + username + "   " + password << std::endl;
-            if (_client->SendLogin(username, password))
-            {
-                sf::Packet response;
-                if (_client->ReceivePacket(response))
-                {
-                    std::string reply;
-                    response >> reply;
-
-                    if (reply == "LOGIN_OK")
-                    {
-                        UpdateState(GameState::MatchmakingMenu);
-                    }
-                    else
-                    {
-                        std::cout << "Login fallido: " << reply << std::endl;                        
-                    }
-                }
-                else
-                {
-                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
-                }
-            }
-            else
-            {
-                std::cout << "Error enviando login." << std::endl;
-            }
-        });
-
-    _loginMenu->GetRegisterButton()->onClick.Subscribe([this]()
-        {
-            //Si register es correcto con BBDD UPdate to matchmaking sino nada
-            std::string username = _loginMenu->GetUsernameText();
-            std::string password = _loginMenu->GetPaswwordText();
-            std::cout << "Send Register  " + username + "   " + password << std::endl;
-            if (_client->SendRegister(username, password))
-            {
-                sf::Packet response;
-                if (_client->ReceivePacket(response))
-                {
-                    std::string reply;
-                    response >> reply;
-
-                    if (reply == "REGISTER_OK")
-                    {
-                        UpdateState(GameState::MatchmakingMenu);
-                    }
-                    else
-                    {
-                        std::cout << "Register fallido: " << reply << std::endl;
-                    }
-                }
-                else
-                {
-                    std::cout << "Error recibiendo respuesta del servidor." << std::endl;
-                }
-            }
-            else
-            {
-                std::cout << "Error enviando login." << std::endl;
-            }
-        });
+    _eventHandler = new EventHandler();
+    _currentState = GameState::None;
+    _loginMenu = nullptr;
+    _splashMenu = nullptr;
+    _matchmakingMenu = nullptr;
+    _gameplay = nullptr;
+    UpdateState(GameState::SplashScreen);
+    _splashTime = 0;
 
     std::srand(std::time(nullptr));
-
 }
 
 GameManager::~GameManager()
@@ -90,7 +24,6 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-    _splashTime = 0;
     _client->ConnectToBootstrapServer("127.0.0.1", 50000);
 }
 
@@ -107,15 +40,71 @@ void GameManager::Run()
 }
 
 void GameManager::Shutdown()
-{    
-
+{   
+    delete _loginMenu;
+    delete _matchmakingMenu;
+    delete _splashMenu;
+    delete _client;
     delete _eventHandler;
+    delete _gameplay;
     delete _window;
 }
 
 void GameManager::UpdateState(GameState newState)
 {
     if (_currentState == newState) return;
+
+    switch (_currentState) 
+    {
+        case GameState::SplashScreen:
+            delete _splashMenu;
+            _splashMenu = nullptr;
+            break;
+
+        case GameState::LoginMenu:
+            delete _loginMenu;
+            _loginMenu = nullptr;
+            break;
+
+        case GameState::MatchmakingMenu:
+            delete _matchmakingMenu;
+            _matchmakingMenu = nullptr;
+            break;
+
+        case GameState::Gameplay:
+            delete _gameplay;
+            _gameplay = nullptr;
+            break;
+        default: 
+            break;
+    }
+
+    switch (newState) 
+    {
+        case GameState::SplashScreen:
+            std::cout << "[Client] Opening Splashscreen" << std::endl;
+            _splashMenu = new SplashScreenMenu();
+            break;
+        case GameState::LoginMenu:
+            std::cout << "[Client] Opening Login Menu" << std::endl;
+            _loginMenu = new LoginMenu(_eventHandler, _client);
+            _loginMenu->onLoginSucces.Subscribe([this]() {     _nextState = GameState::MatchmakingMenu;
+            _shouldChangeState = true; });
+            _loginMenu->onRegisterSucces.Subscribe([this]() { std::cout << "Registered succesfully..." << std::endl; });
+            break;
+
+        case GameState::MatchmakingMenu:
+            std::cout << "[Client] Opening Matchmaking Menu" << std::endl;
+            _matchmakingMenu = new MatchmakingMenu(_eventHandler, _client);
+            _matchmakingMenu->onStartMatch.Subscribe([this]() { _nextState = GameState::Gameplay; _shouldChangeState = true; });
+            break;
+        case GameState::Gameplay:
+            std::cout << "[Client] Starting the game... " << std::endl;
+            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler); // HOLA
+            break;
+
+        default: break;
+    }
 
     _currentState = newState;
 }
@@ -124,7 +113,7 @@ void GameManager::Update(float deltaTime)
 {
     switch (_currentState) {
 
-        case GameState::SplashScreen:
+        case GameState::SplashScreen:            
 
             _splashTime += deltaTime;
 
@@ -136,16 +125,23 @@ void GameManager::Update(float deltaTime)
             break;
 
         case GameState::LoginMenu:
+
             _loginMenu->Update(deltaTime);
             break;
 
         case GameState::MatchmakingMenu:
-            //_matchmakingMenu->Update(deltaTime);
+            _matchmakingMenu->Update(deltaTime);
             break;
 
         case GameState::Gameplay:
-            //UpdateGameplay(deltaTime);
+            _gameplay->Update(deltaTime);
             break;
+    }
+
+    if (_shouldChangeState) 
+    {
+        UpdateState(_nextState);
+        _shouldChangeState = false;
     }
 }
 
@@ -153,8 +149,8 @@ void GameManager::Render()
 {
     _window->Clear();
 
-    switch (_currentState) {
-
+    switch (_currentState) 
+    {
         case GameState::SplashScreen:
             _splashMenu->Render(_window->GetWindow());
             break;
@@ -164,11 +160,13 @@ void GameManager::Render()
             break;
 
         case GameState::MatchmakingMenu:
+           _matchmakingMenu->Render(_window->GetWindow());
             break;
 
         case GameState::Gameplay:
+            _gameplay->Render(_window->GetWindow());
             break;
-        }
+    }
 
     _window->Display();
 }
@@ -179,11 +177,6 @@ void GameManager::HandleEvents()
     {
         _eventHandler->HandleEvent(*event, *_window);
     }
-}
-
-int GameManager::RollDice()
-{
-    return rand() % 6 + 1;
 }
 
 

@@ -4,11 +4,15 @@ c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\tokencomponent.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\textfieldcomponent.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\spriterenderer.obj
+c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\splashscreenmenu.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\playercomponent.obj
+c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\matchmakingmenu.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\mainclient.obj
+c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\loginmenu.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\gameobject.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\gamemanager.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\eventhandler.obj
+c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\buttoncomponent.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\blowfish.obj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\bcrypt.obj
@@ -18,6 +22,7 @@ c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\x64\release\client.pdb
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.iobj
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.tlog\cl.command.1.tlog
+c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.tlog\cl.items.tlog
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.tlog\cl.read.1.tlog
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.tlog\cl.write.1.tlog
 c:\users\nahue\desktop\clonerepositorygithub\aa2_tcp_parchis\client\x64\release\client.tlog\link.command.1.tlog

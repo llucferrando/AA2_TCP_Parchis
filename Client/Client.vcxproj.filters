@@ -43,6 +43,12 @@
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{57923ca7-776d-49d5-8ef8-620abfc51574}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObjects\Prefabs">
+      <UniqueIdentifier>{b96f2029-089b-42d8-b2fd-a91b5ed827c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Prefabs">
+      <UniqueIdentifier>{a1ce5ba7-c829-4dda-ac81-115106956fd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bcrypt.cpp">
@@ -87,13 +93,34 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="LoginMenu.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="SplashScreenMenu.cpp">
+    <ClCompile Include="Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
+    <ClCompile Include="LoginMenu.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="MatchmakingMenu.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashScreenMenu.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Source Files\GameObjects\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickableComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardPositions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,16 +176,37 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="LoginMenu.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="SplashScreenMenu.h">
+    <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
+    <ClInclude Include="MatchmakingMenu.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashScreenMenu.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginMenu.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickableComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardPositions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

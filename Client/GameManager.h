@@ -6,6 +6,9 @@
 #include "SplashScreenMenu.h"
 #include <SFML/Network.hpp>
 #include "Client.h"
+#include "MatchmakingMenu.h"
+#include "Gameplay.h"
+
 class GameManager
 {
 public:
@@ -20,10 +23,11 @@ private:
     void Update(float deltaTime);
     void Render();
     void HandleEvents();
-    int RollDice();
-    //void SendLogin(const std::string& username, const std::string& password);
 
     GameState _currentState;
+    GameState _nextState = GameState::None;
+    bool _shouldChangeState;
+
     sf::TcpSocket _socket;
     Window* _window;
     EventHandler* _eventHandler;
@@ -31,10 +35,11 @@ private:
 
     Client* _client;
 
-    // -- Menus -- //
+    // -- Menus / Gameplay -- //
     LoginMenu* _loginMenu;
+    MatchmakingMenu* _matchmakingMenu;
     SplashScreenMenu* _splashMenu;
-
+    Gameplay* _gameplay;
 
     bool waitingSelection = false;
     int diceValue = 0;

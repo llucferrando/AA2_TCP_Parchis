@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Window.h"
 #include "EventHandler.h"
+#include "FontManager.h"
 
 class TextFieldComponent : public Component
 {
@@ -22,7 +23,6 @@ private:
     void OnGlobalClick(sf::Vector2f clickPos);
 
     sf::RectangleShape _box;
-    sf::Font _font;
     sf::Text _text;
 
     std::string _input;
@@ -32,6 +32,11 @@ private:
     float _cursorBlink;
     bool _cursorVisible;
     bool _firstClick = true;
+
+    //For clearing memory in destructor
+    uint64_t _listenerClickId;
+    uint64_t _listenerTextId;
+    EventHandler* _eventHandler;
 
 };
 

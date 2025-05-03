@@ -138,33 +138,45 @@
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="bcrypt.cpp" />
     <ClCompile Include="blowfish.cpp" />
+    <ClCompile Include="BoardPositions.cpp" />
     <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="ClickableComponent.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
+    <ClCompile Include="MatchmakingMenu.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SplashScreenMenu.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextFieldComponent.cpp" />
+    <ClCompile Include="Token.cpp" />
     <ClCompile Include="TokenComponent.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="bcrypt.h" />
+    <ClInclude Include="BoardPositions.h" />
     <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="ClickableComponent.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Enums.hpp" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Gameplay.h" />
     <ClInclude Include="LoginMenu.h" />
+    <ClInclude Include="MatchmakingMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="node_blf.h" />
     <ClInclude Include="openbsd.h" />
@@ -172,8 +184,10 @@
     <ClInclude Include="SplashScreenMenu.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextFieldComponent.h" />
+    <ClInclude Include="Token.h" />
     <ClInclude Include="TokenComponent.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

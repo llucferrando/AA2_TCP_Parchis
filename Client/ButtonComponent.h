@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Event.h"
 #include "EventHandler.h"
+#include "FontManager.h"
 
 class ButtonComponent : public Component
 {
@@ -20,7 +21,6 @@ private:
     void OnGlobalClick(sf::Vector2f clickPos);
 
     sf::RectangleShape _shape;
-    sf::Font _font;
     sf::Text _label;
 };
 

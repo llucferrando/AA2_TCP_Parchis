@@ -1,10 +1,10 @@
 #include "SpriteRenderer.h"
 
-SpriteRenderer::SpriteRenderer(const std::string & texturePath, int colorID) : _texture(), _sprite(_texture), _colorID(colorID)
+SpriteRenderer::SpriteRenderer(const std::string & texturePath, sf::Color color) : _texture(), _sprite(_texture)
 {
     _texture.loadFromFile(texturePath);
     _sprite.setTexture(_texture, true);
-    _sprite.setColor(GetColorFromPlayer(colorID));
+	_sprite.setColor(color);
 }
 
 void SpriteRenderer::Draw(sf::RenderWindow* window, Transform* transform)
@@ -15,17 +15,9 @@ void SpriteRenderer::Draw(sf::RenderWindow* window, Transform* transform)
     window->draw(_sprite);
 }
 
-sf::Color SpriteRenderer::GetColorFromPlayer(int index)
+sf::Sprite SpriteRenderer::GetSprite()
 {
-	switch (static_cast<PlayerColor>(index))
-	{
-	case PlayerColor::RED:    return sf::Color::Red;
-	case PlayerColor::BLUE:   return sf::Color::Blue;
-	case PlayerColor::GREEN:  return sf::Color::Green;
-	case PlayerColor::YELLOW: return sf::Color::Yellow;
-
-	default:                  return sf::Color::White;
-	}
+    return _sprite;
 }
 
 const std::type_index SpriteRenderer::GetType()

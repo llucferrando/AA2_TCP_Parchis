@@ -1,13 +1,12 @@
 #include "ButtonComponent.h"
 
-ButtonComponent::ButtonComponent(sf::Vector2f position, sf::Vector2f size, const std::string& label, EventHandler* eventHandler) : _label(_font, "", 24)
+ButtonComponent::ButtonComponent(sf::Vector2f position, sf::Vector2f size, const std::string& label, EventHandler* eventHandler) : _label(FontManager::GetMainFont(), "", 24)
 {
     _shape.setPosition(position);
     _shape.setSize(size);
     _shape.setFillColor(sf::Color(150, 150, 250));
 
-    _font.openFromFile("Assets/Fonts/Poppins-Bold.ttf");
-    _label.setFont(_font);
+    _label.setFont(FontManager::GetMainFont());
     _label.setString(label);
     _label.setCharacterSize(24);
     _label.setFillColor(sf::Color::White);
@@ -20,6 +19,7 @@ ButtonComponent::ButtonComponent(sf::Vector2f position, sf::Vector2f size, const
 
 ButtonComponent::~ButtonComponent()
 {
+    //onClick.UnsubscribeAll();
 }
 
 
