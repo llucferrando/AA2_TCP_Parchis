@@ -1,10 +1,13 @@
 #include "SpriteRenderer.h"
 
-SpriteRenderer::SpriteRenderer(const std::string & texturePath, sf::Color color) : _texture(), _sprite(_texture)
+SpriteRenderer::SpriteRenderer(const std::string & texturePath, sf::Color color, bool centerOrigin) : _texture(), _sprite(_texture)
 {
     _texture.loadFromFile(texturePath);
     _sprite.setTexture(_texture, true);
 	_sprite.setColor(color);
+    sf::Vector2u size = _texture.getSize();
+    if(centerOrigin)
+        _sprite.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
 }
 
 void SpriteRenderer::Draw(sf::RenderWindow* window, Transform* transform)

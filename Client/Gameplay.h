@@ -40,7 +40,10 @@ private:
     void HandleNetwork();
     void EndTurn();
 
-    // Nuevas funciones clave
+    // -- Gameplay
+
+    bool AllTokensInHome();
+
     bool HasTokenInHome();
     bool AllTokensOut();
     void BroadcastMove(int fichaId, int pos);

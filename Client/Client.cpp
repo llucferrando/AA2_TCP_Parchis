@@ -286,16 +286,25 @@ void Client::UpdateP2PConnections()
         if (_p2pListener.accept(*newPeer) == sf::Socket::Status::Done)
         {
             newPeer->setBlocking(false);
-
             auto optionalIp = newPeer->getRemoteAddress();
+            unsigned short port = newPeer->getRemotePort();
             if (optionalIp.has_value())
             {
                 sf::IpAddress ip = optionalIp.value();
-                unsigned short port = newPeer->getRemotePort();
+
+                // Verificar si ya estás conectado
+                for (const auto& peer : _peers)
+                {
+                    if (peer.ip == ip && peer.port == port)
+                    {
+                        std::cout << "[Client] Peer already connected: " << ip << ":" << port << std::endl;
+                        delete newPeer;
+                        return;
+                    }
+                }
 
                 _peers.emplace_back(newPeer, ip, port);
                 _selector.add(*newPeer);
-
                 std::cout << "[Client] New peer connected: " << ip << ":" << port << std::endl;
             }
             else

@@ -7,7 +7,7 @@
 class SpriteRenderer : public Component 
 {
 public:
-	SpriteRenderer(const std::string& texturePath, sf::Color color);
+	SpriteRenderer(const std::string& texturePath, sf::Color color, bool centerOrigin);
 
 	void Draw(sf::RenderWindow* window, Transform* transform);
 

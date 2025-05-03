@@ -50,8 +50,8 @@ std::map<PlayerColor, std::vector<sf::Vector2f>> metaPositions =
 
 std::map<PlayerColor, std::vector<sf::Vector2f>> homePositions = 
 {
-    {PlayerColor::RED, {{70,77}, {180, 77}, {70,192}, {180, 192}}},
-    {PlayerColor::GREEN, {{70,527}, {180,527}, {70,640}, {180,640}}},
-    {PlayerColor::BLUE, {{540,77}, {650,77}, {540,192}, {650,192}}},
-    {PlayerColor::YELLOW, {{540,527}, {650,527}, {540,640}, {650,640}}},    
+    {PlayerColor::RED, {{70,75}, {70, 195}, {177,75}, {177, 195}}},
+    {PlayerColor::GREEN, {{70,523}, {70,640}, {177,523}, {177,640}}},
+    {PlayerColor::BLUE, {{540,75}, {650,75}, {540,195}, {650,195}}},
+    {PlayerColor::YELLOW, {{540,523}, {650,523}, {540,640}, {650,640}}},    
 };

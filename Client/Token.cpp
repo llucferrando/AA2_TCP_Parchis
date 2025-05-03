@@ -4,7 +4,7 @@ Token::Token(int playerIndex, int tokenID, sf::Vector2f position, EventHandler* 
 {
 	_state = TokenState::IN_HOME;
 	_color = GetColorFromIndex(playerIndex);
-	_spriteRenderer = AddComponent<SpriteRenderer>("Assets/GameAssets/Token.png", _color);
+	_spriteRenderer = AddComponent<SpriteRenderer>("Assets/GameAssets/Token.png", _color, true);
 	_token = AddComponent<TokenComponent>(GetEnumColorFromIndex(playerIndex), tokenID);
 	GetComponent<Transform>()->position = position;
 	_clickable = AddComponent<ClickableComponent>(eventHandler, GetComponent<Transform>(), _spriteRenderer);

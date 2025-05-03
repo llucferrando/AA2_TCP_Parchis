@@ -3,7 +3,7 @@
 
 MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 {
-	AddComponent<SpriteRenderer>("Assets/Splashscreen/matchmaking.png", sf::Color::White);
+	AddComponent<SpriteRenderer>("Assets/Splashscreen/matchmaking.png", sf::Color::White, false);
 
 	_idCreateRoomField = AddComponent<TextFieldComponent>(sf::Vector2f(160, 300), sf::Vector2f(400, 50), "ID create room", eventHandler);
 

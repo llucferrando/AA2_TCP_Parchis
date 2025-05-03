@@ -3,7 +3,7 @@
 
 LoginMenu::LoginMenu(EventHandler* eventHandler, Client* client) {
 
-    AddComponent<SpriteRenderer>("Assets/Splashscreen/login.png", sf::Color::White);
+    AddComponent<SpriteRenderer>("Assets/Splashscreen/login.png", sf::Color::White, false);
 
     _usernameField = AddComponent<TextFieldComponent>(sf::Vector2f(160, 300), sf::Vector2f(400, 50), "Username", eventHandler);
 

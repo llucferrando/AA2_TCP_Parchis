@@ -12,7 +12,7 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
 
     _board = new GameObject();
 
-    _board->AddComponent<SpriteRenderer>("Assets/GameAssets/Parchis_2.png", sf::Color::White);
+    _board->AddComponent<SpriteRenderer>("Assets/GameAssets/Parchis_2.png", sf::Color::White, false);
 
     _rollButton = new GameObject();
 
@@ -31,8 +31,8 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
     for (int i = 0; i < 4; ++i) 
     {
         Token* token = new Token(playerIndex, i, homePositions[_myColor][i], eventHandler);
-
         _myTokens.push_back(token);
+        
     }
 
     // Subscription to click events on tokens
@@ -41,10 +41,7 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
     {
         _myTokens[i]->GetComponent<ClickableComponent>()->onClick.Subscribe([this, i]() 
             {
-                if (_isMyTurn && _hasRolled) {
-                    MoveFichaConNormas(i);
-                    EndTurn();
-                }
+                if (_isMyTurn && _hasRolled) { MoveFichaConNormas(i); }
             });
     }
 
@@ -117,12 +114,26 @@ void Gameplay::RollDice()
     _diceValue = rand() % 6 + 1;
     _hasRolled = true;
 
+    // -- Si todos los tokens estan out sacas 7
+
+    if (AllTokensOut())
+    {
+        _diceValue = 7;
+    }
+
     std::cout << "[Gameplay] Has sacado un " << _diceValue << std::endl;
 
     sf::Packet dicePacket;
     dicePacket << static_cast<int>(MessageType::DICE_RESULT) << _diceValue;
 
     _client->BroadcastToPeers(dicePacket);
+
+    // -- Si no saca 5 para salir, fuera turno
+
+    if (_diceValue != 5 && AllTokensInHome())
+    {
+        EndTurn();
+    }
 }
 
 
@@ -130,14 +141,15 @@ void Gameplay::EndTurn()
 {
     _hasRolled = false;
     _isMyTurn = false;
+    _currentTime = 0;
 
     _currentTurnIndex = (_currentTurnIndex + 1) % _numPlayers;
     
     std::cout << "Next turn for: " + _currentTurnIndex << std::endl;
 
     sf::Packet turnPacket;
-    turnPacket << static_cast<int>(MessageType::TURN_CHANGE)
-        << _currentTurnIndex;
+    turnPacket << static_cast<int>(MessageType::TURN_CHANGE) << _currentTurnIndex;
+
     _client->BroadcastToPeers(turnPacket);
 }
 
@@ -169,28 +181,33 @@ void Gameplay::HandleNetwork()
                     if (token->GetColor() == color && token->GetTokenID() == fichaId)
                     {
                         token->SetBoardPosition(pos);
-                        ficha->GetComponent<Transform>()->position = GetWorldPosFromBoardIndex(pos, static_cast<int>(color));
-                        std::cout << "[Gameplay] Jugador " << static_cast<int>(color)
-                            << " movió ficha " << fichaId << " a pos " << pos << std::endl;
+
+                        if (pos >= 100)
+                        {
+                            ficha->GetComponent<Transform>()->position = metaPositions[color][pos - 100];
+                        }
+                        else
+                        {
+                            ficha->GetComponent<Transform>()->position = mainPathPositions[pos];
+                        }
+
+                        std::cout << "[Gameplay] Jugador " << static_cast<int>(color) << " movió ficha " << fichaId << " a pos " << pos << std::endl;
                         break;
                     }
                 }
                 break;
             }
-
             case MessageType::TURN_CHANGE:
             {
                 int newTurn;
                 packet >> newTurn;
 
-                _currentTurnIndex = newTurn; 
+                _currentTurnIndex = newTurn;
                 _isMyTurn = (_playerIndex == newTurn);
 
                 std::cout << "[Gameplay] Nuevo turno: " << newTurn << (_isMyTurn ? " (mi turno)" : "") << std::endl;
                 break;
-                break;
             }
-
             case MessageType::DICE_RESULT:
             {
                 int dice;
@@ -198,6 +215,7 @@ void Gameplay::HandleNetwork()
                 std::cout << "[Gameplay] Otro jugador ha sacado un " << dice << std::endl;
                 break;
             }
+
 
             default:
                 std::cout << "[Gameplay] Mensaje no reconocido: " << msgTypeInt << std::endl;
@@ -207,6 +225,19 @@ void Gameplay::HandleNetwork()
         // Siguiente paquete (si hay)
         packetOpt = _client->WaitForPeerMessage(0.f);
     }
+}
+
+bool Gameplay::AllTokensInHome()
+{
+    for (auto token : _myTokens)
+    {
+        std::cout << "Token: " << static_cast<int>(token->GetTokenState()) << std::endl;
+        if (token->GetTokenState() != TokenState::IN_HOME)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Gameplay::HasTokenInHome() {
@@ -249,19 +280,32 @@ int GetStartingIndexForColor(PlayerColor color)
 void Gameplay::BroadcastMove(int fichaId, int pos) 
 {
     sf::Packet movePacket;
-    movePacket << static_cast<int>(MessageType::MOVE_REQUEST)
-        << static_cast<int>(_myColor)
-        << fichaId << pos;
+    movePacket << static_cast<int>(MessageType::MOVE_REQUEST) << static_cast<int>(_myColor) << fichaId << pos;
     _client->BroadcastToPeers(movePacket);
 }
 
 void Gameplay::MoveFichaConNormas(int fichaIndex) 
 {
     Token* ficha = _myTokens[fichaIndex];
-    TokenComponent* comp = ficha->GetComponent<TokenComponent>();
+    TokenComponent* tokenToMove = ficha->GetComponent<TokenComponent>();
 
-    int currentPos = comp->GetBoardPosition();
+    if (_diceValue == 5 && tokenToMove->GetTokenState() == TokenState::IN_HOME)
+    {
+        //Setear la ficha en startPos y end turn
+        int salida = GetStartingIndexForColor(tokenToMove->GetColor());
+        tokenToMove->SetTokenState(TokenState::IN_GAME);
+        tokenToMove->SetBoardPosition(salida);
+        ficha->GetComponent<Transform>()->position = mainPathPositions[salida];
+        BroadcastMove(fichaIndex, salida);
+        
+        EndTurn();
+        return;
+    }
+
+    int currentPos = tokenToMove->GetBoardPosition();
     int targetPos = currentPos + _diceValue;
+
+    // -- Mirar si al mover ficha hago captura
 
     for (auto* rival : _enemyFichas) 
     {
@@ -271,30 +315,53 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
             rivalComp->SetTokenState(TokenState::IN_HOME);
             rivalComp->SetBoardPosition(-1);
             rival->GetComponent<Transform>()->position = homePositions[rivalComp->GetColor()][rivalComp->GetTokenID()];
+
+            //ENVIAR PAQUETE A LOS DEMAS DE CAPTURA
+
             std::cout << "[Gameplay] ¡Captura! +20\n";
             targetPos += 20;
             break;
         }
     }
 
-    int entradaMeta = GetEntryToGoalIndex(_myColor); // ej: 67 para rojo
-    if (currentPos <= entradaMeta && targetPos > entradaMeta) {
+    // -- Mirar si al mover ficha entro en la parte final
+
+    int entradaMeta = GetEntryToGoalIndex(_myColor);
+
+    if (currentPos <= entradaMeta && targetPos > entradaMeta) 
+    {
         int pasosEnMeta = targetPos - entradaMeta - 1;
-        if (pasosEnMeta >= 6) {
-            comp->SetTokenState(TokenState::IN_END);
+        if (pasosEnMeta >= 6) 
+        {
+            tokenToMove->SetTokenState(TokenState::IN_END);
             std::cout << "[Gameplay] Ficha llegó a la meta.\n";
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][5];
         }
-        else {
-            comp->SetTokenState(TokenState::IN_END);
+        else 
+        {
+            tokenToMove->SetTokenState(TokenState::IN_END);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
-            comp->SetBoardPosition(100 + pasosEnMeta); // puedes usar un offset artificial como 100+
+            tokenToMove->SetBoardPosition(100 + pasosEnMeta);
         }
     }
-    else {
-        comp->SetBoardPosition(targetPos);
+    else 
+    {
+        tokenToMove->SetBoardPosition(targetPos);
         ficha->GetComponent<Transform>()->position = mainPathPositions[targetPos];
     }
 
     BroadcastMove(fichaIndex, targetPos);
+
+    // -- Si el dado es un 6 vuelve a tirar después de mover ficha
+
+    if (_diceValue == 6 || _diceValue == 7)
+    {
+        _isMyTurn = true;
+        _hasRolled = false;
+    }
+    else 
+    {
+        EndTurn();
+    }
+
 }
