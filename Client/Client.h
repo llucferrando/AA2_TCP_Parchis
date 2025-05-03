@@ -20,12 +20,14 @@ class Client
 public:
     Client();
     ~Client();
+
     // -- BootstrapServer
     bool ConnectToBootstrapServer(const std::string& ip, unsigned short port);
     void DisconnectFromBootstrapServer();
     bool ReceivePacketFromServer(sf::Packet& packet);
     std::optional<sf::Packet> CheckServerMessage();
     void HandleServerMessages(Event<> OnStartMatch);
+
     // -- Matchmaking & Login
     bool SendLogin(const std::string& username, const std::string& password);
     bool SendRegister(const std::string& username, const std::string& password);

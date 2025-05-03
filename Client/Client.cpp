@@ -265,11 +265,6 @@ void Client::BroadcastToPeers(sf::Packet& packet)
 {
     std::cout << "[Client] Trying to broadcast to " << _peers.size() << " peer(s)." << std::endl;
 
-    if (_peers.size() <= 0)
-    {
-        std::cout << "[Client] Peers empty" << std::endl;
-    }
-
     for (auto& [socket, ip, port] : _peers)
     {
         if (socket->send(packet) == sf::Socket::Status::Done)

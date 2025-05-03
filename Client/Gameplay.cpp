@@ -132,6 +132,8 @@ void Gameplay::EndTurn()
     _isMyTurn = false;
 
     _currentTurnIndex = (_currentTurnIndex + 1) % _numPlayers;
+    
+    std::cout << "Next turn for: " + _currentTurnIndex << std::endl;
 
     sf::Packet turnPacket;
     turnPacket << static_cast<int>(MessageType::TURN_CHANGE)
@@ -178,11 +180,14 @@ void Gameplay::HandleNetwork()
 
             case MessageType::TURN_CHANGE:
             {
-                std::cout << "Turn_Change";
                 int newTurn;
                 packet >> newTurn;
+
+                _currentTurnIndex = newTurn; 
                 _isMyTurn = (_playerIndex == newTurn);
+
                 std::cout << "[Gameplay] Nuevo turno: " << newTurn << (_isMyTurn ? " (mi turno)" : "") << std::endl;
+                break;
                 break;
             }
 
