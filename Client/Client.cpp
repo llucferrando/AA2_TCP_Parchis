@@ -83,6 +83,19 @@ bool Client::JoinRoom(std::string roomId)
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
+std::optional<sf::Packet> Client::WaitForServerMessage(float timeoutSeconds)
+{
+    if (_selector.wait(sf::seconds(timeoutSeconds)) && _selector.isReady(_bootstrapSocket))
+    {
+        sf::Packet packet;
+        if (_bootstrapSocket.receive(packet) == sf::Socket::Status::Done)
+        {
+            return packet;
+        }
+    }
+    return std::nullopt;
+}
+
 bool Client::ReceivePacketFromServer(sf::Packet& packet)
 {
     return _bootstrapSocket.receive(packet) == sf::Socket::Status::Done;
@@ -90,21 +103,18 @@ bool Client::ReceivePacketFromServer(sf::Packet& packet)
 
 std::optional<sf::Packet> Client::CheckServerMessage()
 {
-    if (_selector.wait(sf::milliseconds(0)))
+    if (_selector.isReady(_bootstrapSocket))
     {
-        if (_selector.isReady(_bootstrapSocket))
+        sf::Packet packet;
+        if (_bootstrapSocket.receive(packet) == sf::Socket::Status::Done)
         {
-            sf::Packet packet;
-            if (_bootstrapSocket.receive(packet) == sf::Socket::Status::Done)
-            {
-                return packet;
-            }
+            return packet;
         }
     }
     return std::nullopt;
 }
 
-void Client::HandleServerMessages()
+void Client::HandleServerMessages(Event<> OnStartMatch)
 {
     auto packetOpt = CheckServerMessage();
     if (!packetOpt.has_value()) return;
@@ -155,20 +165,94 @@ void Client::HandleServerMessages()
     {
         std::cout << "[Client] Failed to join room (JOIN_FAIL)." << std::endl;
     }
+
+    else if (cmd == "START_P2P")
+    {
+        int playerIndex;
+        int numPlayers;
+        packet >> playerIndex >> numPlayers;
+
+        std::cout << "[Client] Match starting! Player index: " << playerIndex << ", total players: " << numPlayers << std::endl;
+
+        _playerIndex = playerIndex;
+        _numPlayers = numPlayers;
+        OnStartMatch.Invoke();
+    }
 }
+
 #pragma endregion
 
 #pragma region P2P
 
+std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
+{
+    // Siempre actualizamos el estado de los sockets
+    _selector.wait(sf::seconds(timeoutSeconds));
+
+    for (auto& [socket, ip, port] : _peers)
+    {
+        if (_selector.isReady(*socket))
+        {
+            sf::Packet packet;
+            sf::Socket::Status status = socket->receive(packet);
+
+            if (status == sf::Socket::Status::Done)
+            {
+                std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
+                return packet;
+            }
+            else
+            {
+                std::cout << "[Client] Failed to receive packet from peer " << ip << ":" << port
+                    << " (status: " << static_cast<int>(status) << ")" << std::endl;
+            }
+        }
+    }
+
+    return std::nullopt;
+}
+
+void Client::StartListeningForPeers()
+{
+    if (_p2pListener.listen(_p2pPort) != sf::Socket::Status::Done)
+    {
+        std::cerr << "[Client] Failed to listen on P2P port " << _p2pPort << std::endl;
+    }
+    else
+    {
+        std::cout << "[Client] Listening for P2P on port " << _p2pPort << std::endl;
+        _selector.add(_p2pListener);
+    }
+}
+
 void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
 {
+    if (ip == sf::IpAddress::getLocalAddress() && port == _p2pPort)
+    {
+        std::cout << "[Client] Skipping self-connection to " << ip << ":" << port << std::endl;
+        return;
+    }
+
+    // Verifica que no estés ya conectado a este peer
+    for (const auto& peer : _peers)
+    {
+        if (peer.ip == ip && peer.port == port)
+        {
+            std::cout << "[Client] Already connected to peer: " << ip << ":" << port << std::endl;
+            return;
+        }
+    }
+
     std::cout << "[Client] Trying to connect to peer: " << ip << ":" << port << std::endl;
 
     sf::TcpSocket* peerSocket = new sf::TcpSocket();
 
     if (peerSocket->connect(ip, port) == sf::Socket::Status::Done)
     {
+        peerSocket->setBlocking(false);
         _peers.emplace_back(peerSocket, ip, port);
+        _selector.add(*peerSocket);
+        std::cout << "[Client] Connected to peer: " << ip << ":" << port << std::endl;
     }
     else
     {
@@ -179,11 +263,13 @@ void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
 
 void Client::BroadcastToPeers(sf::Packet& packet)
 {
-    std::cout << "[Client] Trying to broadcast " << std::endl;
-    for (auto [socket, ip, port] : _peers)
+    std::cout << "[Client] Trying to broadcast to " << _peers.size() << " peer(s)." << std::endl;
+
+    if (_peers.size() <= 0)
     {
-        std::cout << ip << " : " << port << std::endl;
+        std::cout << "[Client] Peers empty" << std::endl;
     }
+
     for (auto& [socket, ip, port] : _peers)
     {
         if (socket->send(packet) == sf::Socket::Status::Done)
@@ -232,14 +318,22 @@ void Client::UpdateP2PConnections()
 
 bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 {
+    _selector.wait(sf::Time::Zero);
+
     for (auto& [socket, ip, port] : _peers)
     {
-        if (socket->receive(packet) == sf::Socket::Status::Done)
+        if (_selector.isReady(*socket))
         {
-            std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
-            return true;
+            sf::Packet temp;
+            if (socket->receive(temp) == sf::Socket::Status::Done)
+            {
+                packet = temp;
+                std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
+                return true;
+            }
         }
     }
+
     return false;
 }
 

@@ -2,6 +2,7 @@
 #include <SFML/Network.hpp>
 #include <vector>
 #include <string>
+#include "Event.h"
 
 struct PeerInfo
 {
@@ -24,17 +25,22 @@ public:
     void DisconnectFromBootstrapServer();
     bool ReceivePacketFromServer(sf::Packet& packet);
     std::optional<sf::Packet> CheckServerMessage();
-    void HandleServerMessages();
+    void HandleServerMessages(Event<> OnStartMatch);
     // -- Matchmaking & Login
     bool SendLogin(const std::string& username, const std::string& password);
     bool SendRegister(const std::string& username, const std::string& password);
     bool CreateRoom(std::string roomID);
     bool JoinRoom(std::string roomId);
+    std::optional<sf::Packet> WaitForServerMessage(float timeoutSeconds);
 
+    // -- P2P
+    std::optional<sf::Packet> WaitForPeerMessage(float timeoutSeconds);
+    void StartListeningForPeers();
     bool ReceivePacketFromPeers(sf::Packet& packet);
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
     void BroadcastToPeers(sf::Packet& packet); 
     void UpdateP2PConnections();
+
     // -- Getters & Setters
     void SetPlayerIndex(int index);
     void SetNumPlayers(int num);

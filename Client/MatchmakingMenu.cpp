@@ -21,6 +21,7 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		if (_client->CreateRoom(_idCreateRoomField->GetText()))
 		{
 			std::cout << "[Client] Room created successfully, now listening for players..." << std::endl;
+			_client->StartListeningForPeers();
 		}
 		else
 		{
@@ -32,6 +33,7 @@ MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 		std::cout << "[Client] Join room requested..." << std::endl;
 
 		if (_client->JoinRoom(GetJoinIDText())) {
+			_client->StartListeningForPeers();
 			std::cout << "[Client] Join packet sent. Waiting for response..." << std::endl;
 		}
 		else {
@@ -48,7 +50,7 @@ void MatchmakingMenu::Update(float deltaTime)
 	//Aqui tendria que hacer algo similar al servidor donde acepta y lee nuevos peers no?
 	  // Escuchar nuevos peers entrantes (si este cliente es host)
 	_client->UpdateP2PConnections();
-	_client->HandleServerMessages();
+	_client->HandleServerMessages(onStartMatch);
 }
 
 void MatchmakingMenu::Render(sf::RenderWindow* window)

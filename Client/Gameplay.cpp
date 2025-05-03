@@ -68,6 +68,8 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
 
 void Gameplay::Update(float deltaTime) 
 {
+    _client->UpdateP2PConnections();
+
     if (_isMyTurn && !_hasRolled)
     {
         // IF its my turn and i didnt roll dice, and time reaches to 20s ends turn
@@ -119,6 +121,7 @@ void Gameplay::RollDice()
 
     sf::Packet dicePacket;
     dicePacket << static_cast<int>(MessageType::DICE_RESULT) << _diceValue;
+
     _client->BroadcastToPeers(dicePacket);
 }
 
@@ -138,29 +141,30 @@ void Gameplay::EndTurn()
 
 void Gameplay::HandleNetwork() 
 {
-    sf::Packet packet;
+    auto packetOpt = _client->WaitForPeerMessage(0.1f); // no bloquea pero actualiza selector
 
-    if (_client->ReceivePacketFromPeers(packet)) 
+    while (packetOpt.has_value())
     {
+        sf::Packet packet = packetOpt.value();
         int msgTypeInt;
-
         packet >> msgTypeInt;
 
         MessageType msgType = static_cast<MessageType>(msgTypeInt);
 
-        switch (msgType) {
-
-            case MessageType::MOVE_REQUEST: 
+        switch (msgType)
+        {
+            case MessageType::MOVE_REQUEST:
             {
+                std::cout << "Move_Rquest" << std::endl;
                 int colorInt, fichaId, pos;
                 packet >> colorInt >> fichaId >> pos;
                 PlayerColor color = static_cast<PlayerColor>(colorInt);
 
-                for (auto* ficha : _enemyFichas) {
-
+                for (auto* ficha : _enemyFichas)
+                {
                     auto* token = ficha->GetComponent<TokenComponent>();
 
-                    if (token->GetColor() == color && token->GetTokenID() == fichaId) 
+                    if (token->GetColor() == color && token->GetTokenID() == fichaId)
                     {
                         token->SetBoardPosition(pos);
                         ficha->GetComponent<Transform>()->position = GetWorldPosFromBoardIndex(pos, static_cast<int>(color));
@@ -172,8 +176,9 @@ void Gameplay::HandleNetwork()
                 break;
             }
 
-            case MessageType::TURN_CHANGE: 
+            case MessageType::TURN_CHANGE:
             {
+                std::cout << "Turn_Change";
                 int newTurn;
                 packet >> newTurn;
                 _isMyTurn = (_playerIndex == newTurn);
@@ -181,7 +186,8 @@ void Gameplay::HandleNetwork()
                 break;
             }
 
-            case MessageType::DICE_RESULT: {
+            case MessageType::DICE_RESULT:
+            {
                 int dice;
                 packet >> dice;
                 std::cout << "[Gameplay] Otro jugador ha sacado un " << dice << std::endl;
@@ -189,8 +195,12 @@ void Gameplay::HandleNetwork()
             }
 
             default:
+                std::cout << "[Gameplay] Mensaje no reconocido: " << msgTypeInt << std::endl;
                 break;
         }
+
+        // Siguiente paquete (si hay)
+        packetOpt = _client->WaitForPeerMessage(0.f);
     }
 }
 
