@@ -142,6 +142,15 @@ void BootstrapServer::HandleCommand(Client* client, const std::string& command, 
     }
 }
 
+void BootstrapServer::RemoveClient(Client* client) 
+{
+    _selector.remove(*client->GetSocket());
+
+    _clients.erase(std::remove_if(_clients.begin(), _clients.end(), [client](const std::unique_ptr<Client>& c) { return c.get() == client; }), _clients.end());
+}
+
+#pragma region Join & Create Room
+
 void BootstrapServer::CreateRoom(Client* client, const std::string& roomID) 
 {
     std::cout << "[Server] Creating a room..." << std::endl;
@@ -162,21 +171,12 @@ void BootstrapServer::CreateRoom(Client* client, const std::string& roomID)
 
     std::cout << "[Server] Room created with ID: " << finalRoomID << std::endl;
 }
-std::string BootstrapServer::GenerateRandomRoomID()
-{
-    const std::string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    std::string roomId;
-    for (int i = 0; i < 6; ++i)
-    {
-        roomId += charset[rand() % charset.size()];
-    }
-    return roomId;
-}
+
 void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
 {
     std::cout << "[Server] Join room requested with ID: " << roomID << std::endl;
 
-    if (!client || client->GetRoomID() == roomID) 
+    if (!client || client->GetRoomID() == roomID)
     {
         std::cout << "[Server] Client already in room or invalid.\n";
         return;
@@ -186,18 +186,17 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
 
     if (it != _rooms.end() && !it->second->IsFull())
     {
-        std::cout << "[Server] Joining room..." << std::endl;
-
         Room* room = it->second.get();
         room->AddPlayer(client);
         client->SetRoomID(roomID);
 
-        // Construir paquete con los otros jugadores (solo para networking peer-to-peer)
-        sf::Packet response;
         const auto& players = room->GetPlayers();
         int otherPlayers = players.size() - 1;
 
+        // Enviar al nuevo cliente los peers ya conectados
+        sf::Packet response;
         response << "JOIN_OK" << otherPlayers;
+
         for (auto* player : players)
         {
             if (player != client)
@@ -206,33 +205,31 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
                 if (optionalIp.has_value())
                 {
                     sf::IpAddress ip = optionalIp.value();
-                    unsigned short port = player->GetP2PPort(); 
-
+                    unsigned short port = player->GetP2PPort();
                     response << ip.toString() << port;
                 }
             }
         }
+
         client->GetSocket()->send(response);
 
-        for (auto* player : players)
+        // Notificar a los otros jugadores del nuevo peer
+        sf::Packet notify;
+        auto optionalIp = client->GetSocket()->getRemoteAddress();
+        if (optionalIp.has_value())
         {
-            if (player != client)
+            notify << "NEW_PEER" << optionalIp.value().toString() << client->GetP2PPort();
+
+            for (auto* player : players)
             {
-                sf::Packet notifyPacket;
-                notifyPacket << "NEW_PEER";
-
-                auto optionalIp = client->GetSocket()->getRemoteAddress();
-                if (optionalIp.has_value())
+                if (player != client)
                 {
-                    sf::IpAddress ip = optionalIp.value();
-                    unsigned short port = client->GetP2PPort();
-
-                    notifyPacket << ip.toString() << port;
-                    player->GetSocket()->send(notifyPacket);
+                    player->GetSocket()->send(notify);
                 }
             }
         }
-        int numPlayers = room->GetPlayers().size();
+
+        int numPlayers = players.size();
 
         if (numPlayers == 2 && !room->waitingToStart)
         {
@@ -248,12 +245,25 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
     }
     else
     {
-        std::cout << "[Server] This room does not exist: " << roomID << std::endl;
+        std::cout << "[Server] This room does not exist or is full: " << roomID << std::endl;
         sf::Packet errorPacket;
         errorPacket << "JOIN_FAIL";
         client->GetSocket()->send(errorPacket);
     }
 }
+
+std::string BootstrapServer::GenerateRandomRoomID()
+{
+    const std::string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    std::string roomId;
+    for (int i = 0; i < 6; ++i)
+    {
+        roomId += charset[rand() % charset.size()];
+    }
+    return roomId;
+}
+
+#pragma endregion
 
 void BootstrapServer::StartMatch(Room* room)
 {
@@ -284,9 +294,3 @@ void BootstrapServer::StartMatch(Room* room)
     _rooms.erase(room->GetID());
 }
 
-void BootstrapServer::RemoveClient(Client* client) 
-{
-    _selector.remove(*client->GetSocket());
-
-    _clients.erase(std::remove_if(_clients.begin(), _clients.end(), [client](const std::unique_ptr<Client>& c) { return c.get() == client; }), _clients.end());
-}

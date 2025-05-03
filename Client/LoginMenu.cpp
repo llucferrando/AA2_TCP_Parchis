@@ -69,7 +69,7 @@ void LoginMenu::SubcribeToButtons()
 
         if (_client->SendLogin(GetUsernameText(), GetPasswordText()))
         {
-            auto optPacket = _client->CheckServerMessage();
+            auto optPacket = _client->WaitForServerMessage(2.f);
             if (optPacket.has_value())
             {
                 sf::Packet& response = optPacket.value();
@@ -102,7 +102,7 @@ void LoginMenu::SubcribeToButtons()
 
         if (_client->SendRegister(GetUsernameText(), GetPasswordText()))
         {
-            auto optPacket = _client->CheckServerMessage();
+            auto optPacket = _client->WaitForServerMessage(2.f);
             if (optPacket.has_value())
             {
                 sf::Packet& response = optPacket.value();

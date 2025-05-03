@@ -25,6 +25,5 @@ private:
     ButtonComponent* _createRoomButton;
     ButtonComponent* _joinRoomButton;
     Client* _client;
-    bool _waitingForStartP2P = false;
 };
 
