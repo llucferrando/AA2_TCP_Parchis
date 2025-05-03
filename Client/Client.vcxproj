@@ -146,6 +146,7 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="LoginMenu.h" />
     <ClInclude Include="MatchmakingMenu.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="node_blf.h" />
     <ClInclude Include="openbsd.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SplashScreenMenu.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextFieldComponent.h" />
@@ -189,6 +192,9 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
