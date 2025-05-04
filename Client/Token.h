@@ -21,6 +21,5 @@ private:
 	Transform* _transform;
 	ClickableComponent* _clickable;
 	sf::Color _color;
-	TokenState _state;
 };
 

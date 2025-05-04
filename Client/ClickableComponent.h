@@ -12,7 +12,7 @@ public:
 
     Event<> onClick;
     const std::type_index GetType() override;
-
+    void RenderTest(sf::RenderWindow* window);
 private:
     Transform* _transform;
     SpriteRenderer* _spriteRenderer;

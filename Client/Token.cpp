@@ -2,7 +2,6 @@
 
 Token::Token(int playerIndex, int tokenID, sf::Vector2f position, EventHandler* eventHandler)
 {
-	_state = TokenState::IN_HOME;
 	_color = GetColorFromIndex(playerIndex);
 	_spriteRenderer = AddComponent<SpriteRenderer>("Assets/GameAssets/Token.png", _color, true);
 	_token = AddComponent<TokenComponent>(GetEnumColorFromIndex(playerIndex), tokenID);
@@ -21,10 +20,10 @@ void Token::Update(float deltaTime)
 
 TokenState Token::GetTokenState()
 {
-	return _state;
+	return _token->GetTokenState();
 }
 
 void Token::SetTokenState(TokenState tokenState)
 {
-	_state = tokenState;
+	_token->SetTokenState(tokenState);
 }

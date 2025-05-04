@@ -78,6 +78,17 @@ void Gameplay::Update(float deltaTime)
         }
     }
 
+    if (_hasRolled)
+    {
+        // -- Si no saca 5 para salir, fuera turno
+
+        if (_diceValue != 5 && AllTokensInHome())
+        {
+            std::cout << "TODAS LAS FICHAS EN CASA" << std::endl;
+            EndTurn();
+        }
+    }
+
     HandleNetwork();
 }
 
@@ -127,13 +138,6 @@ void Gameplay::RollDice()
     dicePacket << static_cast<int>(MessageType::DICE_RESULT) << _diceValue;
 
     _client->BroadcastToPeers(dicePacket);
-
-    // -- Si no saca 5 para salir, fuera turno
-
-    if (_diceValue != 5 && AllTokensInHome())
-    {
-        EndTurn();
-    }
 }
 
 
