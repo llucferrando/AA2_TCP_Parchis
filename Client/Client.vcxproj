@@ -151,6 +151,7 @@
     <ClCompile Include="LoginMenu.cpp" />
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="MatchmakingMenu.cpp" />
+    <ClCompile Include="NormalTextComponent.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SplashScreenMenu.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="MatchmakingMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="node_blf.h" />
+    <ClInclude Include="NormalTextComponent.h" />
     <ClInclude Include="openbsd.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="resource.h" />

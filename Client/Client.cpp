@@ -166,6 +166,7 @@ void Client::HandleServerMessages(Event<> OnStartMatch)
         {
             ConnectToPeer(resolved.value(), port);
             std::cout << "[Client] Connected to new peer announced by server: " << ipStr << ":" << port << std::endl;
+
         }
         else
         {
@@ -337,6 +338,19 @@ void Client::UpdateP2PConnections()
     }
 }
 
+void Client::SendUsername()
+{
+    sf::Packet packet;
+    packet << static_cast<int>(MessageType::PLAYER_PROFILE)
+        << _playerIndex
+        << _playerUsername;
+
+    BroadcastToPeers(packet);
+
+    std::cout << "[Client] Sent username '" << _playerUsername << "' as playerIndex " << _playerIndex << " to all peers";
+
+}
+
 bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 {
     _selector.wait(sf::Time::Zero);
@@ -379,6 +393,10 @@ bool Client::ReceivePacketFromPeers(sf::Packet& packet)
     void Client::SetPlayerIndex(int index) { _playerIndex = index; }
 
     void Client::SetNumPlayers(int num) { _numPlayers = num; }
+
+    void Client::SetMyUsername(const std::string& name) { _playerUsername = name; }
+
+   
 
     int Client::GetPlayerIndex() const { return _playerIndex; }
 

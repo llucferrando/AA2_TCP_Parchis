@@ -69,6 +69,7 @@ void LoginMenu::SubcribeToButtons()
 
         if (_client->SendLogin(GetUsernameText(), GetPasswordText()))
         {
+            _client->SetMyUsername(GetUsernameText());
             auto optPacket = _client->WaitForServerMessage(2.f);
             if (optPacket.has_value())
             {
@@ -102,6 +103,8 @@ void LoginMenu::SubcribeToButtons()
 
         if (_client->SendRegister(GetUsernameText(), GetPasswordText()))
         {
+            _client->SetMyUsername(GetUsernameText());
+
             auto optPacket = _client->WaitForServerMessage(2.f);
             if (optPacket.has_value())
             {
