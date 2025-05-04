@@ -19,6 +19,8 @@ DataBaseManager::~DataBaseManager()
 	}
 }
 
+// -- Connects to the MySQL database and sets the active schema or returns an error if not
+
 void DataBaseManager::ConnectDatabase()
 {
 	try {
@@ -35,6 +37,8 @@ void DataBaseManager::ConnectDatabase()
 
 	}
 }
+
+// -- Registers a new user, hashes the password and inserts into the database
 
 bool DataBaseManager::RegisterUser(const std::string& nickname, const std::string& password)
 {
@@ -62,6 +66,8 @@ bool DataBaseManager::RegisterUser(const std::string& nickname, const std::strin
 	}
 	
 }
+
+// -- Logs in a user, checks the nickname and password hash against the database
 
 bool DataBaseManager::LoginUser(const std::string& nickname, const std::string& password)
 {

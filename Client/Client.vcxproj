@@ -143,7 +143,6 @@
     <ClCompile Include="ClickableComponent.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOverMenu.cpp" />

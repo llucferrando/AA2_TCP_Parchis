@@ -8,13 +8,11 @@ ClickableComponent::ClickableComponent(EventHandler* handler, Transform* transfo
 
         sf::FloatRect bounds = _spriteRenderer->GetSprite().getGlobalBounds();
 
-        // Centra el rectángulo en la posición del transform
         bounds.position = {
             _transform->position.x - bounds.size.x / 2.f,
             _transform->position.y - bounds.size.y / 2.f
         };
 
-        //// Aumentar el área clickable
         //float padding = 10.f;
         //bounds.position.x -= padding;
         //bounds.position.y -= padding;
@@ -39,15 +37,14 @@ const std::type_index ClickableComponent::GetType()
 
 void ClickableComponent::RenderTest(sf::RenderWindow* window)
 {
+    // Debug DRAW
     //sf::FloatRect bounds = _spriteRenderer->GetSprite().getGlobalBounds();
 
-    //// Centra el rectángulo en la posición del transform
     //bounds.position = {
     //    _transform->position.x - bounds.size.x / 2.f,
     //    _transform->position.y - bounds.size.y / 2.f
     //};
 
-    //// Aumentar el área clickable
     //float padding = 10.f;
     //bounds.position.x -= padding;
     //bounds.position.y -= padding;

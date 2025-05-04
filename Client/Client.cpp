@@ -4,8 +4,10 @@
 Client::Client() 
 { 
     std::srand(std::time(nullptr)); 
-    _p2pPort = 60000 + rand() % 1000;
+    _p2pPort = 60000 + rand() % 1000; // -- Random port for single player same PC
 }
+
+// -- Disconnects from Server and all peers and frees memory
 
 Client::~Client()
 {
@@ -21,20 +23,12 @@ Client::~Client()
     }
     _peers.clear();
 }
-void Client::ClearPeers()
-{
-    for (auto& peer : _peers)
-    {
-        if (peer.socket)
-        {
-            peer.socket->disconnect();
-            delete peer.socket;
-        }
-    }
-    _peers.clear();
-}
+
+
 
 #pragma region BootstrapServer
+
+// -- Connects to server and adds the socket to the selector
 
 bool Client::ConnectToBootstrapServer(const std::string& ip, unsigned short port)
 {
@@ -76,6 +70,8 @@ bool Client::SendRegister(const std::string& username, const std::string& passwo
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
+// -- Sends request to the server to create room with specific ID and port
+
 bool Client::CreateRoom(std::string roomID)
 {
     std::cout << "[Client] Create Room request with id " << roomID << std::endl;
@@ -85,6 +81,8 @@ bool Client::CreateRoom(std::string roomID)
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
 
+// -- Sens request to the server to join a room with specific ID and port
+
 bool Client::JoinRoom(std::string roomId)
 {
     std::cout << "[Client] Join Room request with id " << roomId << std::endl;
@@ -93,6 +91,8 @@ bool Client::JoinRoom(std::string roomId)
     packet << "JOIN_ROOM" << roomId << _p2pPort;
     return _bootstrapSocket.send(packet) == sf::Socket::Status::Done;
 }
+
+// -- Given a timeout (blocking) wait for a package sended from the server
 
 std::optional<sf::Packet> Client::WaitForServerMessage(float timeoutSeconds)
 {
@@ -107,10 +107,14 @@ std::optional<sf::Packet> Client::WaitForServerMessage(float timeoutSeconds)
     return std::nullopt;
 }
 
+// -- Recieves a package form server without bkloccking
+
 bool Client::ReceivePacketFromServer(sf::Packet& packet)
 {
     return _bootstrapSocket.receive(packet) == sf::Socket::Status::Done;
 }
+
+//-- Checks if there is any message from server to be read
 
 std::optional<sf::Packet> Client::CheckServerMessage()
 {
@@ -124,6 +128,8 @@ std::optional<sf::Packet> Client::CheckServerMessage()
     }
     return std::nullopt;
 }
+
+// -- Handles all the server messages
 
 void Client::HandleServerMessages(Event<> OnStartMatch)
 {
@@ -196,6 +202,21 @@ void Client::HandleServerMessages(Event<> OnStartMatch)
 
 #pragma region P2P
 
+void Client::ClearPeers()
+{
+    for (auto& peer : _peers)
+    {
+        if (peer.socket)
+        {
+            peer.socket->disconnect();
+            delete peer.socket;
+        }
+    }
+    _peers.clear();
+}
+
+// -- Waits for a message from any peer for a limited time
+
 std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
 {
     _selector.wait(sf::seconds(timeoutSeconds));
@@ -242,6 +263,8 @@ void Client::StartListeningForPeers()
         _selector.add(_p2pListener);
     }
 }
+
+// -- Connects to a new peer if not already connected
 
 void Client::ConnectToPeer(const sf::IpAddress& ip, unsigned short port)
 {
@@ -296,6 +319,8 @@ void Client::BroadcastToPeers(sf::Packet& packet)
     }
 }
 
+// -- Accepts new incoming P2P connections and adds them to the peer list
+
 void Client::UpdateP2PConnections()
 {
     if (_selector.isReady(_p2pListener))
@@ -337,6 +362,8 @@ void Client::UpdateP2PConnections()
         }
     }
 }
+
+// -- Sends the client's username and index to all peers for showing in game
 
 void Client::SendUsername()
 {

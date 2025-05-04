@@ -52,6 +52,8 @@ void GameManager::Shutdown()
     delete _window;
 }
 
+// -- Updates state clearing memory from last state (deletes) and creating the new state class
+
 void GameManager::UpdateState(GameState newState)
 {
     if (_currentState == newState) return;

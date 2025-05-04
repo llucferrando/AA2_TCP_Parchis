@@ -1,15 +1,25 @@
 #include "BootstrapServer.h"
 #include <iostream>
 
+// -- Sets up the listening port and connects to DDBB
+
 BootstrapServer::BootstrapServer(unsigned short port) 
 {
+    std::srand(std::time(nullptr));
+
+    // Opens port to listen to connection
+
     if (_listener.listen(port) != sf::Socket::Status::Done) 
     {
         std::cerr << "[Server] Failed to bind port" << std::endl;
     }
+
     _selector.add(_listener);
+
     _db.ConnectDatabase();
 }
+
+// -- Handles Connections, new clients and room managment
 
 void BootstrapServer::Run() 
 {
@@ -21,7 +31,6 @@ void BootstrapServer::Run()
             {
                 AcceptNewConnection();
             }
-
             else 
             {
                 for (auto& client : _clients) 
@@ -48,6 +57,8 @@ void BootstrapServer::Run()
     }
 }
 
+// -- Accepts new clients and adds to the selector
+
 void BootstrapServer::AcceptNewConnection() {
     sf::TcpSocket* socket = new sf::TcpSocket();
 
@@ -63,6 +74,8 @@ void BootstrapServer::AcceptNewConnection() {
         delete socket;
     }
 }
+
+// -- Receives data from a client and processes the command
 
 void BootstrapServer::ReceiveData(Client* client) 
 {
@@ -98,6 +111,8 @@ void BootstrapServer::ReceiveData(Client* client)
     }
 }
 
+// -- Handles Login and Regfitrr checking DDBBManager
+
 void BootstrapServer::HandleCommand(Client* client, const std::string& command, const std::string& nick, const std::string& pass)
 {
     sf::Packet response;
@@ -106,15 +121,19 @@ void BootstrapServer::HandleCommand(Client* client, const std::string& command, 
     {
         bool success = _db.RegisterUser(nick, pass);
         response << (success ? "REGISTER_OK" : "REGISTER_FAIL");
+
         client->GetSocket()->send(response);
     }
     else if (command == "LOGIN")
     {
         bool success = _db.LoginUser(nick, pass);
         response << (success ? "LOGIN_OK" : "LOGIN_FAIL");
+
         client->GetSocket()->send(response);
     }
 }
+
+// -- Handles Join romm and Create Room
 
 void BootstrapServer::HandleCommand(Client* client, const std::string& command, sf::Packet& packet)
 {
@@ -142,6 +161,8 @@ void BootstrapServer::HandleCommand(Client* client, const std::string& command, 
     }
 }
 
+// -- Removes Client from the selector
+
 void BootstrapServer::RemoveClient(Client* client) 
 {
     _selector.remove(*client->GetSocket());
@@ -149,7 +170,10 @@ void BootstrapServer::RemoveClient(Client* client)
     _clients.erase(std::remove_if(_clients.begin(), _clients.end(), [client](const std::unique_ptr<Client>& c) { return c.get() == client; }), _clients.end());
 }
 
+
 #pragma region Join & Create Room
+
+// -- Creates a new room, assigns a unique ID if needed and adds the client
 
 void BootstrapServer::CreateRoom(Client* client, const std::string& roomID) 
 {
@@ -171,6 +195,8 @@ void BootstrapServer::CreateRoom(Client* client, const std::string& roomID)
 
     std::cout << "[Server] Room created with ID: " << finalRoomID << std::endl;
 }
+
+// -- Adds a client to an existing room and notifies all peers
 
 void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
 {
@@ -252,6 +278,8 @@ void BootstrapServer::JoinRoom(Client* client, const std::string& roomID)
     }
 }
 
+// -- If player sends a unvalid room ID generates one randomly
+
 std::string BootstrapServer::GenerateRandomRoomID()
 {
     const std::string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -264,6 +292,8 @@ std::string BootstrapServer::GenerateRandomRoomID()
 }
 
 #pragma endregion
+
+// -- Starts a match for a room: notifies players and closes connections
 
 void BootstrapServer::StartMatch(Room* room)
 {

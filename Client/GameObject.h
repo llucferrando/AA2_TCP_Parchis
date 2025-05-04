@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "Transform.h"
 
-// Making GO as ECS (simplified)
+// Making GO as ECS (simplified) like UNity :')
 
 class GameObject
 {

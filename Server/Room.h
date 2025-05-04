@@ -11,10 +11,14 @@ public:
 
     bool IsFull() const;
     void AddPlayer(Client* client);
+
     const std::vector<Client*>& GetPlayers() const;
     std::string GetID() const;
+
+
     bool waitingToStart = false;
     sf::Clock startTimer;
+
 private:
     std::string _id;
     int _maxPlayers;

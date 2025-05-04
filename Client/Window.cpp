@@ -1,12 +1,11 @@
 #include "Window.h"
 
-Window::Window() {
+Window::Window() 
+{
     _window = new sf::RenderWindow(sf::VideoMode({ WIDTH, HEIGHT }), "Parchis Online");
 }
 
-Window::~Window() {
-    _window->close();
-}
+Window::~Window() { _window->close(); }
 
 bool Window::IsOpen() const { return _window->isOpen(); }
 

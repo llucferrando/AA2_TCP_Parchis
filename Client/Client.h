@@ -36,6 +36,7 @@ public:
     bool JoinRoom(std::string roomId);
     std::optional<sf::Packet> WaitForServerMessage(float timeoutSeconds);
     void SendUsername();
+
     // -- P2P
     std::optional<sf::Packet> WaitForPeerMessage(float timeoutSeconds);
     void StartListeningForPeers();
@@ -44,6 +45,7 @@ public:
     void BroadcastToPeers(sf::Packet& packet); 
     void UpdateP2PConnections();
     void ClearPeers();
+
     // -- Getters & Setters
     void SetPlayerIndex(int index);
     void SetNumPlayers(int num);

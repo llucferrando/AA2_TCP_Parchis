@@ -6,6 +6,7 @@
 
 Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler* eventHandler) : _client(client), _playerIndex(playerIndex), _currentTurnIndex(0), _diceValue(0), _isMyTurn(false), _hasRolled(false), _numPlayers(numPlayers)
 {
+    std::srand(std::time(nullptr));
     _timeToEndTurn = 20.f;
     _currentTime = 0.f;
     _myColor = GetEnumColorFromIndex(playerIndex);
@@ -69,11 +70,7 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
             Token* token = new Token(i, j, homePositions[color][j], eventHandler);
             _enemyFichas.push_back(token);
         }
-    }
-
-
-
-    
+    }   
 
     _isMyTurn = (_playerIndex == 0);
 }
@@ -148,8 +145,7 @@ void Gameplay::Render(sf::RenderWindow* window)
 
 void Gameplay::RollDice()
 {
-    //_diceValue = rand() % 6 + 1;
-    _diceValue = 5;
+    _diceValue = rand() % 6 + 1;
     _hasRolled = true;
 
     // -- Si todos los tokens estan out sacas 7
@@ -379,7 +375,6 @@ bool Gameplay::AllTokensInHome()
 {
     for (auto token : _myTokens)
     {
-        std::cout << "Token: " << static_cast<int>(token->GetTokenState()) << std::endl;
         if (token->GetTokenState() == TokenState::IN_GAME)
         {
             return false;
@@ -452,14 +447,14 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         return;
     }
 
-    // Si el dado no es 5 y la ficha que clico esta en casa a la verga
+    // -- If dices isn't 5 and token is in home doesn't move
 
     if (tokenToMove->GetTokenState() == TokenState::IN_HOME) return;
 
     int currentPos = tokenToMove->GetBoardPosition();
     int targetPos = currentPos + _diceValue;
 
-    // -- Mirar si al mover ficha hago captura
+    // -- Check for capture other tokens
 
     for (auto* rival : _enemyFichas)
     {
@@ -469,8 +464,6 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
             rivalComp->SetTokenState(TokenState::IN_HOME);
             rivalComp->SetBoardPosition(-1);
             rival->GetComponent<Transform>()->position = homePositions[rivalComp->GetColor()][rivalComp->GetTokenID()];
-
-            //ENVIAR PAQUETE A LOS DEMAS DE CAPTURA
 
             std::cout << "[Gameplay] ¡Captura! +20\n";
 
@@ -486,10 +479,10 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         }
     }
 
-    // -- Mirar si al mover ficha entro en la parte final
+    // -- Check if moving token goes to the final part
 
     int entradaMeta = GetEntryToGoalIndex(_myColor);
-    int totalPositions = mainPathPositions.size(); // 60
+    int totalPositions = mainPathPositions.size(); 
     int distanceToEntry = (entradaMeta - currentPos + totalPositions) % totalPositions;
 
     int stepsToMove = targetPos - currentPos;
@@ -507,7 +500,6 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
 
             std::cout << "[Gameplay] ¡Ficha " << fichaIndex << " ha llegado a la meta!" << std::endl;
 
-            // Seguridad extra
             if (tokenToMove->IsInGoal())
             {
                 ficha->GetComponent<Transform>()->position = metaPositions[_myColor][6];
@@ -516,7 +508,6 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         }
         else
         {
-            //tokenToMove->SetTokenState(TokenState::IN_END);
             tokenToMove->SetBoardPosition(100 + pasosEnMeta);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
             tokenToMove->AddSteps(stepsToMove);
@@ -533,7 +524,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
 
     BroadcastMove(fichaIndex, tokenToMove->GetBoardPosition());
 
-    // -- Verificar condición de victoria
+    // -- Check victory condition
     if (AllTokensInGoal())
     {
         std::cout << "[Gameplay] _victory" << std::endl;
@@ -546,7 +537,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         return;
     }
 
-    // -- Si el dado es un 6 vuelve a tirar después de mover ficha
+    // -- If Dice is 6 can throw again after moving token
 
     if (_diceValue == 6 || _diceValue == 7)
     {

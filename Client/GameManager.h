@@ -15,9 +15,9 @@ class GameManager
 public:
     GameManager();
     ~GameManager();
-    void Init();      // Load resources, init fichas, int all game things
-    void Run();       // Main loop
-    void Shutdown();  // Clear resources or whatever
+    void Init();      
+    void Run();       
+    void Shutdown();  
     void UpdateState(GameState newState);
 
 private:

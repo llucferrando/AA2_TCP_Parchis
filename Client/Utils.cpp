@@ -33,6 +33,7 @@ PlayerColor GetEnumColorFromIndex(int index)
     }
 }
 
-sf::Vector2f GetWorldPosFromBoardIndex(int index, int playerOffset) {
+sf::Vector2f GetWorldPosFromBoardIndex(int index, int playerOffset) 
+{
     return sf::Vector2f(100 + index * 10, 200 + playerOffset * 50);
 }

@@ -1,7 +1,8 @@
 #include "GameManager.h"
 #include <iostream>
 
-int main() {
+int main() 
+{
     GameManager* gameManager = new GameManager();
 
     std::cout << "[Client] Starting Game Manager Initialization... " << std::endl;

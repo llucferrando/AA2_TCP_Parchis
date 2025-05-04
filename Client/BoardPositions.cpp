@@ -1,18 +1,21 @@
 #include "BoardPositions.h"
-//60
 
-int GetEntryToGoalIndex(PlayerColor color) {
-    switch (color) {
-    case PlayerColor::RED: 
-        return 30;
-    case PlayerColor::BLUE: 
-        return 15;
-    case PlayerColor::GREEN: 
-        return 45;
-    case PlayerColor::YELLOW: 
-        return 60;
-    default: 
-        return 0;
+// -- ALL THE POSITIONS TO BE USED IN GAMEPLAY
+
+int GetEntryToGoalIndex(PlayerColor color) 
+{
+    switch (color) 
+    {
+        case PlayerColor::RED: 
+            return 30;
+        case PlayerColor::BLUE: 
+         return 15;
+        case PlayerColor::GREEN: 
+            return 45;
+        case PlayerColor::YELLOW: 
+            return 60;
+        default: 
+            return 0;
     }
 }
 
