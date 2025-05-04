@@ -5,6 +5,7 @@
 #include "SpriteRenderer.h"
 #include "EventHandler.h"
 #include "Client.h"
+#include "Event.h"
 
 class GameOverMenu : public Menu
 {

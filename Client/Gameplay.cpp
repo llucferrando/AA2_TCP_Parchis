@@ -136,7 +136,8 @@ void Gameplay::Render(sf::RenderWindow* window)
 
 void Gameplay::RollDice()
 {
-    _diceValue = rand() % 6 + 1;
+    //_diceValue = rand() % 6 + 1;
+    _diceValue = 5;
     _hasRolled = true;
 
     // -- Si todos los tokens estan out sacas 7
@@ -454,7 +455,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         }
         else
         {
-            tokenToMove->SetTokenState(TokenState::IN_END);
+            //tokenToMove->SetTokenState(TokenState::IN_END);
             tokenToMove->SetBoardPosition(100 + pasosEnMeta);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
             tokenToMove->AddSteps(stepsToMove);
@@ -479,7 +480,9 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         sf::Packet winPacket;
         winPacket << static_cast<int>(MessageType::GAME_OVER) << static_cast<int>(_myColor);
         _client->BroadcastToPeers(winPacket);
-        return; // Fin del turno y no se sigue jugando
+
+        onWinMatch.Invoke();
+        return;
     }
 
     // -- Si el dado es un 6 vuelve a tirar después de mover ficha
