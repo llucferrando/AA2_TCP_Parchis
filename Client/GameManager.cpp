@@ -25,8 +25,7 @@ GameManager::~GameManager()
 }
 
 void GameManager::Init()
-{
-    _client->ConnectToBootstrapServer("127.0.0.1", 50000);
+{    
 }
 
 void GameManager::Run()
@@ -91,6 +90,7 @@ void GameManager::UpdateState(GameState newState)
     switch (newState) 
     {
         case GameState::SplashScreen:
+            _client->ConnectToBootstrapServer("127.0.0.1", 50000);
             std::cout << "[Client] Opening Splashscreen" << std::endl;
             _splashMenu = new SplashScreenMenu();
             break;

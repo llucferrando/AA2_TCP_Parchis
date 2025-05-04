@@ -72,6 +72,22 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
     _isMyTurn = (_playerIndex == 0);
 }
 
+Gameplay::~Gameplay()
+{
+    delete _board;
+    delete _rollButton;
+
+    for (auto* t : _myTokens) 
+        delete t;
+    _myTokens.clear();
+
+    for (auto* t : _enemyFichas) 
+        delete t;
+    _enemyFichas.clear();
+    
+    _client->ClearPeers();
+}
+
 void Gameplay::Update(float deltaTime) 
 {
     _client->UpdateP2PConnections();
@@ -302,7 +318,7 @@ bool Gameplay::AllTokensInHome()
     for (auto token : _myTokens)
     {
         std::cout << "Token: " << static_cast<int>(token->GetTokenState()) << std::endl;
-        if (token->GetTokenState() != TokenState::IN_HOME)
+        if (token->GetTokenState() == TokenState::IN_GAME)
         {
             return false;
         }

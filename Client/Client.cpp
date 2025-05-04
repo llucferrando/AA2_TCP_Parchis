@@ -21,7 +21,18 @@ Client::~Client()
     }
     _peers.clear();
 }
-
+void Client::ClearPeers()
+{
+    for (auto& peer : _peers)
+    {
+        if (peer.socket)
+        {
+            peer.socket->disconnect();
+            delete peer.socket;
+        }
+    }
+    _peers.clear();
+}
 
 #pragma region BootstrapServer
 

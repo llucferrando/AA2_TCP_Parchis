@@ -12,6 +12,7 @@
 class Gameplay : public GameObject {
 public:
     Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler* eventHandler);
+    ~Gameplay();
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
     Event<> onWinMatch;

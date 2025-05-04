@@ -42,7 +42,7 @@ public:
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
     void BroadcastToPeers(sf::Packet& packet); 
     void UpdateP2PConnections();
-
+    void ClearPeers();
     // -- Getters & Setters
     void SetPlayerIndex(int index);
     void SetNumPlayers(int num);
