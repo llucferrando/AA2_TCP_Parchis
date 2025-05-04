@@ -2,7 +2,7 @@
 
 GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client)
 {
-    AddComponent<SpriteRenderer>("Assets/Splashscreen/gameOverLost.png", sf::Color::White, false);
+    AddComponent<SpriteRenderer>("Assets/Splashscreen/gameOverLost.png", sf::Color::White);
 
     _exitRoomMenuButton = AddComponent<ButtonComponent>(sf::Vector2f(170, 450), sf::Vector2f(250, 50), "Exit To Menu", eventHandler);
 
@@ -14,6 +14,9 @@ GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client)
     SubcribeToButtons();
 }
 
+GameOverMenu::~GameOverMenu()
+{
+}
 
 void GameOverMenu::Update(float deltaTime)
 {
