@@ -2,7 +2,7 @@
 
 GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client, std::string spritePath)
 {
-    AddComponent<SpriteRenderer>("Assets/Splashscreen/gameOverLost.png", sf::Color::White);
+    AddComponent<SpriteRenderer>(spritePath, sf::Color::White, false);
 
     _exitRoomMenuButton = AddComponent<ButtonComponent>(sf::Vector2f(170, 450), sf::Vector2f(250, 50), "Exit To Menu", eventHandler);
 
@@ -12,10 +12,6 @@ GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client, std::stri
 
     //Subcribe to OnClickEvent for each button in the menu
     SubcribeToButtons();
-}
-
-GameOverMenu::~GameOverMenu()
-{
 }
 
 void GameOverMenu::Update(float deltaTime)
