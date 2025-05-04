@@ -47,8 +47,6 @@ void MatchmakingMenu::Update(float deltaTime)
 	_idCreateRoomField->Update(deltaTime);
 	_idJoinRoomField->Update(deltaTime);
 
-	//Aqui tendria que hacer algo similar al servidor donde acepta y lee nuevos peers no?
-	  // Escuchar nuevos peers entrantes (si este cliente es host)
 	_client->UpdateP2PConnections();
 	_client->HandleServerMessages(onStartMatch);
 }

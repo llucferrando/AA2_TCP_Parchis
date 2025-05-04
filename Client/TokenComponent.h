@@ -21,7 +21,15 @@ public:
 
 	const std::type_index GetType() override;
 
+
+	bool IsInGoal();
+	void AddSteps(int value);
+	void ResetCurrentSteps();
+	int GetStepsToGoal();
 private:
+	int _stepsToGoal;
+	int _currentSteps;
+
 	PlayerColor _color;
 	int _tokenID;
 	int _boardPosition; // -1 if it's home

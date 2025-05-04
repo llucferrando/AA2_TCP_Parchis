@@ -120,12 +120,13 @@ void Gameplay::Render(sf::RenderWindow* window)
 
 void Gameplay::RollDice()
 {
-    _diceValue = rand() % 6 + 1;
+    //_diceValue = rand() % 6 + 1;
+    _diceValue = 5;
     _hasRolled = true;
 
     // -- Si todos los tokens estan out sacas 7
 
-    if (AllTokensOut())
+    if (AllTokensOut() && _diceValue == 6)
     {
         _diceValue = 7;
     }
@@ -296,6 +297,8 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
     Token* ficha = _myTokens[fichaIndex];
     TokenComponent* tokenToMove = ficha->GetComponent<TokenComponent>();
 
+    if (tokenToMove->IsInGoal()) return;
+
     if (_diceValue == 5 && tokenToMove->GetTokenState() == TokenState::IN_HOME)
     {
         //Setear la ficha en startPos y end turn
@@ -304,7 +307,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         tokenToMove->SetBoardPosition(salida);
         ficha->GetComponent<Transform>()->position = mainPathPositions[salida];
         BroadcastMove(fichaIndex, salida);
-        
+
         EndTurn();
         return;
     }
@@ -316,13 +319,12 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
     int currentPos = tokenToMove->GetBoardPosition();
     int targetPos = currentPos + _diceValue;
 
-
     // -- Mirar si al mover ficha hago captura
 
-    for (auto* rival : _enemyFichas) 
+    for (auto* rival : _enemyFichas)
     {
         auto* rivalComp = rival->GetComponent<TokenComponent>();
-        if (rivalComp->GetBoardPosition() == targetPos && rivalComp->GetTokenState() == TokenState::IN_GAME) 
+        if (rivalComp->GetBoardPosition() == targetPos)
         {
             rivalComp->SetTokenState(TokenState::IN_HOME);
             rivalComp->SetBoardPosition(-1);
@@ -331,6 +333,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
             //ENVIAR PAQUETE A LOS DEMAS DE CAPTURA
 
             std::cout << "[Gameplay] ¡Captura! +20\n";
+
             targetPos += 20;
             break;
         }
@@ -339,30 +342,44 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
     // -- Mirar si al mover ficha entro en la parte final
 
     int entradaMeta = GetEntryToGoalIndex(_myColor);
+    int totalPositions = mainPathPositions.size(); // 60
+    int distanceToEntry = (entradaMeta - currentPos + totalPositions) % totalPositions;
 
-    if (currentPos <= entradaMeta && currentPos + _diceValue > entradaMeta)
+    if (_diceValue > distanceToEntry)
     {
-        int pasosEnMeta = currentPos + _diceValue - entradaMeta - 1;
-        if (pasosEnMeta >= 6)
+        int pasosEnMeta = _diceValue - distanceToEntry - 1;
+
+        if (pasosEnMeta >= 6 || tokenToMove->GetStepsToGoal() <= _diceValue)
         {
             tokenToMove->SetTokenState(TokenState::IN_END);
-            ficha->GetComponent<Transform>()->position = metaPositions[_myColor][5];
+            tokenToMove->SetBoardPosition(100 + 6);
+            ficha->GetComponent<Transform>()->position = metaPositions[_myColor][6];
+            tokenToMove->AddSteps(_diceValue);
+
+            std::cout << "[Gameplay] ¡Ficha " << fichaIndex << " ha llegado a la meta!" << std::endl;
+
+            // Seguridad extra
+            if (tokenToMove->IsInGoal())
+            {
+                ficha->GetComponent<Transform>()->position = metaPositions[_myColor][6];
+                tokenToMove->SetBoardPosition(100 + 6);
+            }
         }
         else
         {
             tokenToMove->SetTokenState(TokenState::IN_END);
-            ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
             tokenToMove->SetBoardPosition(100 + pasosEnMeta);
+            ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
+            tokenToMove->AddSteps(_diceValue);
         }
     }
     else
     {
         // Wrap_around
-        int totalPositions = mainPathPositions.size(); // 60
-        int targetPos = (currentPos + _diceValue) % totalPositions;
-
+        targetPos = (currentPos + _diceValue) % totalPositions;
         tokenToMove->SetBoardPosition(targetPos);
         ficha->GetComponent<Transform>()->position = mainPathPositions[targetPos];
+        tokenToMove->AddSteps(_diceValue);
     }
 
     BroadcastMove(fichaIndex, targetPos);
@@ -374,7 +391,7 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         _isMyTurn = true;
         _hasRolled = false;
     }
-    else 
+    else
     {
         EndTurn();
     }
