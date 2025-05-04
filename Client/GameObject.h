@@ -25,7 +25,7 @@ public:
 
 		for (auto& component : components)
 		{
-			if (component->GetType() == typeIndex)
+			if (component && component->GetType() == typeIndex)
 			{
 				return static_cast<T*>(component);
 			}

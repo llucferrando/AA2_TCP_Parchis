@@ -3,7 +3,7 @@
 
 MatchmakingMenu::MatchmakingMenu(EventHandler* eventHandler, Client* client)
 {
-	AddComponent<SpriteRenderer>("Assets/Splashscreen/matchmaking.png", sf::Color::White);
+	AddComponent<SpriteRenderer>("Assets/Splashscreen/matchmaking.png", sf::Color::White, false);
 
 	_idCreateRoomField = AddComponent<TextFieldComponent>(sf::Vector2f(160, 300), sf::Vector2f(400, 50), "ID create room", eventHandler);
 
@@ -47,8 +47,6 @@ void MatchmakingMenu::Update(float deltaTime)
 	_idCreateRoomField->Update(deltaTime);
 	_idJoinRoomField->Update(deltaTime);
 
-	//Aqui tendria que hacer algo similar al servidor donde acepta y lee nuevos peers no?
-	  // Escuchar nuevos peers entrantes (si este cliente es host)
 	_client->UpdateP2PConnections();
 	_client->HandleServerMessages(onStartMatch);
 }

@@ -11,10 +11,12 @@ enum class GameState {
 
 enum class MessageType 
 {
+	PLAYER_PROFILE,
 	ROLL_DICE,
 	MOVE_REQUEST,
 	DICE_RESULT,
 	TURN_CHANGE,
+	TOKEN_CAPTURED,
 	GAME_OVER,
 };
 

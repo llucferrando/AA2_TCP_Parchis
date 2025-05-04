@@ -21,7 +21,18 @@ Client::~Client()
     }
     _peers.clear();
 }
-
+void Client::ClearPeers()
+{
+    for (auto& peer : _peers)
+    {
+        if (peer.socket)
+        {
+            peer.socket->disconnect();
+            delete peer.socket;
+        }
+    }
+    _peers.clear();
+}
 
 #pragma region BootstrapServer
 
@@ -155,6 +166,7 @@ void Client::HandleServerMessages(Event<> OnStartMatch)
         {
             ConnectToPeer(resolved.value(), port);
             std::cout << "[Client] Connected to new peer announced by server: " << ipStr << ":" << port << std::endl;
+
         }
         else
         {
@@ -186,11 +198,12 @@ void Client::HandleServerMessages(Event<> OnStartMatch)
 
 std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
 {
-    // Siempre actualizamos el estado de los sockets
     _selector.wait(sf::seconds(timeoutSeconds));
 
-    for (auto& [socket, ip, port] : _peers)
+    for (auto it = _peers.begin(); it != _peers.end(); )
     {
+        auto& [socket, ip, port] = *it;
+
         if (_selector.isReady(*socket))
         {
             sf::Packet packet;
@@ -201,12 +214,17 @@ std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
                 std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
                 return packet;
             }
-            else
+            else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error)
             {
-                std::cout << "[Client] Failed to receive packet from peer " << ip << ":" << port
-                    << " (status: " << static_cast<int>(status) << ")" << std::endl;
+                std::cout << "[Client] Peer disconnected: " << ip << ":" << port << std::endl;
+                _selector.remove(*socket);
+                delete socket;
+                it = _peers.erase(it);
+                continue;
             }
         }
+
+        ++it;
     }
 
     return std::nullopt;
@@ -265,11 +283,6 @@ void Client::BroadcastToPeers(sf::Packet& packet)
 {
     std::cout << "[Client] Trying to broadcast to " << _peers.size() << " peer(s)." << std::endl;
 
-    if (_peers.size() <= 0)
-    {
-        std::cout << "[Client] Peers empty" << std::endl;
-    }
-
     for (auto& [socket, ip, port] : _peers)
     {
         if (socket->send(packet) == sf::Socket::Status::Done)
@@ -291,16 +304,25 @@ void Client::UpdateP2PConnections()
         if (_p2pListener.accept(*newPeer) == sf::Socket::Status::Done)
         {
             newPeer->setBlocking(false);
-
             auto optionalIp = newPeer->getRemoteAddress();
+            unsigned short port = newPeer->getRemotePort();
             if (optionalIp.has_value())
             {
                 sf::IpAddress ip = optionalIp.value();
-                unsigned short port = newPeer->getRemotePort();
+
+                // Verificar si ya estás conectado
+                for (const auto& peer : _peers)
+                {
+                    if (peer.ip == ip && peer.port == port)
+                    {
+                        std::cout << "[Client] Peer already connected: " << ip << ":" << port << std::endl;
+                        delete newPeer;
+                        return;
+                    }
+                }
 
                 _peers.emplace_back(newPeer, ip, port);
                 _selector.add(*newPeer);
-
                 std::cout << "[Client] New peer connected: " << ip << ":" << port << std::endl;
             }
             else
@@ -316,22 +338,49 @@ void Client::UpdateP2PConnections()
     }
 }
 
+void Client::SendUsername()
+{
+    sf::Packet packet;
+    packet << static_cast<int>(MessageType::PLAYER_PROFILE)
+        << _playerIndex
+        << _playerUsername;
+
+    BroadcastToPeers(packet);
+
+    std::cout << "[Client] Sent username '" << _playerUsername << "' as playerIndex " << _playerIndex << " to all peers";
+
+}
+
 bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 {
     _selector.wait(sf::Time::Zero);
 
-    for (auto& [socket, ip, port] : _peers)
+    for (auto it = _peers.begin(); it != _peers.end(); )
     {
+        auto& [socket, ip, port] = *it;
+
         if (_selector.isReady(*socket))
         {
             sf::Packet temp;
-            if (socket->receive(temp) == sf::Socket::Status::Done)
+            sf::Socket::Status status = socket->receive(temp);
+
+            if (status == sf::Socket::Status::Done)
             {
                 packet = temp;
                 std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
                 return true;
             }
+            else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error)
+            {
+                std::cout << "[Client] Peer disconnected: " << ip << ":" << port << std::endl;
+                _selector.remove(*socket);
+                delete socket;
+                it = _peers.erase(it);
+                continue;
+            }
         }
+
+        ++it;
     }
 
     return false;
@@ -345,13 +394,12 @@ bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 
     void Client::SetNumPlayers(int num) { _numPlayers = num; }
 
+    void Client::SetMyUsername(const std::string& name) { _playerUsername = name; }  
+
     int Client::GetPlayerIndex() const { return _playerIndex; }
 
     int Client::GetNumPlayers() const { return _numPlayers; }
-
-    sf::SocketSelector Client::GetSelector()
-    {
-        return _selector;
-    }
+     
+    sf::SocketSelector Client::GetSelector(){ return _selector; }
 
 #pragma endregion

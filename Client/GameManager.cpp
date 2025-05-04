@@ -25,8 +25,7 @@ GameManager::~GameManager()
 }
 
 void GameManager::Init()
-{
-    _client->ConnectToBootstrapServer("127.0.0.1", 50000);
+{    
 }
 
 void GameManager::Run()
@@ -91,6 +90,7 @@ void GameManager::UpdateState(GameState newState)
     switch (newState) 
     {
         case GameState::SplashScreen:
+            _client->ConnectToBootstrapServer("127.0.0.1", 50000);
             std::cout << "[Client] Opening Splashscreen" << std::endl;
             _splashMenu = new SplashScreenMenu();
             break;
@@ -110,12 +110,14 @@ void GameManager::UpdateState(GameState newState)
 
         case GameState::Gameplay:
             std::cout << "[Client] Starting the game... " << std::endl;
-            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler); // HOLA
+            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler);
+            _gameplay->onWinMatch.Subscribe([this] {_nextState = GameState::GameOver; _shouldChangeState = true;  pathGameOverSprite = "Assets/Splashscreen/gameOverWon.png"; });
+            _gameplay->onLoseMatch.Subscribe([this] {_nextState = GameState::GameOver; _shouldChangeState = true; pathGameOverSprite = "Assets/Splashscreen/gameOverLost.png"; });
             break;
 
         case GameState::GameOver:
             std::cout << "[Client] Game finished..." << std::endl;
-            _gameOverMenu = new GameOverMenu(_eventHandler, _client);
+            _gameOverMenu = new GameOverMenu(_eventHandler, _client, pathGameOverSprite);
             _gameOverMenu->onReturnMenu.Subscribe([this]() { _nextState = GameState::MatchmakingMenu; _shouldChangeState = true; });
             _gameOverMenu->onExitGame.Subscribe([this]() { _window->Close(); });
             break;

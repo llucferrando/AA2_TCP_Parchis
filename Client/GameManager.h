@@ -42,6 +42,7 @@ private:
     SplashScreenMenu* _splashMenu;
     Gameplay* _gameplay;
     GameOverMenu* _gameOverMenu;
+    std::string pathGameOverSprite;
 
     bool waitingSelection = false;
     int diceValue = 0;

@@ -8,15 +8,18 @@
 #include "EventHandler.h"
 #include "ButtonComponent.h"
 #include "BoardPositions.h"
+#include "NormalTextComponent.h"
 
 class Gameplay : public GameObject {
 public:
     Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler* eventHandler);
+    ~Gameplay();
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
-    void RollDice();
-
+    Event<> onWinMatch;
+    Event<> onLoseMatch;
 private:
+
     Client* _client;
     int _playerIndex;
     int _currentTurnIndex;
@@ -25,24 +28,35 @@ private:
 
     bool _isMyTurn;
     bool _hasRolled;
+    bool _usernamesCreated = false;
 
     float _timeToEndTurn;
     float _currentTime;
 
     GameObject* _board;
     GameObject* _rollButton;
+   
 
     PlayerColor _myColor;
 
+    std::array<std::string,4> _playerUsernames;
+    std::array< GameObject*,4> _usernameLabels;
     std::vector<Token*> _myTokens;
     std::vector<Token*> _enemyFichas;
+    std::string _username;
 
     void HandleNetwork();
-    void EndTurn();
-
-    // Nuevas funciones clave
-    bool HasTokenInHome();
-    bool AllTokensOut();
     void BroadcastMove(int fichaId, int pos);
+    void SetupPlayerUsernames();
+    // -- Gameplay
+
+    void RollDice();
+
+    bool AllTokensInHome();
+    bool AllTokensInGoal();
+    bool AllTokensOut();
+    bool HasTokenInHome();
+
     void MoveFichaConNormas(int fichaIndex);
+    void EndTurn();
 };

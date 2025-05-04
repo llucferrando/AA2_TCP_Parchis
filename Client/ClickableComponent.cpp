@@ -8,7 +8,18 @@ ClickableComponent::ClickableComponent(EventHandler* handler, Transform* transfo
 
         sf::FloatRect bounds = _spriteRenderer->GetSprite().getGlobalBounds();
 
-        bounds.position = _transform->position;
+        // Centra el rectángulo en la posición del transform
+        bounds.position = {
+            _transform->position.x - bounds.size.x / 2.f,
+            _transform->position.y - bounds.size.y / 2.f
+        };
+
+        //// Aumentar el área clickable
+        //float padding = 10.f;
+        //bounds.position.x -= padding;
+        //bounds.position.y -= padding;
+        //bounds.size.x += padding * 2;
+        //bounds.size.y += padding * 2;
 
         if (bounds.contains(pos)) {
             onClick.Invoke();
@@ -24,6 +35,31 @@ ClickableComponent::~ClickableComponent()
 const std::type_index ClickableComponent::GetType()
 {
 	return typeid(ClickableComponent);
+}
+
+void ClickableComponent::RenderTest(sf::RenderWindow* window)
+{
+    //sf::FloatRect bounds = _spriteRenderer->GetSprite().getGlobalBounds();
+
+    //// Centra el rectángulo en la posición del transform
+    //bounds.position = {
+    //    _transform->position.x - bounds.size.x / 2.f,
+    //    _transform->position.y - bounds.size.y / 2.f
+    //};
+
+    //// Aumentar el área clickable
+    //float padding = 10.f;
+    //bounds.position.x -= padding;
+    //bounds.position.y -= padding;
+    //bounds.size.x += padding * 2;
+    //bounds.size.y += padding * 2;
+
+    //sf::RectangleShape debugRect;
+    //debugRect.setPosition(bounds.position);
+    //debugRect.setSize(bounds.size);
+    //debugRect.setFillColor(sf::Color(0, 255, 0, 50)); // Verde transparente
+
+    //window->draw(debugRect);
 }
 
 void ClickableComponent::OnGlobalClick(sf::Vector2f pos)

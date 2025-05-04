@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Event.h"
+#include "Enums.hpp"
 
 struct PeerInfo
 {
@@ -20,19 +21,21 @@ class Client
 public:
     Client();
     ~Client();
+
     // -- BootstrapServer
     bool ConnectToBootstrapServer(const std::string& ip, unsigned short port);
     void DisconnectFromBootstrapServer();
     bool ReceivePacketFromServer(sf::Packet& packet);
     std::optional<sf::Packet> CheckServerMessage();
     void HandleServerMessages(Event<> OnStartMatch);
+
     // -- Matchmaking & Login
     bool SendLogin(const std::string& username, const std::string& password);
     bool SendRegister(const std::string& username, const std::string& password);
     bool CreateRoom(std::string roomID);
     bool JoinRoom(std::string roomId);
     std::optional<sf::Packet> WaitForServerMessage(float timeoutSeconds);
-
+    void SendUsername();
     // -- P2P
     std::optional<sf::Packet> WaitForPeerMessage(float timeoutSeconds);
     void StartListeningForPeers();
@@ -40,10 +43,11 @@ public:
     void ConnectToPeer(const sf::IpAddress& ip, unsigned short port); 
     void BroadcastToPeers(sf::Packet& packet); 
     void UpdateP2PConnections();
-
+    void ClearPeers();
     // -- Getters & Setters
     void SetPlayerIndex(int index);
     void SetNumPlayers(int num);
+    void SetMyUsername(const std::string& name);
     int GetPlayerIndex() const;
     int GetNumPlayers() const;
     sf::SocketSelector GetSelector();
@@ -54,6 +58,8 @@ private:
 
     int _playerIndex = -1;
     int _numPlayers = 1;
+
+    std::string _playerUsername;
     
     std::vector<PeerInfo> _peers;
     
