@@ -26,12 +26,14 @@ private:
 
     bool _isMyTurn;
     bool _hasRolled;
+    bool _usernamesCreated = false;
 
     float _timeToEndTurn;
     float _currentTime;
 
     GameObject* _board;
     GameObject* _rollButton;
+   
 
     PlayerColor _myColor;
 
@@ -39,6 +41,7 @@ private:
     std::array< GameObject*,4> _usernameLabels;
     std::vector<Token*> _myTokens;
     std::vector<Token*> _enemyFichas;
+    std::string _username;
 
     void HandleNetwork();
     void EndTurn();
