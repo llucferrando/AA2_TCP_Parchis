@@ -8,6 +8,7 @@
 #include "EventHandler.h"
 #include "ButtonComponent.h"
 #include "BoardPositions.h"
+#include "NormalTextComponent.h"
 
 class Gameplay : public GameObject {
 public:
@@ -34,11 +35,14 @@ private:
 
     PlayerColor _myColor;
 
+    std::array<std::string,4> _playerUsernames;
+    std::array< GameObject*,4> _usernameLabels;
     std::vector<Token*> _myTokens;
     std::vector<Token*> _enemyFichas;
 
     void HandleNetwork();
     void EndTurn();
+    void SetupPlayerUsernames();
 
     // -- Gameplay
 

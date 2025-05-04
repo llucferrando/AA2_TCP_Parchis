@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Event.h"
+#include "Enums.hpp"
 
 struct PeerInfo
 {
@@ -43,9 +44,13 @@ public:
     void BroadcastToPeers(sf::Packet& packet); 
     void UpdateP2PConnections();
 
+    // -- Others
+    void SendUsername();
+
     // -- Getters & Setters
     void SetPlayerIndex(int index);
     void SetNumPlayers(int num);
+    void SetMyUsername(const std::string& name);
     int GetPlayerIndex() const;
     int GetNumPlayers() const;
     sf::SocketSelector GetSelector();
@@ -56,6 +61,8 @@ private:
 
     int _playerIndex = -1;
     int _numPlayers = 1;
+
+    std::string _playerUsername;
     
     std::vector<PeerInfo> _peers;
     

@@ -9,6 +9,8 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
     _timeToEndTurn = 20.f;
     _currentTime = 0.f;
     _myColor = GetEnumColorFromIndex(playerIndex);
+    
+    _client->SendUsername();
 
     _board = new GameObject();
 
@@ -59,6 +61,8 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
             _enemyFichas.push_back(token);
         }
     }
+
+
 
     _isMyTurn = (_playerIndex == 0);
 }
@@ -157,6 +161,30 @@ void Gameplay::EndTurn()
     _client->BroadcastToPeers(turnPacket);
 }
 
+//void Gameplay::SetupPlayerUsernames()
+//{
+//    for (int i = 0; i < _playerUsernames.size(); ++i)
+//    {
+//        if (_playerUsernames[i].empty()) continue;
+//
+//        sf::Vector2f position;
+//        sf::Color color;
+//
+//        switch (i)
+//        {
+//        case 0: position = { 310, 20 };  color = sf::Color::Red;     break;
+//        case 1: position = { 580, 310 }; color = sf::Color::Blue;    break;
+//        case 2: position = { 40, 310 };  color = sf::Color::Green;   break;
+//        case 3: position = { 310, 580 }; color = sf::Color::Yellow;  break;
+//        }
+//
+//        GameObject* labelGO = new GameObject();
+//        auto* text = new NormalTextComponent(position, { 180, 40 }, _playerUsernames[i]);
+//        labelGO->AddComponent(text);
+//        _usernameLabels[i] = labelGO;
+//    }
+//}
+
 void Gameplay::HandleNetwork() 
 {
     auto packetOpt = _client->WaitForPeerMessage(0.1f); // no bloquea pero actualiza selector
@@ -171,6 +199,19 @@ void Gameplay::HandleNetwork()
 
         switch (msgType)
         {
+        case MessageType::PLAYER_PROFILE:
+        {
+            int index;
+            std::string name;
+            packet >> index >> name;
+            
+            if (index >= 0 && index < _playerUsernames.size()) {
+                _playerUsernames[index] = name;
+                std::cout << "[Gameplay] Nombre del jugador " << index << ": " << name << std::endl;
+            }
+
+            break;
+        }
             case MessageType::MOVE_REQUEST:
             {
                 std::cout << "Move_Rquest" << std::endl;

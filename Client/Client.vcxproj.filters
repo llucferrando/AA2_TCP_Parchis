@@ -126,6 +126,9 @@
     <ClCompile Include="GameOverMenu.cpp">
       <Filter>Source Files\GameObjects\Prefabs</Filter>
     </ClCompile>
+    <ClCompile Include="NormalTextComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcrypt.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="GameOverMenu.h">
       <Filter>Header Files\GameObjects\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalTextComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

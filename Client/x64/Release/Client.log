@@ -1,11 +1,52 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (AA2_TCP_Parchis.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Token.cpp
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
-C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+  GameManager.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'GameManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\FontManager.h(11,30): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'GameManager.cpp')
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\GameManager.cpp(19,25): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Gameplay.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Gameplay.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\FontManager.h(11,30): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'Gameplay.cpp')
+  
+  MainClient.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'MainClient.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\FontManager.h(11,30): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'MainClient.cpp')
+  
+  NormalTextComponent.cpp
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'NormalTextComponent.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      E:\3r CDI\Xarxes\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+E:\3r CDI\Xarxes\AA2_TCP_Parchis\Client\FontManager.h(11,30): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'NormalTextComponent.cpp')
+  
   Generating code
-  10 of 1787 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+  33 of 1772 functions ( 1.9%) were compiled, the rest were copied from previous compilation.
+    6 functions were new in current compilation
+    69 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Client.vcxproj -> C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Client.exe
+  Client.vcxproj -> E:\3r CDI\Xarxes\AA2_TCP_Parchis\x64\Release\Client.exe
