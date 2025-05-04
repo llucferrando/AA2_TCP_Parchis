@@ -394,17 +394,12 @@ bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 
     void Client::SetNumPlayers(int num) { _numPlayers = num; }
 
-    void Client::SetMyUsername(const std::string& name) { _playerUsername = name; }
-
-   
+    void Client::SetMyUsername(const std::string& name) { _playerUsername = name; }  
 
     int Client::GetPlayerIndex() const { return _playerIndex; }
 
     int Client::GetNumPlayers() const { return _numPlayers; }
-
-    sf::SocketSelector Client::GetSelector()
-    {
-        return _selector;
-    }
+     
+    sf::SocketSelector Client::GetSelector(){ return _selector; }
 
 #pragma endregion

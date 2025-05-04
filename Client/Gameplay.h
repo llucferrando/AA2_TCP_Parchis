@@ -47,7 +47,7 @@ private:
 
     void HandleNetwork();
     void BroadcastMove(int fichaId, int pos);
-
+    void SetupPlayerUsernames();
     // -- Gameplay
 
     void RollDice();

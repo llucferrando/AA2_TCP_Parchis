@@ -200,10 +200,18 @@ void Gameplay::SetupPlayerUsernames()
 
         switch (i)
         {
-        case 0: position = { 0, 0 };  color = sf::Color::Red;     break;
-        case 1: position = { 520, 0 }; color = sf::Color::Blue;    break;
-        case 2: position = { 0, 680 };  color = sf::Color::Green;   break;
-        case 3: position = { 520, 680 }; color = sf::Color::Yellow;  break;
+        case 0: position = { 0, 0 };  
+              color = sf::Color::Red;    
+              break;
+        case 1: position = { 520, 0 }; 
+              color = sf::Color::Blue;    
+              break;
+        case 2: position = { 0, 680 };  
+              color = sf::Color::Green;   
+              break;
+        case 3: position = { 520, 680 }; 
+              color = sf::Color::Yellow;  
+              break;
         }
 
         GameObject* labelGO = new GameObject();
@@ -228,21 +236,22 @@ void Gameplay::HandleNetwork()
 
         switch (msgType)
         {
-        case MessageType::PLAYER_PROFILE:
-        {
-            int index;
-            std::string name;
-            packet >> index >> name;
+            case MessageType::PLAYER_PROFILE:
+            {
+                int index;
+                std::string name;
+                packet >> index >> name;
 
-            if (index >= 0 && index < _playerUsernames.size()) {
-                _playerUsernames[index] = name;
-                std::cout << "[Gameplay] Nombre del jugador " << index << ": " << _playerUsernames[index] << std::endl;
+                if (index >= 0 && index < _playerUsernames.size()) 
+                {
+                    _playerUsernames[index] = name;
+                    std::cout << "[Gameplay] Nombre del jugador " << index << ": " << _playerUsernames[index] << std::endl;
+                }
+
+                SetupPlayerUsernames();
+
+                break;
             }
-
-            SetupPlayerUsernames();
-
-            break;
-        }
             case MessageType::MOVE_REQUEST:
             {
                 std::cout << "Move_Rquest" << std::endl;
