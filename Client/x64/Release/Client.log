@@ -1,11 +1,13 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (AA2_TCP_Parchis.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Token.cpp
+  Gameplay.cpp
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(42,1): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\stdexcept(101): message : see declaration of 'std::runtime_error'
 C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Dependencies\include\SFML\System\Exception.hpp(41): message : see declaration of 'sf::Exception'
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\FontManager.h(11,30): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\Client\Gameplay.cpp(367,54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Generating code
-  10 of 1787 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+  7 of 1788 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Client.vcxproj -> C:\Users\nahue\Desktop\CloneRepositoryGitHub\AA2_TCP_Parchis\x64\Release\Client.exe

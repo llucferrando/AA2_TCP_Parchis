@@ -34,9 +34,9 @@ std::vector<sf::Vector2f> mainPathPositions =
 
 std::map<PlayerColor, sf::Vector2f> startPositions = 
 {
-    {PlayerColor::RED, {280, 150}},
+    {PlayerColor::RED, {280, 109}},
     {PlayerColor::GREEN, {150, 433}},
-    {PlayerColor::BLUE, {566, 278}},
+    {PlayerColor::BLUE, {560, 278}},
     {PlayerColor::YELLOW, {436,560}}    
 };
 

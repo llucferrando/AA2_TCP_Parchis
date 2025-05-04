@@ -18,13 +18,22 @@ Gameplay::Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler
 
     _rollButton->AddComponent<ButtonComponent>(sf::Vector2f(360, 360), sf::Vector2f(150, 50), "Tirar Dado", eventHandler);
 
-    _rollButton->GetComponent<ButtonComponent>()->onClick.Subscribe([this]() 
+    auto* btn = _rollButton->GetComponent<ButtonComponent>();
+
+    if (btn)
     {
-        if (_isMyTurn && !_hasRolled) 
-        {
-            RollDice();
-        }
-    });
+        btn->onClick.Subscribe([this]()
+            {
+                if (_isMyTurn && !_hasRolled)
+                {
+                    RollDice();
+                }
+            });
+    }
+    else
+    {
+        std::cerr << "[Error] ButtonComponent no encontrado en _rollButton" << std::endl;
+    }
 
     // Player tokens creation
 
@@ -78,17 +87,6 @@ void Gameplay::Update(float deltaTime)
         }
     }
 
-    if (_hasRolled)
-    {
-        // -- Si no saca 5 para salir, fuera turno
-
-        if (_diceValue != 5 && AllTokensInHome())
-        {
-            std::cout << "TODAS LAS FICHAS EN CASA" << std::endl;
-            EndTurn();
-        }
-    }
-
     HandleNetwork();
 }
 
@@ -138,8 +136,13 @@ void Gameplay::RollDice()
     dicePacket << static_cast<int>(MessageType::DICE_RESULT) << _diceValue;
 
     _client->BroadcastToPeers(dicePacket);
-}
 
+    if (_diceValue != 5 && AllTokensInHome())
+    {
+        std::cout << "TODAS LAS FICHAS EN CASA" << std::endl;
+        EndTurn();
+    }
+}
 
 void Gameplay::EndTurn() 
 {
@@ -272,11 +275,11 @@ int GetStartingIndexForColor(PlayerColor color)
         case PlayerColor::YELLOW:
             return 4;
         case PlayerColor::BLUE: 
-            return 19;
+            return 18;
         case PlayerColor::RED: 
-            return 34;
+            return 33;
         case PlayerColor::GREEN:
-            return 49;
+            return 48;
         default: return 0;
     }
 }
@@ -306,8 +309,13 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
         return;
     }
 
+    // Si el dado no es 5 y la ficha que clico esta en casa a la verga
+
+    if (tokenToMove->GetTokenState() == TokenState::IN_HOME) return;
+
     int currentPos = tokenToMove->GetBoardPosition();
     int targetPos = currentPos + _diceValue;
+
 
     // -- Mirar si al mover ficha hago captura
 
@@ -332,24 +340,27 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
 
     int entradaMeta = GetEntryToGoalIndex(_myColor);
 
-    if (currentPos <= entradaMeta && targetPos > entradaMeta) 
+    if (currentPos <= entradaMeta && currentPos + _diceValue > entradaMeta)
     {
-        int pasosEnMeta = targetPos - entradaMeta - 1;
-        if (pasosEnMeta >= 6) 
+        int pasosEnMeta = currentPos + _diceValue - entradaMeta - 1;
+        if (pasosEnMeta >= 6)
         {
             tokenToMove->SetTokenState(TokenState::IN_END);
-            std::cout << "[Gameplay] Ficha llegó a la meta.\n";
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][5];
         }
-        else 
+        else
         {
             tokenToMove->SetTokenState(TokenState::IN_END);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
             tokenToMove->SetBoardPosition(100 + pasosEnMeta);
         }
     }
-    else 
+    else
     {
+        // Wrap_around
+        int totalPositions = mainPathPositions.size(); // 60
+        int targetPos = (currentPos + _diceValue) % totalPositions;
+
         tokenToMove->SetBoardPosition(targetPos);
         ficha->GetComponent<Transform>()->position = mainPathPositions[targetPos];
     }
