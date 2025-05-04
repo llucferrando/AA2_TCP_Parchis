@@ -26,7 +26,8 @@ public:
 
 	void Invoke(Args... args) {
 		for (const auto& [id, callback] : _listeners) {
-			callback(args...);
+			if (callback) 
+				callback(args...);
 		}
 	}
 	void UnsubscribeAll() {

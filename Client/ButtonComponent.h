@@ -20,6 +20,8 @@ public:
 private:
     void OnGlobalClick(sf::Vector2f clickPos);
 
+    sf::Vector2f _size;
+    sf::Vector2f _position;
     sf::RectangleShape _shape;
     sf::Text _label;
 };

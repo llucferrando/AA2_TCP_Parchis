@@ -110,7 +110,9 @@ void GameManager::UpdateState(GameState newState)
 
         case GameState::Gameplay:
             std::cout << "[Client] Starting the game... " << std::endl;
-            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler); // HOLA
+            _gameplay = new Gameplay(_client, _client->GetPlayerIndex(), _client->GetNumPlayers(), _eventHandler);
+            _gameplay->onWinMatch.Subscribe([this] {_nextState = GameState::GameOver; _shouldChangeState = true; });
+            _gameplay->onLoseMatch.Subscribe([this] {_nextState = GameState::GameOver; _shouldChangeState = true; });
             break;
 
         case GameState::GameOver:

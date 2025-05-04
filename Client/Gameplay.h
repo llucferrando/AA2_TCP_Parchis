@@ -14,9 +14,10 @@ public:
     Gameplay(Client* client, int playerIndex, int numPlayers, EventHandler* eventHandler);
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
-    void RollDice();
-
+    Event<> onWinMatch;
+    Event<> onLoseMatch;
 private:
+
     Client* _client;
     int _playerIndex;
     int _currentTurnIndex;
@@ -38,14 +39,17 @@ private:
     std::vector<Token*> _enemyFichas;
 
     void HandleNetwork();
-    void EndTurn();
+    void BroadcastMove(int fichaId, int pos);
 
     // -- Gameplay
 
-    bool AllTokensInHome();
+    void RollDice();
 
-    bool HasTokenInHome();
+    bool AllTokensInHome();
+    bool AllTokensInGoal();
     bool AllTokensOut();
-    void BroadcastMove(int fichaId, int pos);
+    bool HasTokenInHome();
+
     void MoveFichaConNormas(int fichaIndex);
+    void EndTurn();
 };

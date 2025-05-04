@@ -15,6 +15,7 @@ enum class MessageType
 	MOVE_REQUEST,
 	DICE_RESULT,
 	TURN_CHANGE,
+	TOKEN_CAPTURED,
 	GAME_OVER,
 };
 

@@ -120,8 +120,7 @@ void Gameplay::Render(sf::RenderWindow* window)
 
 void Gameplay::RollDice()
 {
-    //_diceValue = rand() % 6 + 1;
-    _diceValue = 5;
+    _diceValue = rand() % 6 + 1;
     _hasRolled = true;
 
     // -- Si todos los tokens estan out sacas 7
@@ -163,7 +162,7 @@ void Gameplay::EndTurn()
 
 void Gameplay::HandleNetwork() 
 {
-    auto packetOpt = _client->WaitForPeerMessage(0.1f); // no bloquea pero actualiza selector
+    auto packetOpt = _client->WaitForPeerMessage(0.1f); 
 
     while (packetOpt.has_value())
     {
@@ -223,8 +222,63 @@ void Gameplay::HandleNetwork()
                 std::cout << "[Gameplay] Otro jugador ha sacado un " << dice << std::endl;
                 break;
             }
+            case MessageType::TOKEN_CAPTURED:
+            {
+                int colorInt, fichaId;
+                packet >> colorInt >> fichaId;
+                PlayerColor color = static_cast<PlayerColor>(colorInt);
 
+                std::cout << "[Gameplay] Jugador " << colorInt << " ha perdido la ficha " << fichaId << " (capturada)\n";
 
+                if (color == _myColor)
+                {
+                    for (auto* ficha : _myTokens)
+                    {
+                        auto* token = ficha->GetComponent<TokenComponent>();
+                        if (token && token->GetTokenID() == fichaId)
+                        {
+                            token->SetTokenState(TokenState::IN_HOME);
+                            token->SetBoardPosition(-1);
+                            ficha->GetComponent<Transform>()->position = homePositions[color][fichaId];
+                            break;
+                        }
+                    }
+                }
+                else 
+                {
+                    for (auto* ficha : _enemyFichas)
+                    {
+                        auto* token = ficha->GetComponent<TokenComponent>();
+                        if (token && token->GetColor() == color && token->GetTokenID() == fichaId)
+                        {
+                            token->SetTokenState(TokenState::IN_HOME);
+                            token->SetBoardPosition(-1);
+                            ficha->GetComponent<Transform>()->position = homePositions[color][fichaId];
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            }
+            case MessageType::GAME_OVER:
+            {
+                int winnerColor;
+                packet >> winnerColor;
+
+                if (winnerColor == static_cast<int>(_myColor))
+                {
+                    std::cout << "[Gameplay] _victory" << std::endl;
+                    onWinMatch.Invoke();
+                }
+                    
+                else
+                {
+                    std::cout << "[Gameplay] _defeat" << std::endl;
+                    onLoseMatch.Invoke();
+                }
+                break;
+            }
             default:
                 std::cout << "[Gameplay] Mensaje no reconocido: " << msgTypeInt << std::endl;
                 break;
@@ -234,7 +288,15 @@ void Gameplay::HandleNetwork()
         packetOpt = _client->WaitForPeerMessage(0.f);
     }
 }
-
+bool Gameplay::AllTokensInGoal()
+{
+    for (auto* token : _myTokens)
+    {
+        if (token->GetTokenState() != TokenState::IN_END)
+            return false;
+    }
+    return true;
+}
 bool Gameplay::AllTokensInHome()
 {
     for (auto token : _myTokens)
@@ -334,6 +396,13 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
 
             std::cout << "[Gameplay] ¡Captura! +20\n";
 
+            sf::Packet capturePacket;
+            capturePacket << static_cast<int>(MessageType::TOKEN_CAPTURED)
+                << static_cast<int>(rivalComp->GetColor())
+                << rivalComp->GetTokenID();
+
+            _client->BroadcastToPeers(capturePacket);
+
             targetPos += 20;
             break;
         }
@@ -345,16 +414,18 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
     int totalPositions = mainPathPositions.size(); // 60
     int distanceToEntry = (entradaMeta - currentPos + totalPositions) % totalPositions;
 
-    if (_diceValue > distanceToEntry)
-    {
-        int pasosEnMeta = _diceValue - distanceToEntry - 1;
+    int stepsToMove = targetPos - currentPos;
 
-        if (pasosEnMeta >= 6 || tokenToMove->GetStepsToGoal() <= _diceValue)
+    if (stepsToMove > distanceToEntry)
+    {
+        int pasosEnMeta = stepsToMove - distanceToEntry - 1;
+
+        if (pasosEnMeta >= 6 || tokenToMove->GetStepsToGoal() <= stepsToMove)
         {
             tokenToMove->SetTokenState(TokenState::IN_END);
             tokenToMove->SetBoardPosition(100 + 6);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][6];
-            tokenToMove->AddSteps(_diceValue);
+            tokenToMove->AddSteps(stepsToMove);
 
             std::cout << "[Gameplay] ¡Ficha " << fichaIndex << " ha llegado a la meta!" << std::endl;
 
@@ -370,19 +441,30 @@ void Gameplay::MoveFichaConNormas(int fichaIndex)
             tokenToMove->SetTokenState(TokenState::IN_END);
             tokenToMove->SetBoardPosition(100 + pasosEnMeta);
             ficha->GetComponent<Transform>()->position = metaPositions[_myColor][pasosEnMeta];
-            tokenToMove->AddSteps(_diceValue);
+            tokenToMove->AddSteps(stepsToMove);
         }
     }
     else
     {
         // Wrap_around
-        targetPos = (currentPos + _diceValue) % totalPositions;
+        targetPos = (currentPos + stepsToMove) % totalPositions;
         tokenToMove->SetBoardPosition(targetPos);
         ficha->GetComponent<Transform>()->position = mainPathPositions[targetPos];
-        tokenToMove->AddSteps(_diceValue);
+        tokenToMove->AddSteps(stepsToMove);
     }
 
-    BroadcastMove(fichaIndex, targetPos);
+    BroadcastMove(fichaIndex, tokenToMove->GetBoardPosition());
+
+    // -- Verificar condición de victoria
+    if (AllTokensInGoal())
+    {
+        std::cout << "[Gameplay] _victory" << std::endl;
+
+        sf::Packet winPacket;
+        winPacket << static_cast<int>(MessageType::GAME_OVER) << static_cast<int>(_myColor);
+        _client->BroadcastToPeers(winPacket);
+        return; // Fin del turno y no se sigue jugando
+    }
 
     // -- Si el dado es un 6 vuelve a tirar después de mover ficha
 

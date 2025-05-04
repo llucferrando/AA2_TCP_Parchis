@@ -2,6 +2,8 @@
 
 ButtonComponent::ButtonComponent(sf::Vector2f position, sf::Vector2f size, const std::string& label, EventHandler* eventHandler) : _label(FontManager::GetMainFont(), "", 24)
 {
+    _size = size;
+    _position = position;
     _shape.setPosition(position);
     _shape.setSize(size);
     _shape.setFillColor(sf::Color(150, 150, 250));
@@ -25,6 +27,11 @@ ButtonComponent::~ButtonComponent()
 
 void ButtonComponent::Render(sf::RenderWindow* window)
 {
+    if (_shape.getSize() != _size)
+    {
+        _shape.setSize(_size);
+        _shape.setPosition(_position);
+    }
     window->draw(_shape);
     window->draw(_label);
 }

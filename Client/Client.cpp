@@ -186,11 +186,12 @@ void Client::HandleServerMessages(Event<> OnStartMatch)
 
 std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
 {
-    // Siempre actualizamos el estado de los sockets
     _selector.wait(sf::seconds(timeoutSeconds));
 
-    for (auto& [socket, ip, port] : _peers)
+    for (auto it = _peers.begin(); it != _peers.end(); )
     {
+        auto& [socket, ip, port] = *it;
+
         if (_selector.isReady(*socket))
         {
             sf::Packet packet;
@@ -201,12 +202,17 @@ std::optional<sf::Packet> Client::WaitForPeerMessage(float timeoutSeconds)
                 std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
                 return packet;
             }
-            else
+            else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error)
             {
-                std::cout << "[Client] Failed to receive packet from peer " << ip << ":" << port
-                    << " (status: " << static_cast<int>(status) << ")" << std::endl;
+                std::cout << "[Client] Peer disconnected: " << ip << ":" << port << std::endl;
+                _selector.remove(*socket);
+                delete socket;
+                it = _peers.erase(it);
+                continue;
             }
         }
+
+        ++it;
     }
 
     return std::nullopt;
@@ -324,18 +330,32 @@ bool Client::ReceivePacketFromPeers(sf::Packet& packet)
 {
     _selector.wait(sf::Time::Zero);
 
-    for (auto& [socket, ip, port] : _peers)
+    for (auto it = _peers.begin(); it != _peers.end(); )
     {
+        auto& [socket, ip, port] = *it;
+
         if (_selector.isReady(*socket))
         {
             sf::Packet temp;
-            if (socket->receive(temp) == sf::Socket::Status::Done)
+            sf::Socket::Status status = socket->receive(temp);
+
+            if (status == sf::Socket::Status::Done)
             {
                 packet = temp;
                 std::cout << "[Client] Packet received from peer " << ip << ":" << port << std::endl;
                 return true;
             }
+            else if (status == sf::Socket::Status::Disconnected || status == sf::Socket::Status::Error)
+            {
+                std::cout << "[Client] Peer disconnected: " << ip << ":" << port << std::endl;
+                _selector.remove(*socket);
+                delete socket;
+                it = _peers.erase(it);
+                continue;
+            }
         }
+
+        ++it;
     }
 
     return false;
