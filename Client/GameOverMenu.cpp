@@ -1,6 +1,6 @@
 #include "GameOverMenu.h"
 
-GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client)
+GameOverMenu::GameOverMenu(EventHandler* eventHandler, Client* client, std::string spritePath)
 {
     AddComponent<SpriteRenderer>("Assets/Splashscreen/gameOverLost.png", sf::Color::White);
 

@@ -9,7 +9,7 @@
 class GameOverMenu : public Menu
 {
 public:
-    GameOverMenu(EventHandler* eventHandler, Client* client);
+    GameOverMenu(EventHandler* eventHandler, Client* client, std::string spritePath);
     void Update(float deltaTime);
     void Render(sf::RenderWindow* window);
     ButtonComponent* GetExitToRoomButton();
