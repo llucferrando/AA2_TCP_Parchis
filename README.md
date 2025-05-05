@@ -1,7 +1,11 @@
 # AA2_TCP_Parchis
 
 OBSERVACIONES:
--Tenemos un repositorio solamente porque creíamos que era mucho más óptimo 
+
+- Por un bug con las librerias hay que descargarese esta carpeta https://drive.google.com/file/d/1d5p-3FezVzvLGtwSJeJA8tpka2FAbZkT/view?usp=sharing
+y substituirla donde se clona el proyecto haciendo replace de las anteriores, si no no deja buildear no sabemos porque.
+
+-Tenemos un repositorio solamente porque creíamos que era mucho más óptimo
 tenerlo todo bajo una misma solución y dos proyectos distintos, el server y el client.
 -Hemos montado un sistema intentando replicar ECS de unity y UnityEvents
 -Para hacer funcionar el server hay que crear una data base, llamada videogame en local y para poder utilizar bien la ip hay que cambiarla manualmente, en nuestro caso la tenemos en local por default,
