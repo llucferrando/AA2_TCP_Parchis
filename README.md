@@ -1,26 +1,30 @@
-# AA2_TCP_Parchis
+# [TCP] Parchis / Ludo Game
 
-OBSERVACIONES:
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
+![TCP](https://img.shields.io/badge/TCP-5C2D91?style=for-the-badge&logo=network&logoColor=white)
+![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-- Por un bug con las librerias hay que descargarese esta carpeta https://drive.google.com/file/d/1d5p-3FezVzvLGtwSJeJA8tpka2FAbZkT/view?usp=sharing
-y substituirla donde se clona el proyecto haciendo replace de las anteriores, si no no deja buildear no sabemos porque.
+**GOAL** 
 
--Tenemos un repositorio solamente porque creíamos que era mucho más óptimo
-tenerlo todo bajo una misma solución y dos proyectos distintos, el server y el client.
--Hemos montado un sistema intentando replicar ECS de unity y UnityEvents
--Para hacer funcionar el server hay que crear una data base, llamada videogame en local y para poder utilizar bien la ip hay que cambiarla manualmente, en nuestro caso la tenemos en local por default,
-se encuentra en el GameManager.cpp en la línea 95, _client->ConnectToBoostrapServer(ip deseada)
+Develop an online multiplayer version of the classic board game Parchis using C++ and TCP sockets, with support for login/registration, lobby creation, and full gameplay rules.
 
-COSAS QUE NO ESTÁN IMPLEMENTADAS:
--No hay sistema de barreras
--Si un cliente se va de la partida, se limpia bien la lista del cliente pero no se
-puede seguir jugando.
-- Muy de vez en cuando crashea pero no hemos podido encontrar el error de ninguna manera. Creemos
-que tiene algo que ver con el puntero a algun componente (al hacer clic un boton o cosas del estilo)
-pero no suele ocurrir.
+**How we resolved it** 
 
-INTEGRANTES:
+We built the project in C++ with Visual Studio and SFML for rendering. The system was designed using an Entity Component System (ECS) architecture to keep the code modular and maintainable. The bootstrap server handled login, registration, and lobby management, while clients connected peer-to-peer to play the matches. We successfully implemented turn order, dice logic, piece movement, and win conditions. 
 
-Lluc Ferrando
-Roger Companys
-Nahuel Aparicio
+Some features, such as barrier mechanics and reconnection handling when a player leaves, were not fully implemented, but the core gameplay loop works correctly.
+
+```markdown
+ 📞 Contact
+
+Nahuel Aparicio Del Blanco
+
+- GitHub: https://github.com/NahuelAparicio10
+- Email: nahuel.ap.code@gmail.com
+- LinkedIn: https://www.linkedin.com/in/nahuel-aparicio-del-blanco
+
+Lluc Ferrando Jorda
+- GitHub: 
+- Email: 
+- LinkedIn: 
