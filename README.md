@@ -25,6 +25,6 @@ Nahuel Aparicio Del Blanco
 - LinkedIn: https://www.linkedin.com/in/nahuel-aparicio-del-blanco
 
 Lluc Ferrando Jorda
-- GitHub: 
-- Email: 
-- LinkedIn: 
+- GitHub: https://github.com/llucferrando
+- Email: llucferrandojorda@gmail.com
+- LinkedIn: https://www.linkedin.com/in/lluc-ferrando-jord%C3%A0-041400250/
